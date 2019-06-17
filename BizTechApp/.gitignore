@@ -29,12 +29,18 @@ build/
 .gradle
 local.properties
 *.iml
+android/app/build/
+android/app/gradle/
+android/app/gradlew
+android/app/gradlew.bat
 
 # node.js
 #
 node_modules/
 npm-debug.log
 yarn-error.log
+.nvm
+*.log
 
 # BUCK
 buck-out/
