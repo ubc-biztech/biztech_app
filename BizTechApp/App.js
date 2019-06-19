@@ -13,7 +13,7 @@ export default class App extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.instructions}>BizTech App 209 Summer</Text>
+				<Text style={styles.instructions}>BizTech App 2019 Summer</Text>
 			</View>
 		);
 	}
