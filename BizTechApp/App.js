@@ -8,12 +8,14 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import Profile from './App/components/Profile';
 
 export default class App extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
 				<Text style={styles.instructions}>BizTech App 2019 Summer</Text>
+				<Profile/>
 			</View>
 		);
 	}
