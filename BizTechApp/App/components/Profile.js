@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
-// import { AMAZON_API } from 'react-native-dotenv'
+import { AMAZON_API } from 'react-native-dotenv'
 
 class Profile extends Component {
   constructor(){
@@ -17,7 +17,7 @@ class Profile extends Component {
   }
 
   fetchUser(){
-    fetch('https://YEET.execute-api.us-west-2.amazonaws.com/dev/users/get?id=75129696')
+    fetch('https://'+AMAZON_API+'.execute-api.us-west-2.amazonaws.com/dev/users/get?id=75129696')
       .then((response) => response.json())
       .then((response) => {
         this.setState({
