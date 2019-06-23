@@ -29,7 +29,8 @@ class Profile extends Component {
   render(){
     return(
       <View>
-        <Text>Profile Yeet!</Text>
+        <Text>Profile</Text>
+        <Text>Welcome, {this.state.userData.fname}</Text>
       </View>
     )
   }
