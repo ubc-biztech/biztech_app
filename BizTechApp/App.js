@@ -1,22 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+
+import {Platform, StyleSheet, Text, ScrollView, View} from 'react-native';
+import Register from './App/components/Register.js';
 import Profile from './App/components/Profile';
 
 export default class App extends Component {
 	render() {
 		return (
-			<View style={styles.container}>
-				<Text style={styles.instructions}>BizTech App 2019 Summer</Text>
+			<ScrollView style={styles.container}>
+				<Register />
 				<Profile/>
-			</View>
+			</ScrollView>
 		);
 	}
 }
@@ -24,9 +19,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF'
+		backgroundColor: '#dbffe2'
 	},
 	instructions: {
 		textAlign: 'center',
