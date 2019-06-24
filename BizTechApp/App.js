@@ -8,7 +8,18 @@
 
 import React, { Component } from "react";
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import { Button,
+ 				 Header,
+				 ThemeProvider } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Profile from './App/components/Profile';
+import CreateEvent from './App/components/CreateEvent';
+
+const theme = {
+  colors: {
+    primary: '#7ad040',
+  }
+}
 
 import {
 	createStackNavigator, createAppContainer
@@ -21,10 +32,18 @@ class HomePage extends Component {
 	render() {
     const {navigate} = this.props.navigation;
 		return (
-			<View style={styles.container}>
-				<Text style={styles.instructions}>BizTech App 2019 Summer</Text>
-				<Profile/>
-			</View>
+			<ThemeProvider theme={theme}>
+				<Header
+					statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
+					leftComponent={{ icon: 'menu', color: '#fff' }}
+					centerComponent={{ text: 'BizTech App', style: { color: '#fff' } }}
+					rightComponent={{ icon: 'home', color: '#fff' }}
+					/>
+				<View>
+					<View style={styles.widgetContainer}><Profile/></View>
+					<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
+				</View>
+			</ThemeProvider>
 		);
 	}
 }
@@ -44,9 +63,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#F5FCFF'
 	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5
+	widgetContainer: {
+		margin: 20,
 	}
 });
