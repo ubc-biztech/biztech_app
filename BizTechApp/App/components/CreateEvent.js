@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
+import { Button, ThemeProvider } from 'react-native-elements';
 
 class CreateEvent extends Component {
   constructor(){
@@ -15,7 +16,7 @@ class CreateEvent extends Component {
 
   render(){
     return (
-      <View>
+      <ThemeProvider>
         <Text style={{height: 40}}>Create Event</Text>
         <View>
           <TextInput
@@ -23,8 +24,9 @@ class CreateEvent extends Component {
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
           />
+
         </View>
-      </View>
+      </ThemeProvider>
     )
   }
 }
