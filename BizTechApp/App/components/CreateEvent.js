@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { Button, ThemeProvider } from 'react-native-elements';
+import { View, TextInput } from 'react-native';
+import { Button, ThemeProvider, Text } from 'react-native-elements';
 
 class CreateEvent extends Component {
   constructor(){
@@ -17,7 +17,7 @@ class CreateEvent extends Component {
   render(){
     return (
       <ThemeProvider>
-        <Text style={{height: 40}}>Create Event</Text>
+        <Text h2>Create Event</Text>
         <View>
           <TextInput
             style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 1}}
