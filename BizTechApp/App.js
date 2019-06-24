@@ -26,13 +26,14 @@ export default class App extends Component {
 		return (
 			<ThemeProvider theme={theme}>
 				<Header
+					statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
 					leftComponent={{ icon: 'menu', color: '#fff' }}
 					centerComponent={{ text: 'BizTech App', style: { color: '#fff' } }}
 					rightComponent={{ icon: 'home', color: '#fff' }}
 					/>
 				<View>
 					<View style={styles.widgetContainer}><Profile/></View>
-					<View  style={styles.widgetContainer}><CreateEvent/></View>
+					<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
 				</View>
 			</ThemeProvider>
 		);
