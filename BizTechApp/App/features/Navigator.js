@@ -1,6 +1,6 @@
-import { createStackNavigator } from 'react-navigation'
-import Main from './App/screens/Main'
-import Login from './App/screens/Login'
+import { createStackNavigator, createAppContainer } from 'react-navigation'
+import Main from '../screens/Main'
+import Login from '../screens/Login'
 
 const routeConfig = {
   Main: {
@@ -8,13 +8,17 @@ const routeConfig = {
   },
   Login: {
     screen: Login
-  }
+  },
 }
 
 const navigatorConfig = {
+  headerMode: 'none',
   navigationOptions: {
-    header: null
-  }
+    header: null,
+    headerVisible: false,
+  },
 }
 
-export default Navigator = createStackNavigator(routeConfig, navigatorConfig)
+const AppNavigator = createStackNavigator(routeConfig, navigatorConfig)
+
+export default createAppContainer(AppNavigator);

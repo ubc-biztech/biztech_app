@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from "react";
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import { Button,
@@ -14,6 +6,7 @@ import { Button,
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Profile from './App/components/Profile';
 import CreateEvent from './App/components/CreateEvent';
+import Navigator from './App/features/Navigator';
 
 const theme = {
   colors: {
@@ -21,38 +14,26 @@ const theme = {
   }
 }
 
-import {
-	createStackNavigator, createAppContainer
-  } from 'react-navigation';
-
-class HomePage extends Component {
-	static navigationOptions = {
-		title: 'BizTech App',
-	  };
+class App extends Component {
 	render() {
-    const {navigate} = this.props.navigation;
+    // const {navigate} = this.props.navigation;
 		return (
-			<ThemeProvider theme={theme}>
-				<Header
-					statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
-					leftComponent={{ icon: 'menu', color: '#fff' }}
-					centerComponent={{ text: 'BizTech App', style: { color: '#fff' } }}
-					rightComponent={{ icon: 'home', color: '#fff' }}
-					/>
-				<View>
-					<View style={styles.widgetContainer}><Profile/></View>
-					<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
-				</View>
-			</ThemeProvider>
+			// <ThemeProvider theme={theme}>
+			// 	<Header
+			// 		statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
+			// 		leftComponent={{ icon: 'menu', color: '#fff' }}
+			// 		centerComponent={{ text: 'BizTech App', style: { color: '#fff' } }}
+			// 		rightComponent={{ icon: 'home', color: '#fff' }}
+			// 		/>
+			// 	<View>
+			// 		<View style={styles.widgetContainer}><Profile/></View>
+			// 		<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
+			// 	</View>
+			// </ThemeProvider>
+				<Navigator/>
 		);
 	}
 }
-
-const MainNavigator = createStackNavigator({
-	Home: { screen: HomePage },
-  });
-
-const App = createAppContainer(MainNavigator);
 
 export default App;
 
