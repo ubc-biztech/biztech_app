@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
-import { AMAZON_API } from 'react-native-dotenv'
+import { AMAZON_API } from 'react-native-dotenv';
+import { ThemeProvider, Text } from 'react-native-elements';
 
 class Profile extends Component {
   constructor(){
@@ -28,10 +28,10 @@ class Profile extends Component {
 
   render(){
     return(
-      <View>
-        <Text>Profile</Text>
+      <ThemeProvider>
+        <Text h2>Profile</Text>
         <Text>Welcome, {this.state.userData.fname}</Text>
-      </View>
+      </ThemeProvider>
     )
   }
 }
