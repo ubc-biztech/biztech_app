@@ -4,8 +4,8 @@ import { Button,
  				 Header,
 				 ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Profile from '../components/Profile';
 import CreateEvent from '../components/CreateEvent';
+import { StatusBar } from 'react-native';
 
 const theme = {
   colors: {
@@ -17,16 +17,8 @@ export default class Main extends Component {
 	render() {
 		return (
 			<ThemeProvider theme={theme}>
-				<Header
-					statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
-					leftComponent={{ icon: 'menu', color: '#fff' }}
-					centerComponent={{ text: 'BizTech App', style: { color: '#fff' } }}
-					rightComponent={{ icon: 'home', color: '#fff' }}
-					/>
-				<View>
-					<View style={styles.widgetContainer}><Profile/></View>
-					<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
-				</View>
+				<StatusBar backgroundColor="#7ad040" barStyle="light-content" />
+				<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
 			</ThemeProvider>
 		);
 	}

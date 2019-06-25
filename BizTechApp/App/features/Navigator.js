@@ -14,11 +14,11 @@ const routeConfig = {
 }
 
 const navigatorConfig = {
-  headerMode: 'none',
-  navigationOptions: {
-    header: null,
-    headerVisible: false,
-  },
+  // headerMode: 'none',
+  // navigationOptions: {
+  //   header: null,
+  //   headerVisible: false,
+  // },
 }
 
 const TabNavigator = createBottomTabNavigator({
