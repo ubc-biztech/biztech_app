@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, ThemeProvider } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
-// import Profile from '../components/Profile';
 
 export default class Profile extends Component {
 

@@ -4,7 +4,6 @@ import { Button,
  				 Header,
 				 ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CreateEvent from '../components/CreateEvent';
 import { StatusBar } from 'react-native';
 
 const theme = {
@@ -18,7 +17,11 @@ export default class Home extends Component {
 		return (
 			<ThemeProvider theme={theme}>
 				<StatusBar backgroundColor="#7ad040" barStyle="light-content" />
-				<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
+				<View style={styles.widgetContainer}>
+          <Text>
+            Home
+          </Text>
+        </View>
 			</ThemeProvider>
 		);
 	}
