@@ -4,29 +4,38 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, ScrollView, View} from 'react-native';
 import Register from './App/components/Register.js';
 import Profile from './App/components/Profile.js';
+import Navigator from './App/features/Navigator';
 
-export default class App extends Component {
+
+class App extends Component {
 	render() {
 		return (
-			<ScrollView style={styles.container}>
-				<Register />
-				<Profile/>
-			</ScrollView>
+
+				<Navigator/>
+
+// 			<ScrollView style={styles.container}>
+// 				<Register />
+// 				<Profile/>
+// 			</ScrollView>
+
 		);
 	}
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#dbffe2'
-	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5
-	}
-});
+
+export default App;
+
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 		backgroundColor: '#dbffe2'
+// 	},
+// 	instructions: {
+// 		textAlign: 'center',
+// 		color: '#333333',
+// 		marginBottom: 5
+// 	}
+// });
 
 // import React, { Component } from 'react';
 
@@ -37,3 +46,4 @@ const styles = StyleSheet.create({
 		// return <EmojiDict />;
 	// }
 // }
+
