@@ -19,8 +19,8 @@ export default class Register extends Component {
 		return (
 			<View style={styles.container}>
 				<Text style={styles.header}>Member Registration</Text>
-                <TextInput 
-                    style={styles.input} 
+                <TextInput
+                    style={styles.input}
                     placeholder="First Name"
                     onChangeText={(value) => this.setState({fname: value})}
                     value={this.state.fname}/>
@@ -69,16 +69,16 @@ export default class Register extends Component {
                     placeholder="Diet Options"
                     onChangeText={(value) => this.setState({diet: value})}
                     value={this.state.diet}/>
-                
+
                 <Button
-                    style={styles.button} 
+                    style={styles.button}
                     color='#03e03e'
-                    title="Join the BizTech family!" 
+                    title="Join the BizTech family!"
                     onPress={this.registerPress.bind(this)} />
 			</View>
 		);
     }
-    
+
     async registerPress() {
         let response = await fetch('https://'+AMAZON_API+'.execute-api.us-west-2.amazonaws.com/dev/users/create', {
                                     method: 'POST',
@@ -108,26 +108,26 @@ export default class Register extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-        alignSelf: 'stretch',
-        paddingLeft: 60,
-        paddingRight: 60,
-        paddingTop: 60,
-        paddingBottom: 60
+    alignSelf: 'stretch',
+    paddingLeft: 60,
+    paddingRight: 60,
+    paddingTop: 60,
+    paddingBottom: 60
 	},
 	header: {
-        color: '#333333',
-        marginBottom: 20,
-        fontSize: 25,
-    },
-    input: {
-		color: '#333333',
-        paddingVertical: 5,
-        marginBottom: 20,
-        borderBottomColor: '#03e03e',
-        borderBottomWidth: 1
-    },
-    button: {
-        paddingTop: 10,
-        marginTop: 10,
-    }
+    color: '#333333',
+    marginBottom: 20,
+    fontSize: 25,
+  },
+  input: {
+  	color: '#333333',
+    paddingVertical: 5,
+    marginBottom: 20,
+    borderBottomColor: '#03e03e',
+    borderBottomWidth: 1
+  },
+  button: {
+    paddingTop: 10,
+    marginTop: 10,
+  }
 });

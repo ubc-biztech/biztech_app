@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { View,
          StyleSheet,
          Dimensions,
+         Button,
          ActivityIndicator } from 'react-native';
-import { Button,
+import {
          Card,
          Text,
          Image,
@@ -23,18 +24,21 @@ const theme = {
 export default class EventCard extends Component {
 
   render() {
-    console.log(this.props.event)
     return(
       <Card>
         <View style={styles.center}>
           <View style={styles.container}>
             <Image
               source={{ uri: this.props.event.img }}
-              style={{ width: width/1.3, height: 200, marginBottom: 10 }}
+              style={{ width: width/1.2, height: 200, marginBottom: 10 }}
               PlaceholderContent={<ActivityIndicator />}
               resizeMode="cover"
             />
-            <Text style={{fontSize: 20}}>{this.props.event.ename}</Text>
+
+            <Text style={{fontSize: 20, color: 'black'}}>{this.props.event.ename}</Text>
+            <Text>{this.props.event.tagline}</Text>
+            <Button color='#7ad040' title='Sign Up'/>
+
             </View>
           </View>
       </Card>
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection:'column',
 	},
 	container: {
-		width: width/1.3,
+		width: width/1.2,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flexDirection:'column'
