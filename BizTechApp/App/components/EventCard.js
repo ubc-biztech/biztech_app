@@ -29,7 +29,7 @@ export default class EventCard extends Component {
           <Image
             source={{ uri: this.props.event.img }}
             style={{ width: width-20, height: 240, marginBottom: 10 }}
-            PlaceholderContent={<ActivityIndicator />}
+            // PlaceholderContent={<ActivityIndicator />}
             resizeMode="cover"
           />
 

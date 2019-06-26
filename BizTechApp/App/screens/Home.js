@@ -20,8 +20,10 @@ const theme = {
 export default class Home extends Component {
   constructor(props) {
     super(props);
+    const ds = {};
     this.state = {
       refreshing: false,
+      userData: ds,
     };
   }
 
@@ -35,8 +37,19 @@ export default class Home extends Component {
       })
   }
 
+  async fetchUser(){
+    fetch(AMAZON_API+'/users/get?id=75129696')
+      .then((response) => response.json())
+      .then((response) => {
+        this.setState({
+          userData: (response)
+        })
+      })
+  }
+
   componentDidMount() {
     this.fetchEvents()
+    this.fetchUser();
   }
 
   _onRefresh = () => {
@@ -57,6 +70,7 @@ export default class Home extends Component {
         }>
         <View style={styles.widgetContainer}>
           <Text h2>Home</Text>
+          <Text>Welcome, {this.state.userData.fname}</Text>
         </View>
 
         <View style={styles.center}>

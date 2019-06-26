@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
-import { View, Dimensions, StyleSheet } from 'react-native';
-
-const {width, height} = Dimensions.get('window');
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default class Card extends Component {
 
+  doNothing(){
+
+  }
   render() {
     return(
-      <View style={styles.card}>
-        {this.props.children}
-      </View>
+      <TouchableOpacity
+        underlayColor='#dddddd'
+        style={styles.card}
+        onPress={() => this.doNothing()}>
+        <View>
+          {this.props.children}
+        </View>
+      </TouchableOpacity>
     )
   }
 
