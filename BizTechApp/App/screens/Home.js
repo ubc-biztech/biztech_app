@@ -13,7 +13,7 @@ const theme = {
   }
 }
 
-export default class Main extends Component {
+export default class Home extends Component {
 	render() {
 		return (
 			<ThemeProvider theme={theme}>

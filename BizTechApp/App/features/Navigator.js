@@ -1,29 +1,12 @@
 import React, { Component } from 'react';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
-import Main from '../screens/Main'
-import Login from '../screens/Login'
+import Home from '../screens/Home'
+import Profile from '../screens/Profile'
 import Icon from 'react-native-vector-icons/Feather';
 
-const routeConfig = {
-  Main: {
-    screen: Main
-  },
-  Login: {
-    screen: Login
-  },
-}
-
-const navigatorConfig = {
-  // headerMode: 'none',
-  // navigationOptions: {
-  //   header: null,
-  //   headerVisible: false,
-  // },
-}
-
 const TabNavigator = createBottomTabNavigator({
-  Main: Main,
-  Login: Login
+  Home: Home,
+  Profile: Profile
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -31,9 +14,9 @@ const TabNavigator = createBottomTabNavigator({
       const { routeName } = navigation.state;
       let IconComponent = Icon;
       let iconName;
-      if (routeName === 'Main') {
+      if (routeName === 'Home') {
         iconName = 'home';
-      } else if (routeName === 'Login') {
+      } else if (routeName === 'Profile') {
         iconName = 'user';
       }
       // You can return any component that you like here!
