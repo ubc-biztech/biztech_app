@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, ThemeProvider } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
+import Register from '../components/Register'
 
 export default class Profile extends Component {
 
@@ -18,7 +19,7 @@ export default class Profile extends Component {
 	  }
 
 	  fetchUser(){
-	    fetch('https://'+AMAZON_API+'.execute-api.us-west-2.amazonaws.com/dev/users/get?id=75129696')
+	    fetch(AMAZON_API+'/users/get?id=75129696')
 	      .then((response) => response.json())
 	      .then((response) => {
 	        this.setState({
@@ -30,10 +31,11 @@ export default class Profile extends Component {
 	  render(){
 	    return(
 	      <ThemeProvider>
-					<View style={styles.widgetContainer}>
+					<ScrollView style={styles.widgetContainer}>
 		        <Text h2>Profile</Text>
 		        <Text>Welcome, {this.state.userData.fname}</Text>
-					</View>
+	          <Register/>
+					</ScrollView>
 	      </ThemeProvider>
 	    )
 	  }
@@ -42,6 +44,6 @@ export default class Profile extends Component {
 
 const styles = StyleSheet.create({
 	widgetContainer: {
-		margin: 20,
+		padding: 20,
 	}
 });

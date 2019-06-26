@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { Platform,
+         StyleSheet,
+         Text,
+         ScrollView } from 'react-native';
 import { Button,
  				 Header,
 				 ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StatusBar } from 'react-native';
+import Register from '../components/Register'
 
 const theme = {
   colors: {
@@ -17,11 +21,7 @@ export default class Home extends Component {
 		return (
 			<ThemeProvider theme={theme}>
 				<StatusBar backgroundColor="#7ad040" barStyle="light-content" />
-				<View style={styles.widgetContainer}>
-          <Text>
-            Home
-          </Text>
-        </View>
+        <Text>Home</Text>
 			</ThemeProvider>
 		);
 	}
