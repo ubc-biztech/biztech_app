@@ -1,20 +1,14 @@
 import React, {Component} from 'react';
-import { View,
-         ScrollView,
+import { ScrollView,
          StyleSheet,
-         Dimensions,
+         View,
          ActivityIndicator } from 'react-native';
-import { Button,
- 				 Header,
-         Card,
-         Text,
-         Image,
-				 ThemeProvider } from 'react-native-elements';
+import { Text,
+         ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StatusBar } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
-
-const {width, height} = Dimensions.get('window');
+import EventCard from '../components/EventCard'
 
 const theme = {
   colors: {
@@ -42,24 +36,15 @@ export default class Home extends Component {
     return(
 			<ThemeProvider theme={theme}>
       <ScrollView>
+        <View style={styles.widgetContainer}>
+          <Text h2>Home</Text>
+          <Text h4>Events</Text>
+        </View>
         <StatusBar backgroundColor="#7ad040" barStyle="light-content" />
           {this.state && this.state.events &&
             this.state.events.map(event => {
-              console.log(event.img)
               return (
-                <Card key={event.id}>
-                  <View style={styles.center}>
-                    <View style={styles.container}>
-                      <Image
-                        source={{ uri: event.img }}
-                        style={{ width: width/1.3, height: 200, marginBottom: 10 }}
-                        PlaceholderContent={<ActivityIndicator />}
-                        resizeMode="cover"
-                      />
-                      <Text style={{fontSize: 20}}>{event.ename}</Text>
-                      </View>
-                    </View>
-                </Card>
+                <EventCard key={event.id} event={event}/>
               )
             })
           }
@@ -70,15 +55,7 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-	center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection:'column',
-	},
-	container: {
-		width: width/1.3,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexDirection:'column'
+	widgetContainer: {
+		padding: 20,
 	}
 });
