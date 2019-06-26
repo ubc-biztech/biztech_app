@@ -18,7 +18,7 @@ export default class Profile extends Component {
 	    this.fetchUser();
 	  }
 
-	  fetchUser(){
+	  async fetchUser(){
 	    fetch(AMAZON_API+'/users/get?id=75129696')
 	      .then((response) => response.json())
 	      .then((response) => {
