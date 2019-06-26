@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
-import { Platform,
+import { View,
+         ScrollView,
          StyleSheet,
-         Text,
-         ScrollView } from 'react-native';
+         Dimensions,
+         ActivityIndicator } from 'react-native';
 import { Button,
  				 Header,
+         Card,
+         Text,
+         Image,
 				 ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StatusBar } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
+
+const {width, height} = Dimensions.get('window');
 
 const theme = {
   colors: {
@@ -25,7 +31,6 @@ export default class Home extends Component {
         this.setState({
           events: response
         })
-        console.log(this.state.events[0].ename)
       })
   }
 
@@ -33,41 +38,47 @@ export default class Home extends Component {
     this.fetchEvents()
   }
 
-	render() {
-		return (
+  render() {
+    return(
 			<ThemeProvider theme={theme}>
-				<StatusBar backgroundColor="#7ad040" barStyle="light-content" />
-        <Text>Home</Text>
-        {this.state && this.state.events &&
-          this.mapEvents()
-        }
+      <ScrollView>
+        <StatusBar backgroundColor="#7ad040" barStyle="light-content" />
+          {this.state && this.state.events &&
+            this.state.events.map(event => {
+              console.log(event.img)
+              return (
+                <Card key={event.id}>
+                  <View style={styles.center}>
+                    <View style={styles.container}>
+                      <Image
+                        source={{ uri: event.img }}
+                        style={{ width: width/1.3, height: 200, marginBottom: 10 }}
+                        PlaceholderContent={<ActivityIndicator />}
+                        resizeMode="cover"
+                      />
+                      <Text style={{fontSize: 20}}>{event.ename}</Text>
+                      </View>
+                    </View>
+                </Card>
+              )
+            })
+          }
+      </ScrollView>
 			</ThemeProvider>
-		);
-	}
-
-  mapEvents(){
-    var events = this.state.events.map(function (event) {
-        return (
-          <Text key={event.id}>{event.ename}</Text>
-        );
-     });
-     return events
+    )
   }
 }
 
 const styles = StyleSheet.create({
+	center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection:'column',
+	},
 	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF'
-	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5
-	},
-	widgetContainer: {
-		margin: 20,
+		width: width/1.3,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flexDirection:'column'
 	}
 });
