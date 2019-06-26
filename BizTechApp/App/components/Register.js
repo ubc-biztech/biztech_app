@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import { AMAZON_API } from 'react-native-dotenv';
 
 export default class Register extends Component {
     state = {
@@ -73,13 +74,35 @@ export default class Register extends Component {
                     style={styles.button} 
                     color='#03e03e'
                     title="Join the BizTech family!" 
-                    onPress={this.registerPress} />
+                    onPress={this.registerPress.bind(this)} />
 			</View>
 		);
     }
     
-    registerPress() {
-        
+    async registerPress() {
+        let response = await fetch('https://'+AMAZON_API+'.execute-api.us-west-2.amazonaws.com/dev/users/create', {
+                                    method: 'POST',
+                                    headers: {
+                                        Accept: 'application/json',
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        fname: this.state.fname,
+                                        lname: this.state.lname,
+                                        email: this.state.email,
+                                        faculty: this.state.faculty,
+                                        id: this.state.studentID,
+                                        password: this.state.pass,
+                                        year: this.state.year,
+                                        gender: this.state.gender,
+                                        diet: this.state.diet
+                                    })
+            })
+                .then((response) => response.json())
+                .then((response) => {
+                    console.log(response)
+                })
+                .done();
     }
 }
 

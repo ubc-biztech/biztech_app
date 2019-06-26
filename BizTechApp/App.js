@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import {Platform, StyleSheet, Text, ScrollView, View} from 'react-native';
 import Register from './App/components/Register.js';
-import Profile from './App/components/Profile';
+import Profile from './App/components/Profile.js';
 
 export default class App extends Component {
 	render() {
