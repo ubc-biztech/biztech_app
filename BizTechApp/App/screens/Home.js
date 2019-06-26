@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { ScrollView,
+         RefreshControl,
          StyleSheet,
          View,
          StatusBar,
@@ -17,6 +18,12 @@ const theme = {
 }
 
 export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
 
   async fetchEvents(){
     fetch(AMAZON_API+'/events/get')
@@ -32,14 +39,26 @@ export default class Home extends Component {
     this.fetchEvents()
   }
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this.fetchEvents().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
   render() {
     return(
 			<ThemeProvider theme={theme}>
-      <ScrollView>
+      <ScrollView refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />
+        }>
         <View style={styles.widgetContainer}>
           <Text h2>Home</Text>
         </View>
-        
+
         <View style={styles.center}>
           {this.state && this.state.events &&
             this.state.events.map(event => {
