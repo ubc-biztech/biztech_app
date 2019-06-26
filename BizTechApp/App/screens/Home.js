@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import { ScrollView,
          StyleSheet,
          View,
+         StatusBar,
          ActivityIndicator } from 'react-native';
 import { Text,
          ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { StatusBar } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import EventCard from '../components/EventCard'
 
@@ -38,9 +38,9 @@ export default class Home extends Component {
       <ScrollView>
         <View style={styles.widgetContainer}>
           <Text h2>Home</Text>
-          <Text h4>Events</Text>
         </View>
-        <StatusBar backgroundColor="#7ad040" barStyle="light-content" />
+        
+        <View style={styles.center}>
           {this.state && this.state.events &&
             this.state.events.map(event => {
               return (
@@ -48,6 +48,7 @@ export default class Home extends Component {
               )
             })
           }
+        </View>
       </ScrollView>
 			</ThemeProvider>
     )
@@ -55,6 +56,11 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+	center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection:'column',
+	},
 	widgetContainer: {
 		padding: 20,
 	}

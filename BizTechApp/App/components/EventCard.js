@@ -4,14 +4,12 @@ import { View,
          Dimensions,
          Button,
          ActivityIndicator } from 'react-native';
-import {
-         Card,
-         Text,
+import { Text,
          Image,
 				 ThemeProvider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { StatusBar } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
+import Card from './Card';
 
 const {width, height} = Dimensions.get('window');
 
@@ -26,21 +24,24 @@ export default class EventCard extends Component {
   render() {
     return(
       <Card>
-        <View style={styles.center}>
-          <View style={styles.container}>
-            <Image
-              source={{ uri: this.props.event.img }}
-              style={{ width: width/1.2, height: 200, marginBottom: 10 }}
-              PlaceholderContent={<ActivityIndicator />}
-              resizeMode="cover"
-            />
 
-            <Text style={{fontSize: 20, color: 'black'}}>{this.props.event.ename}</Text>
-            <Text>{this.props.event.tagline}</Text>
-            <Button color='#7ad040' title='Sign Up'/>
+        <View >
+          <Image
+            source={{ uri: this.props.event.img }}
+            style={{ width: width-20, height: 240, marginBottom: 10 }}
+            PlaceholderContent={<ActivityIndicator />}
+            resizeMode="cover"
+          />
 
+            <View style={styles.content}>
+              <Text style={{ fontWeight: '800', color: 'black' }}>{this.props.event.ename}</Text>
+              <Text style={{ color: '#7ad040' }} >{this.props.event.edate}</Text>
+              <Text style={{ marginBottom: 10 }} >{this.props.event.tagline}</Text>
+              <Button color='#7ad040' title='Sign Up'/>
             </View>
-          </View>
+
+        </View>
+
       </Card>
     )
   }
@@ -48,15 +49,8 @@ export default class EventCard extends Component {
 }
 
 const styles = StyleSheet.create({
-	center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection:'column',
-	},
-	container: {
-		width: width/1.2,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexDirection:'column'
+	content: {
+		padding: 10,
+    paddingTop: 0
 	}
 });
