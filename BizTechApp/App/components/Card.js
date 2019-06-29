@@ -11,7 +11,7 @@ export default class Card extends Component {
       <TouchableOpacity
         underlayColor='#dddddd'
         style={styles.card}
-        onPress={() => this.doNothing()}>
+        onPress={this.props.onPress}>
         <View>
           {this.props.children}
         </View>

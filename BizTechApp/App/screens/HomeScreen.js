@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { ScrollView,
          StyleSheet,
          View,
+         Button,
          StatusBar,
          ActivityIndicator } from 'react-native';
 import { Text,
@@ -15,7 +16,6 @@ export default class Home extends Component {
     super(props);
     const ds = {};
     this.state = {
-      refreshing: false,
       userData: ds,
     };
   }
@@ -45,13 +45,6 @@ export default class Home extends Component {
     this.fetchUser();
   }
 
-  _onRefresh = () => {
-    this.setState({refreshing: true});
-    this.fetchEvents().then(() => {
-      this.setState({refreshing: false});
-    });
-  }
-
   render() {
     return(
 			<ThemeProvider>
@@ -65,7 +58,12 @@ export default class Home extends Component {
           {this.state && this.state.events &&
             this.state.events.map(event => {
               return (
-                <EventCard key={event.id} event={event}/>
+                <EventCard key={event.id} event={event}
+                  onPress={() => {
+                    this.props.navigation.navigate('Event', {
+                      event: event })
+                    }
+                  }/>
               )
             })
           }

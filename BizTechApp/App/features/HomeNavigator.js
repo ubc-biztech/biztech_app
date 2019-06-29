@@ -11,9 +11,16 @@ import { AMAZON_API } from 'react-native-dotenv';
 
 import EventCard from '../components/EventCard'
 import HomeScreen from '../screens/HomeScreen'
+import EventScreen from '../screens/EventScreen'
 
 export default createStackNavigator({
-  Home: HomeScreen
+  Home: HomeScreen,
+  Event: EventScreen
+},
+{
+    defaultNavigationOptions: {
+      header: null,
+    },
 })
 
 const styles = StyleSheet.create({
