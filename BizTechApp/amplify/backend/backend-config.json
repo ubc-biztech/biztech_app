@@ -1,0 +1,8 @@
+{
+	"auth": {
+		"biztechapp7e46678a": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

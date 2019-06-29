@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
+import { Auth } from 'aws-amplify';
+import { withNavigation } from 'react-navigation';
 
-export default class Register extends Component {
-    state = {
+class Register extends Component {
+	  constructor(){
+	    super();
+	    this.state = {
         fname: '',
         lname: '',
         email: '',
@@ -14,7 +18,11 @@ export default class Register extends Component {
         year: '',
         gender: '',
         diet: '',
-    };
+        confirmationCode: '',
+        modalVisible: false,
+      };
+	  }
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -75,36 +83,108 @@ export default class Register extends Component {
                     color='#03e03e'
                     title="Join the BizTech family!"
                     onPress={this.registerPress.bind(this)} />
+                <Button
+                    style={styles.button}
+                    color='#03e03e'
+                    title="debug open modal"
+                    onPress={this.handleDebugOpen.bind(this)} />
+                <Modal
+                  visible={this.state.modalVisible}
+                >
+                  <View
+                    style={styles.container}
+                  >
+                  <TextInput
+                    placeholder="Confirmation Code"
+                    // leftIcon={{ type: 'font-awesome', name: 'lock' }}
+                    onChangeText={
+                      // Set this.state.confirmationCode to the value in this Input box
+                      (value) => this.setState({ confirmationCode: value })
+                    }
+                  />
+                    <Button
+                      title='Submit'
+                      onPress={ this.handleConfirmationCode.bind(this) }
+                    />
+                    <Button
+                      title='Debug close'
+                      onPress={ this.handleDebugClose.bind(this)}/>
+                  </View>
+                </Modal>
+
 			</View>
 		);
     }
 
-    async registerPress() {
-        let response = await fetch('https://'+AMAZON_API+'.execute-api.us-west-2.amazonaws.com/dev/users/create', {
-                                    method: 'POST',
-                                    headers: {
-                                        Accept: 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        fname: this.state.fname,
-                                        lname: this.state.lname,
-                                        email: this.state.email,
-                                        faculty: this.state.faculty,
-                                        id: this.state.studentID,
-                                        password: this.state.pass,
-                                        year: this.state.year,
-                                        gender: this.state.gender,
-                                        diet: this.state.diet
-                                    })
-            })
-                .then((response) => response.json())
-                .then((response) => {
-                    console.log(response)
-                })
-                .done();
+    handleDebugClose(){
+      this.setState({ modalVisible: false });
+      this.props.navigation.navigate('Home')
+    }
+
+    handleDebugOpen(){
+      this.setState({ modalVisible: true });
+    }
+
+    handleConfirmationCode() {
+      const { email, confirmationCode } = this.state;
+      Auth.confirmSignUp(email, confirmationCode, {})
+        .then(() => {
+          this.setState({ modalVisible: false });
+          this.props.navigation.navigate('Home')
+        })
+        .catch(err => console.log(err));
+    }
+
+    registerPress() {
+      this.setState({ modalVisible: true })
+      const { email, pass, cpass, fname, lname } = this.state;
+      // Make sure passwords match
+      if (pass === cpass) {
+        Auth.signUp({
+          username: email,
+          password: pass,
+          attributes: {
+            email,
+            name: fname,
+            family_name: lname,
+          },
+          })
+          // On success, show Confirmation Code Modal
+          .then(() => this.setState({ modalVisible: true }))
+          // On failure, display error in console
+          .catch(err => console.log(err));
+      } else {
+        alert('Passwords do not match.');
+      }
+
+
+        // let response = await fetch(AMAZON_API+'users/create',
+        // {   method: 'POST',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         fname: this.state.fname,
+        //         lname: this.state.lname,
+        //         email: this.state.email,
+        //         faculty: this.state.faculty,
+        //         id: this.state.studentID,
+        //         password: this.state.pass,
+        //         year: this.state.year,
+        //         gender: this.state.gender,
+        //         diet: this.state.diet
+        //     })
+        //     })
+        //         .then((response) => response.json())
+        //         .then((response) => {
+        //             console.log(response)
+        //         })
+        //         .done();
     }
 }
+
+export default withNavigation(Register);
 
 const styles = StyleSheet.create({
 	container: {

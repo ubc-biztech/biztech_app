@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 const TabNavigator = createBottomTabNavigator({
   Home: Home,
-  Profile: Profile
+  Profile: Profile,
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -16,6 +16,8 @@ const TabNavigator = createBottomTabNavigator({
       let iconName;
       if (routeName === 'Home') {
         iconName = 'home';
+      } else if (routeName === 'Login') {
+        iconName = 'user';
       } else if (routeName === 'Profile') {
         iconName = 'user';
       }
