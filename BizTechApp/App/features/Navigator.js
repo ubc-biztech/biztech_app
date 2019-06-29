@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
-import Home from '../screens/Home'
+import { createAppContainer, createBottomTabNavigator } from 'react-navigation'
+import HomeNavigator from '../features/HomeNavigator'
 import Profile from '../screens/Profile'
 import Icon from 'react-native-vector-icons/Feather';
 
 const TabNavigator = createBottomTabNavigator({
-  Home: Home,
+  Home: HomeNavigator,
   Profile: Profile
 },
 {

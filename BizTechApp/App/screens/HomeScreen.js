@@ -1,21 +1,14 @@
 import React, {Component} from 'react';
 import { ScrollView,
-         RefreshControl,
          StyleSheet,
          View,
          StatusBar,
          ActivityIndicator } from 'react-native';
 import { Text,
          ThemeProvider } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { AMAZON_API } from 'react-native-dotenv';
-import EventCard from '../components/EventCard'
 
-const theme = {
-  colors: {
-    primary: '#7ad040',
-  }
-}
+import EventCard from '../components/EventCard'
 
 export default class Home extends Component {
   constructor(props) {
@@ -61,13 +54,8 @@ export default class Home extends Component {
 
   render() {
     return(
-			<ThemeProvider theme={theme}>
-      <ScrollView refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />
-        }>
+			<ThemeProvider>
+      <ScrollView>
         <View style={styles.widgetContainer}>
           <Text h2>Home</Text>
           <Text>Welcome, {this.state.userData.fname}</Text>

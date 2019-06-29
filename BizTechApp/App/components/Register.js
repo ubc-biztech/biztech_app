@@ -80,7 +80,7 @@ export default class Register extends Component {
     }
 
     async registerPress() {
-        let response = await fetch('https://'+AMAZON_API+'.execute-api.us-west-2.amazonaws.com/dev/users/create', {
+        let response = await fetch(AMAZON_API+'/users/create', {
                                     method: 'POST',
                                     headers: {
                                         Accept: 'application/json',
