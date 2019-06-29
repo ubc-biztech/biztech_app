@@ -1,0 +1,72 @@
+{
+    "identityPoolName": "biztechappaba5147d_identitypool_aba5147d",
+    "allowUnauthenticatedIdentities": false,
+    "lambdaLogPolicy": "biztec_aba5147d_lambda_log_policy",
+    "openIdLambdaRoleName": "biztec_aba5147d_openid_lambda_role",
+    "openIdRolePolicy": "biztec_aba5147d_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "biztec_aba5147d_openid_lambda_iam_policy",
+    "openIdLogPolicy": "biztec_aba5147d_openid_lambda_log_policy",
+    "userPoolName": "biztechappaba5147d_userpool_aba5147d",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "biztecaba5147d_sns-role",
+    "roleExternalId": "biztecaba5147d_role_external_id",
+    "policyName": "biztecaba5147d-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email",
+        "name"
+    ],
+    "userpoolClientName": "biztecaba5147d_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "biztecaba5147d_totp_lambda_role",
+    "mfaLambdaLogPolicy": "biztecaba5147d_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "biztecaba5147d_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "biztecaba5147d_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "biztecaba5147d_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "biztecaba5147d_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "biztecaba5147d_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "biztechappaba5147d",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default",
+    "usernameAttributes": [
+        "email"
+    ]
+}

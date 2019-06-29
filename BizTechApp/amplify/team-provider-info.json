@@ -12,9 +12,7 @@
         },
         "categories": {
             "auth": {
-                "biztechapp7e46678a": {
-                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"628031991014994\",\"client_secret\":\"3d26161bccc63bb3b51d86e41c79b5e8\"},{\"ProviderName\":\"Google\",\"client_id\":\"178250345583-nrurrjn6giuo153f2dnpsk4dddeuu296.apps.googleusercontent.com\",\"client_secret\":\"NLYQRaLtSYiTmR8kibLUiDNL\"}]"
-                }
+                "biztechappaba5147d": {}
             }
         }
     }
