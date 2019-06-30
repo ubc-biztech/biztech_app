@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-const SignupSchema = Yup.object().shape({
+const FormSchema = Yup.object().shape({
 pass: Yup.string()
 	.required('Required'),
 email: Yup.string()
@@ -31,7 +31,7 @@ class SignIn extends Component {
 
 			  <Formik
 			    initialValues={{ email: '' }}
-					validationSchema={ SignupSchema }
+					validationSchema={ FormSchema }
 			    onSubmit={values => this.handleSignIn(values)}
 			  >
 			    {props => (
