@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
+import { Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
+import { Input } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { withNavigation } from 'react-navigation';
@@ -95,9 +96,9 @@ class Register extends Component {
           <View
             style={styles.container}
           >
-          <TextInput
+          <Input
             placeholder="Confirmation Code"
-            // leftIcon={{ type: 'font-awesome', name: 'lock' }}
+            leftIcon={{ type: 'font-awesome', name: 'lock' }}
             onChangeText={
               // Set this.state.confirmationCode to the value in this Input box
               (value) => this.setState({ confirmationCode: value })
@@ -138,10 +139,10 @@ class Register extends Component {
   }
 
   async registerPress() {
-    this.setState({ modalVisible: true })
     const { email, pass, cpass, fname, lname } = this.state;
     // Make sure passwords match
     if (pass === cpass) {
+	    this.setState({ modalVisible: true })
       Auth.signUp({
         username: email,
         password: pass,

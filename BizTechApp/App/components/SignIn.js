@@ -2,6 +2,15 @@ import React, {Component} from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { withNavigation } from 'react-navigation';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+const SignupSchema = Yup.object().shape({
+pass: Yup.string()
+	.required('Required'),
+email: Yup.string()
+	.required('Required'),
+});
 
 class SignIn extends Component {
 	  constructor(){
@@ -9,41 +18,65 @@ class SignIn extends Component {
 	    this.state = {
         email: '',
         pass: '',
+				try: false,
+				incorrect: false
       };
 	  }
 
+		// { props.touched.email && props.errors.email && <Text style={{ fontSize: 10, color: 'red' }}>{props.errors.email}</Text> }
 	render() {
 		return (
 			<View style={styles.container}>
 				<Text style={styles.header}>Sign In</Text>
-        <TextInput
-            style={styles.input}
-            placeholder="Email"
-            onChangeText={(value) => this.setState({email: value})}
-            value={this.state.email}/>
-        <TextInput
-            style={styles.input}
-            placeholder="Password"
-            onChangeText={(value) => this.setState({pass: value})}
-            value={this.state.pass}/>
-        <Button
-            style={styles.button}
-            color='#7ad040'
-            title="Sign In"
-            onPress={this.handleSignIn.bind(this)} />
 
+			  <Formik
+			    initialValues={{ email: '' }}
+					validationSchema={ SignupSchema }
+			    onSubmit={values => this.handleSignIn(values)}
+			  >
+			    {props => (
+			      <View>
+			        <TextInput
+		            style={styles.input}
+								placeholder="Email"
+			          onChangeText={props.handleChange('email')}
+							  onBlur={() => props.setFieldTouched('email')}
+			          value={props.values.email}
+			        />
+			        <TextInput
+			            style={styles.input}
+			            placeholder="Password"
+				          onChangeText={props.handleChange('pass')}
+									secureTextEntry={true}
+				          onBlur={props.handleBlur('pass')}
+				          value={props.values.pass}/>
+			        <Button disabled={!props.isValid} onPress={props.handleSubmit} title="Sign In" />
+							{ this.state.try && this.state.incorrect && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>Incorrect username/password</Text> }
+			      </View>
+			    )}
+			  </Formik>
 			</View>
 		);
   }
 
 
-	handleSignIn() {
-	  const { email, pass } = this.state;
+	handleSignIn(values) {
+		this.setState({try: true})
+	  const { email, pass } = values;
 	  Auth.signIn(email, pass)
 	    // If we are successful, navigate to Home screen
-	    .then(user => this.props.navigation.navigate('Home'))
+	    .then(user => {
+				this.setState({incorrect: false})
+				this.props.navigation.navigate('Home')
+			})
 	    // On failure, display error in console
-	    .catch(err => console.log(err));
+	    .catch(err => {
+				console.log(err)
+				if (err.code == 'NotAuthorizedException' || err.code == 'UserNotFoundException'){
+					this.setState({incorrect: true})
+				}
+
+			});
 	}
 
 }
@@ -66,7 +99,7 @@ const styles = StyleSheet.create({
   input: {
   	color: '#333333',
     paddingVertical: 5,
-    marginBottom: 20,
+    marginBottom: 10,
     borderBottomColor: '#7ad040',
     borderBottomWidth: 1
   },
