@@ -7,6 +7,7 @@ import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+// Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
 fname: Yup.string()
 	.required('Required'),
@@ -44,25 +45,27 @@ class Register extends Component {
 			<View>
 			<Formik
 				initialValues={{
-					// fname: '',
-					// lname: '',
-					// email: '',
-					// id: '',
-	        // pass: '',
-	        // faculty: '',
-	        // year: '',
-	        // gender: '',
-	        // diet: '',
+					fname: '',
+					lname: '',
+					email: '',
+					id: '',
+	        pass: '',
+	        faculty: '',
+	        year: '',
+	        gender: '',
+	        diet: null,
 				}}
 				validationSchema={ FormSchema }
 				onSubmit={(values, actions) => {
 					const {faculty, year, gender} = values;
 
+					// check if dropdown fields are blank, generate error if they are
 					( faculty == '' ? this.setState({facultyErr: true}) : null);
 					( year == '' ? this.setState({yearErr: true}) : null);
 					( gender == '' ? this.setState({genderErr: true}) : null);
 					const {facultyErr, yearErr, genderErr} = this.state;
 
+					// check if there are no dropdown field errors
 					if (!facultyErr && !yearErr && !genderErr ){
 						this.registerPress(values)
 					}
@@ -82,7 +85,8 @@ class Register extends Component {
 							onBlur={() => props.setFieldTouched('fname')}
 		          value={props.values.fname}
 						/>
-	          {props.touched.fname && props.errors.fname &&
+	          {//if touched or invalid show error text
+							props.touched.fname && props.errors.fname &&
 							<Text style={{ fontSize: 10, color: 'red' }}>
 							{props.errors.fname}</Text>}
 
@@ -145,7 +149,8 @@ class Register extends Component {
 	            <Picker.Item label='4' value='4'/>
 	            <Picker.Item label='5+' value='5'/>
 	          </Picker>
-	          {this.state.yearErr &&
+	          {//show error text if state has yearErr
+							this.state.yearErr &&
 							<Text style={{ fontSize: 10, color: 'red' }}>
 							Required</Text>}
 

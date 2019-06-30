@@ -5,6 +5,7 @@ import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+// Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
 pass: Yup.string()
 	.required('Required'),
@@ -51,7 +52,9 @@ class SignIn extends Component {
 				          onBlur={props.handleBlur('pass')}
 				          value={props.values.pass}/>
 			        <Button disabled={!props.isValid} onPress={props.handleSubmit} title="Sign In" />
-							{ this.state.try && this.state.incorrect && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>Incorrect username/password</Text> }
+							{//state.try indicates user tried to login
+							 //state.incorrect indicates an incorrect try
+								this.state.try && this.state.incorrect && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>Incorrect username/password</Text> }
 			      </View>
 			    )}
 			  </Formik>
