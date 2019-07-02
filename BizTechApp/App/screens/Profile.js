@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, ThemeProvider } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
-import Register from '../components/Register'
 
 export default class Profile extends Component {
 
@@ -34,7 +33,6 @@ export default class Profile extends Component {
 					<ScrollView style={styles.widgetContainer}>
 		        <Text h2>Profile</Text>
 		        <Text>Welcome, {this.state.userData.fname}</Text>
-	          <Register/>
 					</ScrollView>
 	      </ThemeProvider>
 	    )

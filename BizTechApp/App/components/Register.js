@@ -1,110 +1,324 @@
 import React, {Component} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import { Picker, Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
+import { Input } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
+import Auth from '@aws-amplify/auth';
+import { withNavigation } from 'react-navigation';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
-export default class Register extends Component {
-    state = {
-        fname: '',
-        lname: '',
-        email: '',
-        studentID: '',
-        pass: '',
-        cpass: '',
-        faculty: '',
-        year: '',
-        gender: '',
-        diet: '',
-    };
+// Validation Schema for Formik form using Yup library
+const FormSchema = Yup.object().shape({
+fname: Yup.string()
+	.required('Required'),
+lname: Yup.string()
+	.required('Required'),
+id: Yup.number()
+	.min(9999999, 'Valid Student ID required')
+	.max(100000000, 'Valid Student ID required')
+	.required('Required'),
+pass: Yup.string()
+	.min('6', 'Weak password')
+	.required('Password Required'),
+email: Yup.string()
+	.email('Valid email required')
+	.required('Email required'),
+});
+
+class Register extends Component {
+	  constructor(){
+	    super();
+	    this.state = {
+        confirmationCode: '',
+        modalVisible: false,
+				genderErr: false,
+				yearErr: false,
+				facultyErr: false,
+				err: false,
+				errMessage: ''
+      };
+	  }
+
 	render() {
+		const { diet } = this.props
 		return (
-			<View style={styles.container}>
-				<Text style={styles.header}>Member Registration</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="First Name"
-                    onChangeText={(value) => this.setState({fname: value})}
-                    value={this.state.fname}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Last Name"
-                    onChangeText={(value) => this.setState({lname: value})}
-                    value={this.state.lname}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Email"
-                    onChangeText={(value) => this.setState({email: value})}
-                    value={this.state.email}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Student Number"
-                    onChangeText={(value) => this.setState({studentID: value})}
-                    value={this.state.studentID}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    onChangeText={(value) => this.setState({pass: value})}
-                    value={this.state.pass}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Confirm Password"
-                    onChangeText={(value) => this.setState({cpass: value})}
-                    value={this.state.cpass}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Faculty"
-                    onChangeText={(value) => this.setState({faculty: value})}
-                    value={this.state.faculty}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Year"
-                    onChangeText={(value) => this.setState({year: value})}
-                    value={this.state.year}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Gender"
-                    onChangeText={(value) => this.setState({gender: value})}
-                    value={this.state.gender}/>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Diet Options"
-                    onChangeText={(value) => this.setState({diet: value})}
-                    value={this.state.diet}/>
+			<View>
+			<Formik
+				initialValues={{
+					fname: '',
+					lname: '',
+					email: '',
+					id: '',
+	        pass: '',
+	        faculty: '',
+	        year: '',
+	        gender: '',
+	        diet: null,
+				}}
+				validationSchema={ FormSchema }
+				onSubmit={(values, actions) => {
+					const {faculty, year, gender} = values;
 
-                <Button
-                    style={styles.button}
-                    color='#03e03e'
-                    title="Join the BizTech family!"
-                    onPress={this.registerPress.bind(this)} />
-			</View>
+					// check if dropdown fields are blank, generate error if they are
+					( faculty == '' ? this.setState({facultyErr: true}) : null);
+					( year == '' ? this.setState({yearErr: true}) : null);
+					( gender == '' ? this.setState({genderErr: true}) : null);
+					const {facultyErr, yearErr, genderErr} = this.state;
+
+					// check if there are no dropdown field errors
+					if (!facultyErr && !yearErr && !genderErr ){
+						this.registerPress(values)
+					}
+					actions.setSubmitting(false)
+				}}
+	      onValueChange={ (itemIndex) => {
+	        this.props.values.diet = itemIndex
+	      }}
+			>
+				{ props => (
+				<View style={styles.container}>
+						<Text style={styles.header}>Member Registration</Text>
+		        <TextInput
+	            style={styles.input}
+	            placeholder="First Name"
+							onChangeText={props.handleChange('fname')}
+							onBlur={() => props.setFieldTouched('fname')}
+		          value={props.values.fname}
+						/>
+	          {//if touched or invalid show error text
+							props.touched.fname && props.errors.fname &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							{props.errors.fname}</Text>}
+
+		        <TextInput
+	            style={styles.input}
+	            placeholder="Last Name"
+							onChangeText={props.handleChange('lname')}
+							onBlur={() => props.setFieldTouched('lname')}
+		          value={props.values.lname}
+						/>
+	          {props.touched.lname && props.errors.lname &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							{props.errors.lname}</Text>}
+
+		        <TextInput
+	            style={styles.input}
+	            placeholder="Email"
+							onChangeText={props.handleChange('email')}
+							onBlur={() => props.setFieldTouched('email')}
+		          value={props.values.email}
+						/>
+	          {props.touched.email && props.errors.email &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							{props.errors.email}</Text>}
+
+		        <TextInput
+	            style={styles.input}
+	            placeholder="Student Number"
+							onChangeText={props.handleChange('id')}
+							onBlur={() => props.setFieldTouched('id')}
+		          value={props.values.id}
+						/>
+	          {props.touched.id && props.errors.id &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							Valid Student ID required</Text>}
+
+		        <TextInput
+							secureTextEntry={true}
+	            style={styles.input}
+	            placeholder="Password"
+							onChangeText={props.handleChange('pass')}
+							onBlur={() => props.setFieldTouched('pass')}
+		          value={props.values.pass}
+						/>
+	          {props.touched.pass && props.errors.pass &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							{props.errors.pass}</Text>}
+
+						<Picker
+	            selectedValue={this.state.year}
+							onValueChange={(itemValue, itemIndex) => {
+								(itemValue == '' ? this.setState({yearErr: true}) : this.setState({yearErr: false}))
+						    props.setFieldValue('year', itemValue)
+						    this.setState({year: itemValue})
+							}}>
+              <Picker.Item label='Year of Study' value=''/>
+	            <Picker.Item label='1' value='1'/>
+	            <Picker.Item label='2' value='2'/>
+	            <Picker.Item label='3' value='3'/>
+	            <Picker.Item label='4' value='4'/>
+	            <Picker.Item label='5+' value='5'/>
+	          </Picker>
+	          {//show error text if state has yearErr
+							this.state.yearErr &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							Required</Text>}
+
+						<Picker
+	            selectedValue={this.state.faculty}
+							onValueChange={(itemValue) => {
+								(itemValue == '' ? this.setState({facultyErr: true}) : this.setState({facultyErr: false}))
+						    props.setFieldValue('faculty', itemValue)
+						    this.setState({faculty: itemValue})
+							}}>
+	            <Picker.Item label='Faculty' value=''/>
+	            <Picker.Item label='Science' value='science'/>
+	            <Picker.Item label='Commerce' value='commerce'/>
+	            <Picker.Item label='Arts' value='arts'/>
+	            <Picker.Item label='Engineering' value='engineering'/>
+	            <Picker.Item label='Land Food Systems' value='lfs'/>
+	            <Picker.Item label='Forestry' value='forestry'/>
+	          </Picker>
+	          {this.state.facultyErr &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							Required</Text>}
+
+						<Picker
+	            selectedValue={this.state.gender}
+							onValueChange={(itemValue, itemIndex) => {
+								(itemValue == '' ? this.setState({genderErr: true}) : this.setState({genderErr: false}))
+						    props.setFieldValue('gender', itemValue)
+						    this.setState({gender: itemValue})
+							}}>
+              <Picker.Item label='Gender' value=''/>
+	            <Picker.Item label='Male' value='m'/>
+	            <Picker.Item label='Female' value='f'/>
+	            <Picker.Item label='Other' value='o'/>
+	          </Picker>
+	          {this.state.genderErr &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							Required</Text>}
+
+						<Picker
+	            selectedValue={this.state.diet}
+							onValueChange={(itemValue, itemIndex) => {
+						    props.setFieldValue('diet', itemValue)
+						    this.setState({diet: itemValue})
+							}}>
+              <Picker.Item label='Dietary Restrictions' value=''/>
+	            <Picker.Item label='Vegan' value='Vegan'/>
+	            <Picker.Item label='Vegetarian' value='Vegetarian'/>
+	            <Picker.Item label='Halal' value='Halal'/>
+	            <Picker.Item label='Gluten Free' value='Gluten'/>
+	          </Picker>
+
+		        <Button
+							disabled={props.isSubmitting}
+	            color='#7ad040'
+							onPress={props.handleSubmit}
+							title="Join the BizTech Family!" />
+
+						{ // Notify user if account already exists or some other error
+							this.state.err && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>{this.state.errMessage}</Text> }
+
+		        <Button
+	            style={styles.button}
+	            title="debug open modal"
+	            onPress={this.handleDebugOpen.bind(this)} />
+					</View>
+		    )}
+	  </Formik>
+
+    <Modal
+      visible={this.state.modalVisible}
+    >
+      <View
+        style={styles.container}
+      >
+      <TextInput
+        placeholder="Confirmation Code"
+        onChangeText={
+          // Set this.state.confirmationCode to the value in this Input box
+          (value) => this.setState({ confirmationCode: value })
+        }
+      />
+        <Button
+          title='Submit'
+					color='#7ad040'
+          onPress={ this.handleConfirmationCode.bind(this)}/>
+        <Button
+          title='Debug close'
+          onPress={ this.handleDebugClose.bind(this)}/>
+      </View>
+    </Modal>
+	</View>
+
 		);
-    }
+  }
 
-    async registerPress() {
-        let response = await fetch('https://'+AMAZON_API+'.execute-api.us-west-2.amazonaws.com/dev/users/create', {
-                                    method: 'POST',
-                                    headers: {
-                                        Accept: 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        fname: this.state.fname,
-                                        lname: this.state.lname,
-                                        email: this.state.email,
-                                        faculty: this.state.faculty,
-                                        id: this.state.studentID,
-                                        password: this.state.pass,
-                                        year: this.state.year,
-                                        gender: this.state.gender,
-                                        diet: this.state.diet
-                                    })
-            })
-                .then((response) => response.json())
-                .then((response) => {
-                    console.log(response)
-                })
-                .done();
-    }
+  handleDebugClose(){
+    this.setState({ modalVisible: false });
+    this.props.navigation.navigate('Home')
+  }
+
+  handleDebugOpen(){
+    this.setState({ modalVisible: true });
+  }
+
+  handleConfirmationCode() {
+    const { email, confirmationCode } = this.state;
+    Auth.confirmSignUp(email, confirmationCode, {})
+      .then(() => {
+        this.setState({ modalVisible: false });
+        this.props.navigation.navigate('Home')
+      })
+      .catch(err => console.log(err));
+  }
+
+  registerPress(values) {
+    const { email, pass, fname, lname, id, year, faculty, gender, diet } = values;
+		this.setState({email})
+      Auth.signUp({
+        username: email,
+        password: pass,
+        attributes: {
+          email,
+          name: fname,
+          family_name: lname,
+        },
+        })
+        // On success, show Confirmation Code Modal
+        .then(() => {
+					this.setState({ modalVisible: true })
+			    let response = fetch(AMAZON_API+'/users/create',
+			    {   method: 'POST',
+			        headers: {
+			            Accept: 'application/json',
+			            'Content-Type': 'application/json',
+			        },
+			        body: JSON.stringify({
+			            fname,
+			            lname,
+			            email,
+			            faculty,
+			            id,
+			            year,
+			            gender,
+			            diet
+			        })
+			        })
+			    .then((response) => response.json())
+			    .then((response) => {
+			        console.log(response)
+			    })
+			    .done();
+
+				})
+        // On failure, display error in console
+        .catch(err => {
+					console.log(err)
+					if (err.message != 'Forbidden')
+						this.setState({err: true})
+						this.setState({errMessage: err.message})
+					if (err.code == 'UsernameExistsException')
+						this.setState({err: true})
+
+				});
+
+  }
 }
+
+export default withNavigation(Register);
 
 const styles = StyleSheet.create({
 	container: {
@@ -122,12 +336,12 @@ const styles = StyleSheet.create({
   input: {
   	color: '#333333',
     paddingVertical: 5,
-    marginBottom: 20,
-    borderBottomColor: '#03e03e',
+    marginBottom: 10,
+    borderBottomColor: '#7ad040',
     borderBottomWidth: 1
   },
   button: {
     paddingTop: 10,
     marginTop: 10,
-  }
+  },
 });
