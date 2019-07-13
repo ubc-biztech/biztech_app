@@ -1,0 +1,19 @@
+{
+    "biztech": {
+        "awscloudformation": {
+            "AuthRoleName": "biztechapp-biztech-20190629121315-authRole",
+            "UnauthRoleArn": "arn:aws:iam::432714361962:role/biztechapp-biztech-20190629121315-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::432714361962:role/biztechapp-biztech-20190629121315-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "biztechapp-biztech-20190629121315-deployment",
+            "UnauthRoleName": "biztechapp-biztech-20190629121315-unauthRole",
+            "StackName": "biztechapp-biztech-20190629121315",
+            "StackId": "arn:aws:cloudformation:us-west-2:432714361962:stack/biztechapp-biztech-20190629121315/f1560770-9aa1-11e9-a61c-0ad0021418ba"
+        },
+        "categories": {
+            "auth": {
+                "biztechappaba5147d": {}
+            }
+        }
+    }
+}

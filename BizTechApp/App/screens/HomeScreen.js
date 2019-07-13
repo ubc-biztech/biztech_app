@@ -42,7 +42,7 @@ export default class Home extends Component {
 
   componentDidMount() {
     this.fetchEvents()
-    this.fetchUser();
+    // this.fetchUser();
   }
 
   render() {
