@@ -23,7 +23,8 @@ export default class EventCard extends Component {
 
   render() {
     return(
-      <Card>
+      <Card
+        onPress={this.props.onPress}>
 
         <View >
           <Image

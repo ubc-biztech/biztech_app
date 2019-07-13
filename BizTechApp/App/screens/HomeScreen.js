@@ -1,28 +1,21 @@
 import React, {Component} from 'react';
 import { ScrollView,
-         RefreshControl,
          StyleSheet,
          View,
+         Button,
          StatusBar,
          ActivityIndicator } from 'react-native';
 import { Text,
          ThemeProvider } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { AMAZON_API } from 'react-native-dotenv';
-import EventCard from '../components/EventCard'
 
-const theme = {
-  colors: {
-    primary: '#7ad040',
-  }
-}
+import EventCard from '../components/EventCard'
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     const ds = {};
     this.state = {
-      refreshing: false,
       userData: ds,
     };
   }
@@ -52,22 +45,10 @@ export default class Home extends Component {
     // this.fetchUser();
   }
 
-  _onRefresh = () => {
-    this.setState({refreshing: true});
-    this.fetchEvents().then(() => {
-      this.setState({refreshing: false});
-    });
-  }
-
   render() {
     return(
-			<ThemeProvider theme={theme}>
-      <ScrollView refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />
-        }>
+			<ThemeProvider>
+      <ScrollView>
         <View style={styles.widgetContainer}>
           <Text h2>Home</Text>
           <Text>Welcome, {this.state.userData.fname}</Text>
@@ -77,7 +58,12 @@ export default class Home extends Component {
           {this.state && this.state.events &&
             this.state.events.map(event => {
               return (
-                <EventCard key={event.id} event={event}/>
+                <EventCard key={event.id} event={event}
+                  onPress={() => {
+                    this.props.navigation.navigate('Event', {
+                      event: event })
+                    }
+                  }/>
               )
             })
           }
