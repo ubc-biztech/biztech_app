@@ -53,7 +53,7 @@ class Register extends Component {
 	        faculty: '',
 	        year: '',
 	        gender: '',
-	        diet: null,
+	        diet: 'none',
 				}}
 				validationSchema={ FormSchema }
 				onSubmit={(values, actions) => {
@@ -195,7 +195,7 @@ class Register extends Component {
 						    props.setFieldValue('diet', itemValue)
 						    this.setState({diet: itemValue})
 							}}>
-              <Picker.Item label='Dietary Restrictions' value=''/>
+              <Picker.Item label='Dietary Restrictions' value='none'/>
 	            <Picker.Item label='Vegan' value='Vegan'/>
 	            <Picker.Item label='Vegetarian' value='Vegetarian'/>
 	            <Picker.Item label='Halal' value='Halal'/>
@@ -275,27 +275,30 @@ class Register extends Component {
           email,
           name: fname,
           family_name: lname,
+					nickname: id
         },
         })
         // On success, show Confirmation Code Modal
         .then(() => {
 					this.setState({ modalVisible: true })
+					const body = JSON.stringify({
+							fname,
+							lname,
+							email,
+							faculty,
+							id,
+							year,
+							gender,
+							diet
+					})
+					console.log(body);
 			    let response = fetch(AMAZON_API+'/users/create',
 			    {   method: 'POST',
 			        headers: {
 			            Accept: 'application/json',
 			            'Content-Type': 'application/json',
 			        },
-			        body: JSON.stringify({
-			            fname,
-			            lname,
-			            email,
-			            faculty,
-			            id,
-			            year,
-			            gender,
-			            diet
-			        })
+			        body: body
 			        })
 			    .then((response) => response.json())
 			    .then((response) => {
