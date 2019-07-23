@@ -1,5 +1,5 @@
 //Login Reducer.
-import { loginConsts } from '../constants/consts.js';
+import { ATTEMPT, SUCCESS, FAILED } from '../constants/Consts';
 
 const initialState = {
     isLoggedIn: false,
@@ -9,18 +9,18 @@ const initialState = {
 }
 
 export default function loginReducer(state=initialState, action) {
-    console.log(action.type);
     switch(action.type) {
-        case loginConsts.ATTEMPT:
+        case ATTEMPT:
             return Object.assign({}, state, {
                 isLoading: true
             })
-        case loginConsts.SUCCESS:
+        case SUCCESS:
             return Object.assign({}, state, {
                 isLoading: false,
-                user: action.user
+                user: action.user,
+                isLoggedIn: true
             })
-        case loginConsts.FAILED:
+        case FAILED:
             return Object.assign({}, state, {
                 isLoading: false,
                 error: action.err

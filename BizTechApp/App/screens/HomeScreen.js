@@ -8,15 +8,14 @@ import { ScrollView,
 import { Text,
          ThemeProvider } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
+import { connect } from 'react-redux';
 
 import EventCard from '../components/EventCard'
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
-    const ds = {};
     this.state = {
-      userData: ds,
     };
   }
 
@@ -30,19 +29,18 @@ export default class Home extends Component {
       })
   }
 
-  async fetchUser(){
-    fetch(AMAZON_API+'/users/get?id=75129696')
-      .then((response) => response.json())
-      .then((response) => {
-        this.setState({
-          userData: (response)
-        })
-      })
-  }
+  // async fetchUser(){
+  //   fetch(AMAZON_API+'/users/get?id=75129696')
+  //     .then((response) => response.json())
+  //     .then((response) => {
+  //       this.setState({
+  //         userData: (response)
+  //       })
+  //     })
+  // }
 
   componentDidMount() {
     this.fetchEvents()
-    // this.fetchUser();
   }
 
   render() {
@@ -51,7 +49,8 @@ export default class Home extends Component {
       <ScrollView>
         <View style={styles.widgetContainer}>
           <Text h2>Home</Text>
-          <Text>Welcome, {this.state.userData.fname}</Text>
+          {this.props.isLoggedIn && <Text> Welcome, { this.props.userData.name } </Text>}
+          {!this.props.isLoggedIn && <Text> Welcome to BizTech </Text>}
         </View>
 
         <View style={styles.center}>
@@ -72,7 +71,16 @@ export default class Home extends Component {
 			</ThemeProvider>
     )
   }
-}
+};
+
+const mapStateToProps = (state) => {
+	return {
+    userData: state.login.user,
+    isLoggedIn: state.login.isLoggedIn
+  };
+};
+
+export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
 	center: {

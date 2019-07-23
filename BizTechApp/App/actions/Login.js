@@ -1,36 +1,38 @@
 // Actions for logging in.
 import Auth from '@aws-amplify/auth';
-import { loginConsts } from '../constants/consts.js';
+import { ATTEMPT, SUCCESS, FAILED } from '../constants/Consts'
 
 export function isLoading()  {
     return {
-        type: loginConsts.ATTEMPT,
+        type: ATTEMPT,
     }
 }
 
 export function loginSuccess(user) {
     return {
-        type: loginConst.SUCCESS,
+        type: SUCCESS,
         user
     }
 }
 
 export function loginFailed(err) {
     return {
-        type: LOGIN_FAILED,
+        type: FAILED,
         err
     }
 }
 
 export function doLogin(values) {
-    return dispatch => {
+    return (dispatch) => {
         dispatch(isLoading());
         const { email, pass } = values;
         return Auth.signIn(email, pass)
             .then((user) => {
                 dispatch(loginSuccess(user));
                 console.log('login success');
+                console.log(user);
             }).catch(err => {
+                console.log("login error");
                 console.log(err);
                 dispatch(loginFailed(err));
             })
