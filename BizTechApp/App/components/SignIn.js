@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { doLogin } from '../actions/Login';
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -14,18 +16,29 @@ email: Yup.string()
 });
 
 class SignIn extends Component {
-	  constructor(){
+	constructor(){
 	    super();
 	    this.state = {
         email: '',
         pass: '',
-				try: false,
-				incorrect: false
       };
-	  }
+	}
+	
+	componentDidUpdate() {
+		if (this.props.isLoggedIn) {
+			this.props.navigation.navigate('Home');
+		}
+	}
 
 		// { props.touched.email && props.errors.email && <Text style={{ fontSize: 10, color: 'red' }}>{props.errors.email}</Text> }
 	render() {
+		if (this.props.isLoading) {
+			return (
+				<View style={styles.container}>
+					<Text style={styles.header}>Loading Screen</Text>
+				</View>
+			)
+		}
 		return (
 			<View style={styles.container}>
 				<Text style={styles.header}>Sign In</Text>
@@ -33,7 +46,7 @@ class SignIn extends Component {
 			  <Formik
 			    initialValues={{ email: '' }}
 					validationSchema={ FormSchema }
-			    onSubmit={values => this.handleSignIn(values)}
+			    onSubmit={values => this.props.handleSignIn(values)}
 			  >
 			    {props => (
 			      <View>
@@ -52,39 +65,32 @@ class SignIn extends Component {
 				          onBlur={props.handleBlur('pass')}
 				          value={props.values.pass}/>
 			        <Button disabled={!props.isValid} onPress={props.handleSubmit} title="Sign In" />
-							{//state.try indicates user tried to login
-							 //state.incorrect indicates an incorrect try
-								this.state.try && this.state.incorrect && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>Incorrect username/password</Text> }
+							{//state.props.incorrect indicates an incorrect try
+								(this.props.incorrect !== undefined) && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>Incorrect username/password</Text> }
 			      </View>
 			    )}
 			  </Formik>
 			</View>
 		);
   }
+};
 
+const mapStateToProps = (state) => {
+	return {
+		isLoading: state.login.isLoading,
+		incorrect: state.login.error,
+		isLoggedIn: state.login.isLoggedIn
+	};
+};
 
-	handleSignIn(values) {
-		this.setState({try: true})
-	  const { email, pass } = values;
-	  Auth.signIn(email, pass)
-	    // If we are successful, navigate to Home screen
-	    .then(user => {
-				this.setState({incorrect: false})
-				this.props.navigation.navigate('Home')
-			})
-	    // On failure, display error in console
-	    .catch(err => {
-				console.log(err)
-				if (err.code == 'NotAuthorizedException' || err.code == 'UserNotFoundException'){
-					this.setState({incorrect: true})
-				}
+const mapDispatchToProps = (dispatch) => {
+	return {
+		handleSignIn: (values) => dispatch(doLogin(values))
+	};
+};
 
-			});
-	}
-
-}
-
-export default withNavigation(SignIn);
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)
+							(SignIn));
 
 const styles = StyleSheet.create({
 	container: {
