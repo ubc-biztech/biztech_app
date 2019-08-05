@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { createAppContainer, createBottomTabNavigator } from 'react-navigation'
 import HomeNavigator from '../features/HomeNavigator'
+import ProfileNavigator from '../features/ProfileNavigator'
 import Profile from '../screens/Profile'
 import Login from '../screens/Login'
 import Icon from 'react-native-vector-icons/Feather';
 
 const TabNavigator = createBottomTabNavigator({
   Home: HomeNavigator,
-  Profile: Profile,
+  Profile: ProfileNavigator,
   'Sign In': Login,
 },
 {

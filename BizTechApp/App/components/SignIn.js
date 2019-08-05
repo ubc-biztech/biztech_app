@@ -23,7 +23,7 @@ class SignIn extends Component {
         pass: '',
       };
 	}
-	
+
 	componentDidUpdate() {
 		if (this.props.isLoggedIn) {
 			this.props.navigation.navigate('Home');
@@ -75,6 +75,7 @@ class SignIn extends Component {
   }
 };
 
+// objects
 const mapStateToProps = (state) => {
 	return {
 		isLoading: state.login.isLoading,
@@ -83,6 +84,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
+// actions
 const mapDispatchToProps = (dispatch) => {
 	return {
 		handleSignIn: (values) => dispatch(doLogin(values))

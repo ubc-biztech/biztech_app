@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Picker, Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
-import { Input } from 'react-native-elements';
+import { Picker, Button, Modal, StyleSheet, TextInput, View} from 'react-native';
+import { Text, Input } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { withNavigation } from 'react-navigation';
@@ -30,7 +30,6 @@ class Register extends Component {
 	    super();
 	    this.state = {
         confirmationCode: '',
-        modalVisible: false,
 				genderErr: false,
 				yearErr: false,
 				facultyErr: false,
@@ -210,59 +209,14 @@ class Register extends Component {
 
 						{ // Notify user if account already exists or some other error
 							this.state.err && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>{this.state.errMessage}</Text> }
-
-		        <Button
-	            style={styles.button}
-	            title="debug open modal"
-	            onPress={this.handleDebugOpen.bind(this)} />
+						
 					</View>
 		    )}
 	  </Formik>
 
-    <Modal
-      visible={this.state.modalVisible}
-    >
-      <View
-        style={styles.container}
-      >
-      <TextInput
-        placeholder="Confirmation Code"
-        onChangeText={
-          // Set this.state.confirmationCode to the value in this Input box
-          (value) => this.setState({ confirmationCode: value })
-        }
-      />
-        <Button
-          title='Submit'
-					color='#7ad040'
-          onPress={ this.handleConfirmationCode.bind(this)}/>
-        <Button
-          title='Debug close'
-          onPress={ this.handleDebugClose.bind(this)}/>
-      </View>
-    </Modal>
 	</View>
 
 		);
-  }
-
-  handleDebugClose(){
-    this.setState({ modalVisible: false });
-    this.props.navigation.navigate('Home')
-  }
-
-  handleDebugOpen(){
-    this.setState({ modalVisible: true });
-  }
-
-  handleConfirmationCode() {
-    const { email, confirmationCode } = this.state;
-    Auth.confirmSignUp(email, confirmationCode, {})
-      .then(() => {
-        this.setState({ modalVisible: false });
-        this.props.navigation.navigate('Home')
-      })
-      .catch(err => console.log(err));
   }
 
   registerPress(values) {
@@ -291,7 +245,6 @@ class Register extends Component {
 							gender,
 							diet
 					})
-					console.log(body);
 			    let response = fetch(AMAZON_API+'/users/create',
 			    {   method: 'POST',
 			        headers: {

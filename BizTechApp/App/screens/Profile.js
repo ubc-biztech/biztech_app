@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { Button, View, StyleSheet, ScrollView } from 'react-native';
 import { Text, ThemeProvider } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
 
@@ -33,6 +33,9 @@ export default class Profile extends Component {
 					<ScrollView style={styles.widgetContainer}>
 		        <Text h2>Profile</Text>
 		        <Text>Welcome, {this.state.userData.fname}</Text>
+						<Button
+							title='Confirm Account'
+							onPress={() => this.props.navigation.navigate('Welcome')}/>
 					</ScrollView>
 	      </ThemeProvider>
 	    )
