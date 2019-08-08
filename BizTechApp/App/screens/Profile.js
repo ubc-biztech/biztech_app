@@ -2,37 +2,16 @@ import React, { Component } from 'react';
 import { Button, View, StyleSheet, ScrollView } from 'react-native';
 import { Text, ThemeProvider } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
+import { connect } from 'react-redux';
 
-export default class Profile extends Component {
-
-	  constructor(){
-	    super();
-	    const ds = {};
-	    this.state = {
-	      userData: ds,
-	    }
-	  }
-
-	  componentDidMount(){
-	    this.fetchUser();
-	  }
-
-	  async fetchUser(){
-	    fetch(AMAZON_API+'/users/get?id=75129696')
-	      .then((response) => response.json())
-	      .then((response) => {
-	        this.setState({
-	          userData: (response)
-	        })
-	      })
-	  }
+class Profile extends Component {
 
 	  render(){
 	    return(
 	      <ThemeProvider>
 					<ScrollView style={styles.widgetContainer}>
 		        <Text h2>Profile</Text>
-		        <Text>Welcome, {this.state.userData.fname}</Text>
+		        <Text>Welcome, {this.props.userData.fname}</Text>
 						<Button
 							title='Confirm Account'
 							onPress={() => this.props.navigation.navigate('Welcome')}/>
@@ -42,6 +21,15 @@ export default class Profile extends Component {
 	  }
 
 }
+
+// objects
+const mapStateToProps = (state) => {
+	return {
+		userData: state.login.user,
+	};
+};
+
+export default connect(mapStateToProps) (Profile);
 
 const styles = StyleSheet.create({
 	widgetContainer: {

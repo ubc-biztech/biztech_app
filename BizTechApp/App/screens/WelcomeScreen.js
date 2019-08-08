@@ -20,7 +20,9 @@ class WelcomeScreen extends Component {
     }
 
   handleConfirmationCode() {
-    const { email, confirmationCode } = this.state;
+    const confirmationCode = this.state;
+    const email = this.props.userData.email;
+    console.log(email);
     Auth.confirmSignUp(email, confirmationCode, {})
       .then(() => {
         this.setState({ modalVisible: false });
@@ -32,7 +34,8 @@ class WelcomeScreen extends Component {
   render() {
     return(
 			<ThemeProvider>
-          <Text h2>Welcome to the BizTech Family!</Text>
+        <View style={styles.widgetContainer}>
+          <Text h2>Welcome to BizTech!</Text>
           <Text>
             Please enter your confirmation code.
           </Text>
@@ -47,12 +50,9 @@ class WelcomeScreen extends Component {
             title='Submit'
             color='#7ad040'
             onPress={ this.handleConfirmationCode.bind(this) }/>
+        </View>
 			</ThemeProvider>
     )
-  }
-
-  componentDidMount() {
-    console.log('YHO', this.props.userData)
   }
 };
 
@@ -64,3 +64,9 @@ const mapStateToProps = (state) => {
 };
 
 export default withNavigation(connect(mapStateToProps) (WelcomeScreen));
+
+const styles = StyleSheet.create({
+  widgetContainer: {
+    padding: 20,
+  }
+})
