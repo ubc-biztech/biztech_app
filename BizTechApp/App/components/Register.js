@@ -6,6 +6,8 @@ import Auth from '@aws-amplify/auth';
 import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { populateUser } from '../actions/Login';
+import { connect } from 'react-redux';
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -209,7 +211,7 @@ class Register extends Component {
 
 						{ // Notify user if account already exists or some other error
 							this.state.err && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>{this.state.errMessage}</Text> }
-						
+
 					</View>
 		    )}
 	  </Formik>
@@ -256,6 +258,7 @@ class Register extends Component {
 			    .then((response) => response.json())
 			    .then((response) => {
 			        console.log(response)
+							this.props.populateDispatch(id)
 			    })
 			    .done();
 
@@ -274,7 +277,23 @@ class Register extends Component {
   }
 }
 
-export default withNavigation(Register);
+// objects
+const mapStateToProps = (state) => {
+	return {
+		userData: state.login.user,
+	};
+};
+
+// actions
+const mapDispatchToProps = (dispatch) => {
+	return {
+		populateDispatch: (id) => dispatch(populateUser(id))
+	};
+};
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)
+							(Register));
+// export default withNavigation(Register);
 
 const styles = StyleSheet.create({
 	container: {

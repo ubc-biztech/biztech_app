@@ -23,9 +23,9 @@ class WelcomeScreen extends Component {
     const confirmationCode = this.state;
     const email = this.props.userData.email;
     console.log(email);
-    Auth.confirmSignUp(email, confirmationCode, {})
+    console.log(this.state.confirmationCode);
+    Auth.confirmSignUp(email, this.state.confirmationCode, {})
       .then(() => {
-        this.setState({ modalVisible: false });
         this.props.navigation.navigate('Home')
       })
       .catch(err => console.log(err));

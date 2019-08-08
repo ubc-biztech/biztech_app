@@ -46,3 +46,15 @@ export function doLogin(values) {
             })
     }
 }
+
+export function populateUser(id) {
+    return (dispatch) => {
+      fetch(AMAZON_API+'/users/get?id='+id)
+  	      .then((response) => response.json())
+  	      .then((response) => {
+            dispatch(loginSuccess(response));
+            console.log('populate success');
+            console.log(response);
+  	      })
+    }
+}
