@@ -4,11 +4,11 @@ import { Text,
 import { createStackNavigator } from 'react-navigation'
 
 import Profile from '../screens/Profile'
-import WelcomeScreen from '../screens/WelcomeScreen'
+import ConfirmScreen from '../screens/ConfirmScreen'
 
 export default createStackNavigator({
   Profile: Profile,
-  Welcome: WelcomeScreen
+  Confirm: ConfirmScreen
 },
 {
     defaultNavigationOptions: {

@@ -11,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
 
-class WelcomeScreen extends Component {
+class ConfirmScreen extends Component {
 	  constructor(){
 	    super();
 	    this.state = {
@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default withNavigation(connect(mapStateToProps) (WelcomeScreen));
+export default withNavigation(connect(mapStateToProps) (ConfirmScreen));
 
 const styles = StyleSheet.create({
   widgetContainer: {
