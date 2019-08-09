@@ -68,9 +68,9 @@ export default styles = StyleSheet.create({
 	},
 
   loginLogo: {
-    width: 80/1.2,
-    height: 110/1.2,
-    marginBottom: 10
+    width: 80/2,
+    height: 110/2,
+    marginBottom: 10,
   },
 
   //form stuff
@@ -78,7 +78,7 @@ export default styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingLeft: 60,
     paddingRight: 60,
-    paddingTop: 60,
+    paddingTop: 40,
     paddingBottom: 60
 	},
   input: {
