@@ -3,6 +3,7 @@ import { TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 import { logout } from '../actions/Login';
+//styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
 
@@ -13,8 +14,8 @@ class Profile extends Component {
 	      <View>
 					<ScrollView style={styles.widgetContainer}>
 		        <Text style={styles.h1}>Profile</Text>
-	          {this.props.isLoggedIn && <Text> Welcome, { this.props.userData.fname } </Text>}
-	          {!this.props.isLoggedIn && <Text> Welcome to BizTech </Text>}
+	          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
+	          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
 
 						<TouchableOpacity
 							onPress={() => this.props.navigation.navigate('Confirm')}
@@ -28,7 +29,7 @@ class Profile extends Component {
 							style={styles.button}>
 							<Text style={styles.buttonText}>Logout</Text>
 						</TouchableOpacity>
-						
+
 					</ScrollView>
 	      </View>
 	    )
