@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { ScrollView,
-         StyleSheet,
          View,
          Button,
          TextInput } from 'react-native';

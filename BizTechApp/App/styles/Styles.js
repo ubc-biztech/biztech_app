@@ -13,7 +13,9 @@ export default styles = StyleSheet.create({
     fontSize: 36
   },
  h3: {
-    fontFamily: 'RedHatDisplay-Bold'
+    fontFamily: 'RedHatDisplay-Bold',
+    fontSize: 18,
+    color: 'black'
   },
 	widgetContainer: {
 		padding: 20
@@ -38,5 +40,23 @@ export default styles = StyleSheet.create({
     fontFamily: 'RedHatDisplay-Bold',
 		color: '#fff',
 		textAlign: 'center',
-	}
+	},
+	card: {
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection:'column',
+    backgroundColor: '#ffffff',
+    paddingBottom: 5,
+    borderRadius: 10,
+
+    shadowColor: "#000",
+    shadowOffset: {
+    	width: 0,
+    	height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 4,
+	},
 })

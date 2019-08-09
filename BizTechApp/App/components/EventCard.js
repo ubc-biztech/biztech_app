@@ -30,7 +30,12 @@ export default class EventCard extends Component {
         <View >
           <Image
             source={{ uri: this.props.event.img }}
-            style={{ width: width-20, height: 240, marginBottom: 10 }}
+            style={{
+              width: width-20,
+              height: 240,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              marginBottom: 10 }}
             // PlaceholderContent={<ActivityIndicator />}
             resizeMode="cover"
           />
@@ -39,7 +44,6 @@ export default class EventCard extends Component {
               <Text style={styles.h3}>{this.props.event.ename}</Text>
               <Text style={styles.colour}>{this.props.event.edate}</Text>
               <Text>{this.props.event.tagline}</Text>
-              <Button color='#7ad040' title='Sign Up'/>
             </View>
 
         </View>

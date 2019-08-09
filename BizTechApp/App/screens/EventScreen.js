@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView, StyleSheet, View, Dimensions, Image,
+import { ScrollView, View, Dimensions, Image,
          Button, StatusBar, ActivityIndicator } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 

@@ -6,6 +6,7 @@ import { logout } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
+import Button from '../components/Button'
 
 class Profile extends Component {
 
@@ -17,11 +18,9 @@ class Profile extends Component {
 	          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
 	          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
 
-						<TouchableOpacity
-							onPress={() => this.props.navigation.navigate('Confirm')}
-							style={styles.button}>
-							<Text style={styles.buttonText}>Confirm Account</Text>
-						</TouchableOpacity>
+						<Button onPress={() => this.props.navigation.navigate('Confirm')}>
+							Confirm Account
+						</Button>
 
 						<TouchableOpacity
 							title='Log Out'
