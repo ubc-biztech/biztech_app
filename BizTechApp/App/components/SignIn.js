@@ -6,6 +6,9 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { doLogin } from '../actions/Login';
 
+//styling
+import styles from '../styles/Styles';
+
 import Button from '../components/Button'
 
 // Validation Schema for Formik form using Yup library
@@ -29,13 +32,13 @@ class SignIn extends Component {
 		if (this.props.isLoading) {
 			return (
 				<View style={styles.container}>
-					<Text style={styles.header}>Loading Screen</Text>
+					<Text style={styles.h1}>Loading Screen</Text>
 				</View>
 			)
 		}
 		return (
 			<View style={styles.container}>
-				<Text style={styles.header}>Sign In</Text>
+				<Text style={styles.h1}>Sign In</Text>
 
 			  <Formik
 			    initialValues={{ email: '' }}
@@ -86,29 +89,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps) (SignIn);
-
-const styles = StyleSheet.create({
-	container: {
-    alignSelf: 'stretch',
-    paddingLeft: 60,
-    paddingRight: 60,
-    paddingTop: 60,
-    paddingBottom: 60
-	},
-	header: {
-    color: '#333333',
-    marginBottom: 20,
-    fontSize: 25,
-  },
-  input: {
-  	color: '#333333',
-    paddingVertical: 5,
-    marginBottom: 10,
-    borderBottomColor: '#7ad040',
-    borderBottomWidth: 1
-  },
-  button: {
-    paddingTop: 10,
-    marginTop: 10,
-  }
-});

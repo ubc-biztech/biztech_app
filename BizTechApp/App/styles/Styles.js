@@ -66,4 +66,21 @@ export default styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 4,
 	},
+
+  //form stuff
+	container: {
+    alignSelf: 'stretch',
+    paddingLeft: 60,
+    paddingRight: 60,
+    paddingTop: 60,
+    paddingBottom: 60
+	},
+  input: {
+    fontFamily: 'RedHatDisplay-Regular',
+  	color: '#333333',
+    paddingVertical: 5,
+    marginBottom: 10,
+    borderBottomColor: '#7ad040',
+    borderBottomWidth: 1
+  }
 })
