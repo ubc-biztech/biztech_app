@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Picker, Button, Modal, StyleSheet, TextInput, View} from 'react-native';
+import { Picker, StyleSheet, TextInput, View} from 'react-native';
 import { Text, Input } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
@@ -7,6 +7,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { populateUser } from '../actions/Login';
 import { connect } from 'react-redux';
+
+import Button from '../components/Button'
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -201,7 +203,6 @@ class Register extends Component {
 
 		        <Button
 							disabled={props.isSubmitting}
-	            color='#7ad040'
 							onPress={props.handleSubmit}
 							title="Join the BizTech Family!" />
 
@@ -308,9 +309,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderBottomColor: '#7ad040',
     borderBottomWidth: 1
-  },
-  button: {
-    paddingTop: 10,
-    marginTop: 10,
-  },
+  }
 });

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { ScrollView,
          View,
-         Button,
          TextInput } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';
@@ -10,6 +9,8 @@ import { connect } from 'react-redux';
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
+
+import Button from '../components/Button'
 
 class ConfirmScreen extends Component {
 	  constructor(){
@@ -47,7 +48,6 @@ class ConfirmScreen extends Component {
         />
         <Button
           title='Submit'
-          color='#7ad040'
           onPress={ this.handleConfirmationCode.bind(this) }/>
       </View>
     )

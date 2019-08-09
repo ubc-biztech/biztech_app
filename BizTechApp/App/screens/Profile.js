@@ -18,16 +18,13 @@ class Profile extends Component {
 	          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
 	          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
 
-						<Button onPress={() => this.props.navigation.navigate('Confirm')}>
-							Confirm Account
-						</Button>
-
-						<TouchableOpacity
-							title='Log Out'
+						<Button
+							onPress={() => this.props.navigation.navigate('Confirm')}
+							title='Verify Account'/>
+							
+						<Button
 							onPress={() => this.props.logout()}
-							style={styles.button}>
-							<Text style={styles.buttonText}>Logout</Text>
-						</TouchableOpacity>
+							title='Logout'/>
 
 					</ScrollView>
 	      </View>

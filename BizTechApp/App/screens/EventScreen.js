@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import { ScrollView, View, Dimensions, Image,
-         Button, StatusBar, ActivityIndicator } from 'react-native';
+import { ScrollView, View, Dimensions, Image } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 
 const {width, height} = Dimensions.get('window');
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
+
+import Button from '../components/Button'
 
 export default class EventScreen extends Component {
 
@@ -33,7 +34,7 @@ export default class EventScreen extends Component {
           <Text style={styles.h1}>{ event.ename }</Text>
           <Text style={styles.colour} >{ event.edate }</Text>
           <Text>{ this.getDescription(event) }</Text>
-          <Button color='#7ad040' title='Sign Up'/>
+          <Button title='Sign Up'/>
         </View>
 			</View>
     )

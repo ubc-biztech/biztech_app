@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { doLogin } from '../actions/Login';
+
+import Button from '../components/Button'
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({

@@ -36,6 +36,13 @@ export default styles = StyleSheet.create({
 		marginVertical: 10,
     borderRadius: 30,
 	},
+	buttonDisabled: {
+		color: '#fff',
+		padding: 14,
+		backgroundColor: '#bbb',
+		marginVertical: 10,
+    borderRadius: 30,
+	},
 	buttonText: {
     fontFamily: 'RedHatDisplay-Bold',
 		color: '#fff',
