@@ -60,9 +60,9 @@ class Register extends Component {
 					const {faculty, year, gender} = values;
 
 					// check if dropdown fields are blank, generate error if they are
-					( faculty == '' ? this.setState({facultyErr: true}) : null);
-					( year == '' ? this.setState({yearErr: true}) : null);
-					( gender == '' ? this.setState({genderErr: true}) : null);
+					( faculty == '' ? this.setState({facultyErr: true}) : this.setState({facultyErr: false}));
+					( year == '' ? this.setState({yearErr: true}) : this.setState({yearErr: false}));
+					( gender == '' ? this.setState({genderErr: true}) : this.setState({genderErr: false}));
 					const {facultyErr, yearErr, genderErr} = this.state;
 
 					// check if there are no dropdown field errors
@@ -138,7 +138,6 @@ class Register extends Component {
 						<Picker
 	            selectedValue={this.state.year}
 							onValueChange={(itemValue, itemIndex) => {
-								(itemValue == '' ? this.setState({yearErr: true}) : this.setState({yearErr: false}))
 						    props.setFieldValue('year', itemValue)
 						    this.setState({year: itemValue})
 							}}>
@@ -157,7 +156,6 @@ class Register extends Component {
 						<Picker
 	            selectedValue={this.state.faculty}
 							onValueChange={(itemValue) => {
-								(itemValue == '' ? this.setState({facultyErr: true}) : this.setState({facultyErr: false}))
 						    props.setFieldValue('faculty', itemValue)
 						    this.setState({faculty: itemValue})
 							}}>
@@ -176,7 +174,6 @@ class Register extends Component {
 						<Picker
 	            selectedValue={this.state.gender}
 							onValueChange={(itemValue, itemIndex) => {
-								(itemValue == '' ? this.setState({genderErr: true}) : this.setState({genderErr: false}))
 						    props.setFieldValue('gender', itemValue)
 						    this.setState({gender: itemValue})
 							}}>
