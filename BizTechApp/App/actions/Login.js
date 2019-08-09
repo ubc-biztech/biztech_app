@@ -58,3 +58,9 @@ export function populateUser(id) {
   	      })
     }
 }
+
+export function logout() {
+    return {
+        type: 'logout'
+    }
+}
