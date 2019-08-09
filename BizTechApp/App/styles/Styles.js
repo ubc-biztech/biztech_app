@@ -67,6 +67,12 @@ export default styles = StyleSheet.create({
     elevation: 4,
 	},
 
+  loginLogo: {
+    width: 80/1.2,
+    height: 110/1.2,
+    marginBottom: 10
+  },
+
   //form stuff
 	container: {
     alignSelf: 'stretch',

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { TextInput, View, Image } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
@@ -9,6 +9,7 @@ import { doLogin } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 
+import Text from '../components/Text'
 import Button from '../components/Button'
 
 // Validation Schema for Formik form using Yup library
@@ -38,6 +39,7 @@ class SignIn extends Component {
 		}
 		return (
 			<View style={styles.container}>
+				<Image source={require('../img/biztech.png')} style={styles.loginLogo} />
 				<Text style={styles.h1}>Sign In</Text>
 
 			  <Formik

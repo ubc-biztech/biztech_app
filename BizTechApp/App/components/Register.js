@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Picker, TextInput, View} from 'react-native';
+import { Picker, TextInput, View, Image } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { Formik } from 'formik';
@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 //styling
 import styles from '../styles/Styles';
-
+import Text from '../components/Text'
 import Button from '../components/Button'
 
 // Validation Schema for Formik form using Yup library
@@ -81,6 +81,7 @@ class Register extends Component {
 			>
 				{ props => (
 				<View style={styles.container}>
+						<Image source={require('../img/biztech.png')} style={styles.loginLogo} />
 						<Text style={styles.h1}>Sign Up</Text>
 		        <TextInput
 	            style={styles.input}
