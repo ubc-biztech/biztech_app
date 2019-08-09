@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView, View, Dimensions, Image } from 'react-native';
+import { View, Dimensions, Image } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 
 const {width, height} = Dimensions.get('window');

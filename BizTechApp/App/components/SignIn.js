@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';

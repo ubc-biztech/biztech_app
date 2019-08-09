@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Picker, StyleSheet, TextInput, View} from 'react-native';
-import { Text, Input } from 'react-native-elements';
+import { Picker, TextInput, View} from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { Formik } from 'formik';

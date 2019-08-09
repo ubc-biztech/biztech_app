@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import { View,
-         StyleSheet,
          Dimensions,
          Button,
-         Image,
-         ActivityIndicator } from 'react-native';
+         Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AMAZON_API } from 'react-native-dotenv';
 import Card from './Card';

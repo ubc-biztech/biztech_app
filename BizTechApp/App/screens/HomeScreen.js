@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import { ScrollView,
-         StyleSheet,
-         View,
-         Button,
-         StatusBar,
-         ActivityIndicator } from 'react-native';
+         View } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 

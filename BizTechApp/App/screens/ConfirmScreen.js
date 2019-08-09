@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView,
-         View,
+import { View,
          TextInput } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';

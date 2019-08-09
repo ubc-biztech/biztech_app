@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 import { logout } from '../actions/Login';
@@ -21,7 +21,7 @@ class Profile extends Component {
 						<Button
 							onPress={() => this.props.navigation.navigate('Confirm')}
 							title='Verify Account'/>
-							
+
 						<Button
 							onPress={() => this.props.logout()}
 							title='Logout'/>
