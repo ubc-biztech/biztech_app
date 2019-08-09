@@ -1,15 +1,18 @@
-import Navigator from './App/features/Navigator';
+import React, {Component} from 'react';
+//aws
 import Amplify from '@aws-amplify/core';
 import aws_exports from './aws-exports';
-import React, {Component} from 'react';
+//redux
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import rootReducer from './App/reducers/Index';
-//redux-persist imports
+//redux-persist
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
+//screens
+import Main from './App/screens/Main';
 
 const persistConfig = {
   key: 'root',
@@ -36,7 +39,7 @@ export default class App extends Component {
 		return (
 			<Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Navigator/>
+          <Main/>
         </PersistGate>
 			</Provider>
 		);

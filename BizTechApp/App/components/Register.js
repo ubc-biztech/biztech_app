@@ -3,7 +3,6 @@ import { Picker, Button, Modal, StyleSheet, TextInput, View} from 'react-native'
 import { Text, Input } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
-import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { populateUser } from '../actions/Login';
@@ -236,7 +235,6 @@ class Register extends Component {
         })
         // On success, show Confirmation Code Modal
         .then(() => {
-					this.setState({ modalVisible: true })
 					const body = JSON.stringify({
 							fname,
 							lname,
@@ -291,9 +289,8 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)
-							(Register));
-// export default withNavigation(Register);
+export default connect(mapStateToProps, mapDispatchToProps)
+							(Register);
 
 const styles = StyleSheet.create({
 	container: {
