@@ -20,7 +20,7 @@ export default class Login extends Component {
 		    selectedIndex: 0,
 	    }
 
-		  this.buttons = ['Sign Up', 'Sign In']
+		  this.buttons = ['Sign In', 'Sign Up']
 	  }
 
 		updateIndex() {
@@ -38,7 +38,7 @@ export default class Login extends Component {
 						  selectedIndex={this.state.selectedIndex}
 						  buttons={ this.buttons }
 						/>
-						{ this.state.selectedIndex === 0 ? <Register/> : <SignIn/>}
+						{ this.state.selectedIndex === 0 ? <SignIn/> : <Register/> }
 		      </ScrollView>
 				</ThemeProvider>
 	    )

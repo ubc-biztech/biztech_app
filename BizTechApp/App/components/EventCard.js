@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import { View,
-         StyleSheet,
          Dimensions,
          Button,
-         ActivityIndicator } from 'react-native';
-import { Text,
-         Image,
-				 ThemeProvider } from 'react-native-elements';
+         Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AMAZON_API } from 'react-native-dotenv';
 import Card from './Card';
+//styling
+import styles from '../styles/Styles';
+import Text from '../components/Text'
 
 const {width, height} = Dimensions.get('window');
 
@@ -29,16 +28,20 @@ export default class EventCard extends Component {
         <View >
           <Image
             source={{ uri: this.props.event.img }}
-            style={{ width: width-20, height: 240, marginBottom: 10 }}
+            style={{
+              width: width-20,
+              height: 240,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              marginBottom: 10 }}
             // PlaceholderContent={<ActivityIndicator />}
             resizeMode="cover"
           />
 
             <View style={styles.content}>
-              <Text style={{ fontWeight: '800', color: 'black' }}>{this.props.event.ename}</Text>
-              <Text style={{ color: '#7ad040' }} >{this.props.event.edate}</Text>
-              <Text style={{ marginBottom: 10 }} >{this.props.event.tagline}</Text>
-              <Button color='#7ad040' title='Sign Up'/>
+              <Text style={styles.h3}>{this.props.event.ename}</Text>
+              <Text style={styles.colour}>{this.props.event.edate}</Text>
+              <Text>{this.props.event.tagline}</Text>
             </View>
 
         </View>
@@ -48,10 +51,3 @@ export default class EventCard extends Component {
   }
 
 }
-
-const styles = StyleSheet.create({
-	content: {
-		padding: 10,
-    paddingTop: 0
-	}
-});

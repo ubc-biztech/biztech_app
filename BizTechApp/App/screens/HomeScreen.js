@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
 import { ScrollView,
-         StyleSheet,
-         View,
-         Button,
-         StatusBar,
-         ActivityIndicator } from 'react-native';
-import { Text,
-         ThemeProvider } from 'react-native-elements';
+         View } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 
 import EventCard from '../components/EventCard'
+//styling
+import styles from '../styles/Styles';
+import Text from '../components/Text'
 
 class Home extends Component {
   constructor(props) {
@@ -35,12 +32,11 @@ class Home extends Component {
 
   render() {
     return(
-			<ThemeProvider>
       <ScrollView>
         <View style={styles.widgetContainer}>
-          <Text h2>Home</Text>
-          {this.props.isLoggedIn && <Text> Welcome, { this.props.userData.fname } </Text>}
-          {!this.props.isLoggedIn && <Text> Welcome to BizTech </Text>}
+          <Text style={styles.h1}>Home</Text>
+          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
+          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
         </View>
 
         <View style={styles.center}>
@@ -58,7 +54,6 @@ class Home extends Component {
           }
         </View>
       </ScrollView>
-			</ThemeProvider>
     )
   }
 };
@@ -71,14 +66,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Home);
-
-const styles = StyleSheet.create({
-	center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection:'column',
-	},
-	widgetContainer: {
-		padding: 20,
-	}
-});

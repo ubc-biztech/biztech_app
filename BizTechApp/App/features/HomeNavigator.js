@@ -1,11 +1,4 @@
 import React, {Component} from 'react';
-import { ScrollView,
-         StyleSheet,
-         View,
-         StatusBar,
-         ActivityIndicator } from 'react-native';
-import { Text,
-         ThemeProvider } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation'
 import { AMAZON_API } from 'react-native-dotenv';
 
@@ -22,14 +15,3 @@ export default createStackNavigator({
       header: null,
     },
 })
-
-const styles = StyleSheet.create({
-	center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection:'column',
-	},
-	widgetContainer: {
-		padding: 20,
-	}
-});

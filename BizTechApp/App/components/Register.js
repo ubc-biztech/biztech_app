@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
-import { Picker, Button, Modal, StyleSheet, TextInput, View} from 'react-native';
-import { Text, Input } from 'react-native-elements';
+import { Picker, TextInput, View, Image } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { populateUser } from '../actions/Login';
 import { connect } from 'react-redux';
+
+//styling
+import styles from '../styles/Styles';
+import Text from '../components/Text'
+import Button from '../components/Button'
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -77,7 +81,8 @@ class Register extends Component {
 			>
 				{ props => (
 				<View style={styles.container}>
-						<Text style={styles.header}>Member Registration</Text>
+						<Image source={require('../img/biztech.png')} style={styles.loginLogo} />
+						<Text style={styles.h1}>Sign Up</Text>
 		        <TextInput
 	            style={styles.input}
 	            placeholder="First Name"
@@ -136,6 +141,7 @@ class Register extends Component {
 							{props.errors.pass}</Text>}
 
 						<Picker
+							style={styles.text}
 	            selectedValue={this.state.year}
 							onValueChange={(itemValue, itemIndex) => {
 						    props.setFieldValue('year', itemValue)
@@ -201,7 +207,6 @@ class Register extends Component {
 
 		        <Button
 							disabled={props.isSubmitting}
-	            color='#7ad040'
 							onPress={props.handleSubmit}
 							title="Join the BizTech Family!" />
 
@@ -288,29 +293,3 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)
 							(Register);
-
-const styles = StyleSheet.create({
-	container: {
-    alignSelf: 'stretch',
-    paddingLeft: 60,
-    paddingRight: 60,
-    paddingTop: 60,
-    paddingBottom: 60
-	},
-	header: {
-    color: '#333333',
-    marginBottom: 20,
-    fontSize: 25,
-  },
-  input: {
-  	color: '#333333',
-    paddingVertical: 5,
-    marginBottom: 10,
-    borderBottomColor: '#7ad040',
-    borderBottomWidth: 1
-  },
-  button: {
-    paddingTop: 10,
-    marginTop: 10,
-  },
-});

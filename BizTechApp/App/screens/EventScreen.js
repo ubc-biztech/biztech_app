@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import { ScrollView, StyleSheet, View, Dimensions, Image,
-         Button, StatusBar, ActivityIndicator } from 'react-native';
-import { Text,
-         ThemeProvider } from 'react-native-elements';
+import { View, Dimensions, Image } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 
 const {width, height} = Dimensions.get('window');
+//styling
+import styles from '../styles/Styles';
+import Text from '../components/Text'
+
+import Button from '../components/Button'
 
 export default class EventScreen extends Component {
 
@@ -22,30 +24,19 @@ export default class EventScreen extends Component {
     const { navigation } = this.props
     const event = navigation.getParam('event')
     return(
-			<ThemeProvider>
+			<View>
         <Image
           source={{ uri: event.img }}
           style={{ width: width, height: 240, marginBottom: 10 }}
           resizeMode="cover"
         />
         <View style={styles.widgetContainer}>
-          <Text h4>{ event.ename }</Text>
-          <Text style={{ color: '#7ad040', marginBottom: 10 }} >{ event.edate }</Text>
-          <Text style={{ marginBottom: 10 }} >{ this.getDescription(event) }</Text>
-          <Button color='#7ad040' title='Sign Up'/>
+          <Text style={styles.h1}>{ event.ename }</Text>
+          <Text style={styles.colour} >{ event.edate }</Text>
+          <Text>{ this.getDescription(event) }</Text>
+          <Button title='Sign Up'/>
         </View>
-			</ThemeProvider>
+			</View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-	center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection:'column',
-	},
-	widgetContainer: {
-		padding: 20,
-	}
-});
