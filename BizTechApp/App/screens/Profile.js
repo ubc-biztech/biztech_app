@@ -9,6 +9,10 @@ import Text from '../components/Text'
 import Button from '../components/Button'
 
 class Profile extends Component {
+  static navigationOptions = {
+    header: null
+  };
+
 
 	  render(){
 	    return(
@@ -17,6 +21,10 @@ class Profile extends Component {
 		        <Text style={styles.h1}>Profile</Text>
 	          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
 	          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
+
+						<Button
+							onPress={() => this.props.navigation.navigate('Edit Profile')}
+							title='Edit Profile'/>
 
 						<Button
 							onPress={() => this.props.logout()}

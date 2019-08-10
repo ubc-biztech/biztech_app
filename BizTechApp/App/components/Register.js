@@ -34,7 +34,6 @@ class Register extends Component {
 	  constructor(){
 	    super();
 	    this.state = {
-        confirmationCode: '',
 				genderErr: false,
 				yearErr: false,
 				facultyErr: false,
@@ -235,7 +234,6 @@ class Register extends Component {
 					nickname: id
         },
         })
-        // On success, show Confirmation Code Modal
         .then(() => {
 					const body = JSON.stringify({
 							fname,

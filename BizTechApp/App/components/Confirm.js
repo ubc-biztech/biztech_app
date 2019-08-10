@@ -36,6 +36,7 @@ class ConfirmScreen extends Component {
           Please enter your confirmation code.
         </Text>
         <TextInput
+          style={styles.input}
           placeholder="Confirmation Code"
           onChangeText={
             // Set this.state.confirmationCode to the value in this Input box
