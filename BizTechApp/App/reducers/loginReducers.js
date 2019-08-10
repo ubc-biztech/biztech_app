@@ -27,8 +27,7 @@ export default function loginReducer(state=initialState, action) {
             })
         case 'logout':
             return Object.assign({}, state, {
-              isLoggedIn: false,
-              user: null
+              isLoggedIn: false
             })
         default:
             return state
