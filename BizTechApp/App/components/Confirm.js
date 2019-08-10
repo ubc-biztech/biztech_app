@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import { View,
-         TextInput } from 'react-native';
-import { AMAZON_API } from 'react-native-dotenv';
-import { withNavigation } from 'react-navigation';
+import { View, TextInput } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
 import { doVerify } from '../actions/Login';
@@ -28,8 +25,6 @@ class ConfirmScreen extends Component {
     Auth.confirmSignUp(email, this.state.confirmationCode, {})
       .then(() => {
         this.props.doVerify()
-        this.props.navigation.navigate('Profile')
-        this.props.navigation.navigate('Home')
       })
       .catch(err => console.log(err));
   }
@@ -37,7 +32,6 @@ class ConfirmScreen extends Component {
   render() {
     return(
       <View style={styles.widgetContainer}>
-        <Text style={styles.h1}>Welcome to BizTech!</Text>
         <Text>
           Please enter your confirmation code.
         </Text>
@@ -59,10 +53,9 @@ class ConfirmScreen extends Component {
 // objects
 const mapStateToProps = (state) => {
 	return {
-		userData: state.login.user,
+    userData: state.login.user
 	};
 };
-
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -70,4 +63,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps) (ConfirmScreen));
+export default connect(mapStateToProps, mapDispatchToProps) (ConfirmScreen);

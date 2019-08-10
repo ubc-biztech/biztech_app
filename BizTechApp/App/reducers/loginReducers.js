@@ -2,10 +2,12 @@
 import { ATTEMPT, SUCCESS, FAILED } from '../constants/Consts';
 
 const initialState = {
+    events: null,
     isLoggedIn: false,
     isLoading: false,
     user: null,
-    error: undefined
+    error: undefined,
+    isVerified: false
 }
 
 export default function loginReducer(state=initialState, action) {
@@ -13,6 +15,10 @@ export default function loginReducer(state=initialState, action) {
         case ATTEMPT:
             return Object.assign({}, state, {
                 isLoading: true
+            })
+        case 'stopLoading':
+            return Object.assign({}, state, {
+                isLoading: false
             })
         case SUCCESS:
             return Object.assign({}, state, {
@@ -22,12 +28,24 @@ export default function loginReducer(state=initialState, action) {
             })
         case FAILED:
             return Object.assign({}, state, {
+                user: {
+                  email: action.email
+                },
                 isLoading: false,
                 error: action.err
             })
         case 'logout':
+          console.log('logout, state cleared')
+          return Object.assign({}, state, initialState)
+        case 'verified':
+          console.log('verified called')
+          return Object.assign({}, state, {
+            isVerified: true,
+            error: null
+          })
+        case 'events':
             return Object.assign({}, state, {
-              isLoggedIn: false
+                events: action.events
             })
         default:
             return state

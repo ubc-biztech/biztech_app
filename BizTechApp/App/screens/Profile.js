@@ -19,10 +19,6 @@ class Profile extends Component {
 	          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
 
 						<Button
-							onPress={() => this.props.navigation.navigate('Confirm')}
-							title='Verify Account'/>
-
-						<Button
 							onPress={() => this.props.logout()}
 							title='Logout'/>
 
@@ -43,7 +39,7 @@ const mapStateToProps = (state) => {
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		logout: (values) => dispatch(logout())
+		logout: () => dispatch(logout())
 	};
 };
 
