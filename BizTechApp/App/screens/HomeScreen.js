@@ -9,6 +9,8 @@ import EventCard from '../components/EventCard'
 import styles from '../styles/Styles';
 import Text from '../components/Text'
 
+import Notification from '../components/Notification'
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,11 @@ class Home extends Component {
   render() {
     return(
       <ScrollView>
+        { !this.props.isVerified &&
+          <Notification
+            onPress={() => this.props.navigation.navigate('Confirm')}
+            colour='#ff7043'>Please confirm your account</Notification>
+        }
         <View style={styles.widgetContainer}>
           <Text style={styles.h1}>Home</Text>
           {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
@@ -61,7 +68,8 @@ class Home extends Component {
 const mapStateToProps = (state) => {
 	return {
     userData: state.login.user,
-    isLoggedIn: state.login.isLoggedIn
+    isLoggedIn: state.login.isLoggedIn,
+    isVerified: state.login.isVerified
   };
 };
 

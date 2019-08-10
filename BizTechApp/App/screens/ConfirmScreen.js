@@ -28,6 +28,7 @@ class ConfirmScreen extends Component {
     Auth.confirmSignUp(email, this.state.confirmationCode, {})
       .then(() => {
         this.props.doVerify()
+        this.props.navigation.navigate('Profile')
         this.props.navigation.navigate('Home')
       })
       .catch(err => console.log(err));

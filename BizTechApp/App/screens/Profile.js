@@ -18,12 +18,6 @@ class Profile extends Component {
 	          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
 	          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
 
-						{	!this.props.isVerified &&
-							<Button
-								onPress={() => this.props.navigation.navigate('Confirm')}
-								title='Verify Account'/>
-						}
-
 						<Button
 							onPress={() => this.props.logout()}
 							title='Logout'/>
@@ -39,8 +33,7 @@ class Profile extends Component {
 const mapStateToProps = (state) => {
 	return {
 		userData: state.login.user,
-    isLoggedIn: state.login.isLoggedIn,
-    isVerified: state.login.isVerified
+    isLoggedIn: state.login.isLoggedIn
 	};
 };
 // actions

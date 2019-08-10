@@ -4,6 +4,9 @@ export default styles = StyleSheet.create({
  text: {
     fontFamily: 'RedHatDisplay-Regular'
   },
+ bold: {
+    fontFamily: 'RedHatDisplay-Bold'
+  },
  colour: {
     fontFamily: 'RedHatDisplay-Regular',
     color: '#7ad040'

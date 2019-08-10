@@ -31,7 +31,7 @@ export function doLogin(values) {
             .then((user) => {
               console.log(user.signInUserSession.idToken.payload);
               let id = (user.signInUserSession.idToken.payload.nickname);
-              user.signInUserSession.idToken.payload.email_verified ? dispatch(isVerified()) : null;
+              user.signInUserSession.idToken.payload.email_verified ? dispatch(doVerify()) : null;
               fetch(AMAZON_API+'/users/get?id='+id)
           	      .then((response) => response.json())
           	      .then((response) => {
