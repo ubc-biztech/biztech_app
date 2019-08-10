@@ -2,6 +2,7 @@
 import { ATTEMPT, SUCCESS, FAILED } from '../constants/Consts';
 
 const initialState = {
+    events: null,
     isLoggedIn: false,
     isLoading: false,
     user: null,
@@ -27,13 +28,17 @@ export default function loginReducer(state=initialState, action) {
                 error: action.err
             })
         case 'logout':
-          console.log('logout: state cleared')
+          console.log('logout, state cleared')
           return Object.assign({}, state, initialState)
         case 'verified':
           console.log('verified called')
           return Object.assign({}, state, {
             isVerified: true
           })
+        case 'events':
+            return Object.assign({}, state, {
+                events: action.events
+            })
         default:
             return state
     }

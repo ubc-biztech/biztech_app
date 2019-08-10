@@ -72,3 +72,10 @@ export function doVerify() {
         type: 'verified'
     }
 }
+
+export function populateEvents(events) {
+    return {
+        type: 'events',
+        events
+    }
+}
