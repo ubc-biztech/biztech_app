@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { createAppContainer, createBottomTabNavigator } from 'react-navigation'
 import HomeNavigator from '../features/HomeNavigator'
+import ProfileNavigator from '../features/ProfileNavigator'
 import Profile from '../screens/Profile'
-import Login from '../screens/Login'
 import Icon from 'react-native-vector-icons/Feather';
 
 const TabNavigator = createBottomTabNavigator({
   Home: HomeNavigator,
-  Profile: Profile,
-  'Sign In': Login,
+  Profile: ProfileNavigator,
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -18,8 +17,6 @@ const TabNavigator = createBottomTabNavigator({
       let iconName;
       if (routeName === 'Home') {
         iconName = 'home';
-      } else if (routeName === 'Sign In') {
-        iconName = 'user';
       } else if (routeName === 'Profile') {
         iconName = 'user';
       }

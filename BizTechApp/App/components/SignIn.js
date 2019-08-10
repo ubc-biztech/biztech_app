@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import Auth from '@aws-amplify/auth';
-import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -23,14 +22,7 @@ class SignIn extends Component {
         pass: '',
       };
 	}
-	
-	componentDidUpdate() {
-		if (this.props.isLoggedIn) {
-			this.props.navigation.navigate('Home');
-		}
-	}
 
-		// { props.touched.email && props.errors.email && <Text style={{ fontSize: 10, color: 'red' }}>{props.errors.email}</Text> }
 	render() {
 		if (this.props.isLoading) {
 			return (
@@ -75,6 +67,7 @@ class SignIn extends Component {
   }
 };
 
+// objects
 const mapStateToProps = (state) => {
 	return {
 		isLoading: state.login.isLoading,
@@ -83,14 +76,14 @@ const mapStateToProps = (state) => {
 	};
 };
 
+// actions
 const mapDispatchToProps = (dispatch) => {
 	return {
 		handleSignIn: (values) => dispatch(doLogin(values))
 	};
 };
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)
-							(SignIn));
+export default connect(mapStateToProps, mapDispatchToProps) (SignIn);
 
 const styles = StyleSheet.create({
 	container: {

@@ -1,42 +1,19 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import { Button,
- 				 Header,
-				 ThemeProvider } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import CreateEvent from '../components/CreateEvent';
-import { StatusBar } from 'react-native';
+import { connect } from 'react-redux';
+import Navigator from '../features/Navigator';
+import Login from '../screens/Login'
 
-const theme = {
-  colors: {
-    primary: '#7ad040',
+class Main extends Component {
+  render() {
+    return (this.props.isLoggedIn) ? <Navigator/> : <Login/>
   }
-}
+};
 
-export default class Main extends Component {
-	render() {
-		return (
-			<ThemeProvider theme={theme}>
-				<StatusBar backgroundColor="#7ad040" barStyle="light-content" />
-				<View style={styles.widgetContainer}><CreateEvent theme={theme}/></View>
-			</ThemeProvider>
-		);
-	}
-}
+// objects
+const mapStateToProps = (state) => {
+	return {
+    isLoggedIn: state.login.isLoggedIn
+	};
+};
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF'
-	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5
-	},
-	widgetContainer: {
-		margin: 20,
-	}
-});
+export default connect(mapStateToProps) (Main);

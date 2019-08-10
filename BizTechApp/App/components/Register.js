@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { Picker, Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
-import { Input } from 'react-native-elements';
+import { Picker, Button, Modal, StyleSheet, TextInput, View} from 'react-native';
+import { Text, Input } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
-import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { populateUser } from '../actions/Login';
+import { connect } from 'react-redux';
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -30,7 +31,6 @@ class Register extends Component {
 	    super();
 	    this.state = {
         confirmationCode: '',
-        modalVisible: false,
 				genderErr: false,
 				yearErr: false,
 				facultyErr: false,
@@ -53,16 +53,16 @@ class Register extends Component {
 	        faculty: '',
 	        year: '',
 	        gender: '',
-	        diet: null,
+	        diet: 'none',
 				}}
 				validationSchema={ FormSchema }
 				onSubmit={(values, actions) => {
 					const {faculty, year, gender} = values;
 
 					// check if dropdown fields are blank, generate error if they are
-					( faculty == '' ? this.setState({facultyErr: true}) : null);
-					( year == '' ? this.setState({yearErr: true}) : null);
-					( gender == '' ? this.setState({genderErr: true}) : null);
+					( faculty == '' ? this.setState({facultyErr: true}) : this.setState({facultyErr: false}));
+					( year == '' ? this.setState({yearErr: true}) : this.setState({yearErr: false}));
+					( gender == '' ? this.setState({genderErr: true}) : this.setState({genderErr: false}));
 					const {facultyErr, yearErr, genderErr} = this.state;
 
 					// check if there are no dropdown field errors
@@ -138,7 +138,6 @@ class Register extends Component {
 						<Picker
 	            selectedValue={this.state.year}
 							onValueChange={(itemValue, itemIndex) => {
-								(itemValue == '' ? this.setState({yearErr: true}) : this.setState({yearErr: false}))
 						    props.setFieldValue('year', itemValue)
 						    this.setState({year: itemValue})
 							}}>
@@ -157,7 +156,6 @@ class Register extends Component {
 						<Picker
 	            selectedValue={this.state.faculty}
 							onValueChange={(itemValue) => {
-								(itemValue == '' ? this.setState({facultyErr: true}) : this.setState({facultyErr: false}))
 						    props.setFieldValue('faculty', itemValue)
 						    this.setState({faculty: itemValue})
 							}}>
@@ -176,7 +174,6 @@ class Register extends Component {
 						<Picker
 	            selectedValue={this.state.gender}
 							onValueChange={(itemValue, itemIndex) => {
-								(itemValue == '' ? this.setState({genderErr: true}) : this.setState({genderErr: false}))
 						    props.setFieldValue('gender', itemValue)
 						    this.setState({gender: itemValue})
 							}}>
@@ -195,7 +192,7 @@ class Register extends Component {
 						    props.setFieldValue('diet', itemValue)
 						    this.setState({diet: itemValue})
 							}}>
-              <Picker.Item label='Dietary Restrictions' value=''/>
+              <Picker.Item label='Dietary Restrictions' value='none'/>
 	            <Picker.Item label='Vegan' value='Vegan'/>
 	            <Picker.Item label='Vegetarian' value='Vegetarian'/>
 	            <Picker.Item label='Halal' value='Halal'/>
@@ -211,58 +208,13 @@ class Register extends Component {
 						{ // Notify user if account already exists or some other error
 							this.state.err && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>{this.state.errMessage}</Text> }
 
-		        <Button
-	            style={styles.button}
-	            title="debug open modal"
-	            onPress={this.handleDebugOpen.bind(this)} />
 					</View>
 		    )}
 	  </Formik>
 
-    <Modal
-      visible={this.state.modalVisible}
-    >
-      <View
-        style={styles.container}
-      >
-      <TextInput
-        placeholder="Confirmation Code"
-        onChangeText={
-          // Set this.state.confirmationCode to the value in this Input box
-          (value) => this.setState({ confirmationCode: value })
-        }
-      />
-        <Button
-          title='Submit'
-					color='#7ad040'
-          onPress={ this.handleConfirmationCode.bind(this)}/>
-        <Button
-          title='Debug close'
-          onPress={ this.handleDebugClose.bind(this)}/>
-      </View>
-    </Modal>
 	</View>
 
 		);
-  }
-
-  handleDebugClose(){
-    this.setState({ modalVisible: false });
-    this.props.navigation.navigate('Home')
-  }
-
-  handleDebugOpen(){
-    this.setState({ modalVisible: true });
-  }
-
-  handleConfirmationCode() {
-    const { email, confirmationCode } = this.state;
-    Auth.confirmSignUp(email, confirmationCode, {})
-      .then(() => {
-        this.setState({ modalVisible: false });
-        this.props.navigation.navigate('Home')
-      })
-      .catch(err => console.log(err));
   }
 
   registerPress(values) {
@@ -275,31 +227,33 @@ class Register extends Component {
           email,
           name: fname,
           family_name: lname,
+					nickname: id
         },
         })
         // On success, show Confirmation Code Modal
         .then(() => {
-					this.setState({ modalVisible: true })
+					const body = JSON.stringify({
+							fname,
+							lname,
+							email,
+							faculty,
+							id,
+							year,
+							gender,
+							diet
+					})
 			    let response = fetch(AMAZON_API+'/users/create',
 			    {   method: 'POST',
 			        headers: {
 			            Accept: 'application/json',
 			            'Content-Type': 'application/json',
 			        },
-			        body: JSON.stringify({
-			            fname,
-			            lname,
-			            email,
-			            faculty,
-			            id,
-			            year,
-			            gender,
-			            diet
-			        })
+			        body: body
 			        })
 			    .then((response) => response.json())
 			    .then((response) => {
 			        console.log(response)
+							this.props.populateDispatch(id)
 			    })
 			    .done();
 
@@ -318,7 +272,22 @@ class Register extends Component {
   }
 }
 
-export default withNavigation(Register);
+// objects
+const mapStateToProps = (state) => {
+	return {
+		userData: state.login.user,
+	};
+};
+
+// actions
+const mapDispatchToProps = (dispatch) => {
+	return {
+		populateDispatch: (id) => dispatch(populateUser(id))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)
+							(Register);
 
 const styles = StyleSheet.create({
 	container: {

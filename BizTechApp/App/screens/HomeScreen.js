@@ -29,16 +29,6 @@ class Home extends Component {
       })
   }
 
-  // async fetchUser(){
-  //   fetch(AMAZON_API+'/users/get?id=75129696')
-  //     .then((response) => response.json())
-  //     .then((response) => {
-  //       this.setState({
-  //         userData: (response)
-  //       })
-  //     })
-  // }
-
   componentDidMount() {
     this.fetchEvents()
   }
@@ -49,7 +39,7 @@ class Home extends Component {
       <ScrollView>
         <View style={styles.widgetContainer}>
           <Text h2>Home</Text>
-          {this.props.isLoggedIn && <Text> Welcome, { this.props.userData.name } </Text>}
+          {this.props.isLoggedIn && <Text> Welcome, { this.props.userData.fname } </Text>}
           {!this.props.isLoggedIn && <Text> Welcome to BizTech </Text>}
         </View>
 
