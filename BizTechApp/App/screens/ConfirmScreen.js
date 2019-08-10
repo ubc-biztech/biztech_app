@@ -5,6 +5,7 @@ import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
+import { doVerify } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
@@ -26,6 +27,7 @@ class ConfirmScreen extends Component {
     console.log(this.state.confirmationCode);
     Auth.confirmSignUp(email, this.state.confirmationCode, {})
       .then(() => {
+        this.props.doVerify()
         this.props.navigation.navigate('Home')
       })
       .catch(err => console.log(err));
@@ -60,4 +62,11 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default withNavigation(connect(mapStateToProps) (ConfirmScreen));
+// actions
+const mapDispatchToProps = (dispatch) => {
+	return {
+		doVerify: () => dispatch(doVerify())
+	};
+};
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps) (ConfirmScreen));

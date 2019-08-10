@@ -5,7 +5,8 @@ const initialState = {
     isLoggedIn: false,
     isLoading: false,
     user: null,
-    error: undefined
+    error: undefined,
+    isVerified: false
 }
 
 export default function loginReducer(state=initialState, action) {
@@ -26,9 +27,13 @@ export default function loginReducer(state=initialState, action) {
                 error: action.err
             })
         case 'logout':
-            return Object.assign({}, state, {
-              isLoggedIn: false
-            })
+          console.log('logout: state cleared')
+          return Object.assign({}, state, initialState)
+        case 'verified':
+          console.log('verified called')
+          return Object.assign({}, state, {
+            isVerified: true
+          })
         default:
             return state
     }

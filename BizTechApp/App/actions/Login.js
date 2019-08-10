@@ -29,14 +29,16 @@ export function doLogin(values) {
         const { email, pass } = values;
         return Auth.signIn(email, pass)
             .then((user) => {
-                let id = (user.signInUserSession.idToken.payload.nickname);
-                fetch(AMAZON_API+'/users/get?id='+id)
-            	      .then((response) => response.json())
-            	      .then((response) => {
-                      dispatch(loginSuccess(response));
-                      console.log('login success');
-                      console.log(response);
-            	      })
+              console.log(user.signInUserSession.idToken.payload);
+              let id = (user.signInUserSession.idToken.payload.nickname);
+              user.signInUserSession.idToken.payload.email_verified ? dispatch(isVerified()) : null;
+              fetch(AMAZON_API+'/users/get?id='+id)
+          	      .then((response) => response.json())
+          	      .then((response) => {
+                    dispatch(loginSuccess(response));
+                    console.log('login success');
+                    console.log(response);
+          	      })
 
                 // console.log(user.signInUserSession.idToken.payload);
             }).catch(err => {
@@ -62,5 +64,11 @@ export function populateUser(id) {
 export function logout() {
     return {
         type: 'logout'
+    }
+}
+
+export function doVerify() {
+    return {
+        type: 'verified'
     }
 }
