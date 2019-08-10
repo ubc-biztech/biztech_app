@@ -9,6 +9,12 @@ export function isLoading()  {
     }
 }
 
+export function stopLoading() {
+    return {
+        type: 'stopLoading'
+    }
+}
+
 export function loginSuccess(user) {
     return {
         type: SUCCESS,
@@ -16,9 +22,10 @@ export function loginSuccess(user) {
     }
 }
 
-export function loginFailed(err) {
+export function loginFailed(email, err) {
     return {
         type: FAILED,
+        email,
         err
     }
 }
@@ -44,7 +51,7 @@ export function doLogin(values) {
             }).catch(err => {
                 console.log("login error");
                 console.log(err);
-                dispatch(loginFailed(err));
+                dispatch(loginFailed(email, err));
             })
     }
 }

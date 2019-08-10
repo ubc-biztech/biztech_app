@@ -4,6 +4,7 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import Navigator from '../features/Navigator';
 import Login from '../screens/Login'
+import { stopLoading } from '../actions/Login'
 
 class Main extends Component {
   render() {
@@ -14,6 +15,9 @@ class Main extends Component {
       </View>
     )
   }
+  componentDidMount() {
+    this.props.stopLoading()
+  }
 };
 
 // objects
@@ -22,5 +26,11 @@ const mapStateToProps = (state) => {
     isLoggedIn: state.login.isLoggedIn
 	};
 };
+// actions
+const mapDispatchToProps = (dispatch) => {
+	return {
+		stopLoading: () => dispatch(stopLoading())
+	};
+};
 
-export default connect(mapStateToProps) (Main);
+export default connect(mapStateToProps, mapDispatchToProps) (Main);

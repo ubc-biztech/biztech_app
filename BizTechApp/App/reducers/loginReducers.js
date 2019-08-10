@@ -16,6 +16,10 @@ export default function loginReducer(state=initialState, action) {
             return Object.assign({}, state, {
                 isLoading: true
             })
+        case 'stopLoading':
+            return Object.assign({}, state, {
+                isLoading: false
+            })
         case SUCCESS:
             return Object.assign({}, state, {
                 isLoading: false,
@@ -24,6 +28,9 @@ export default function loginReducer(state=initialState, action) {
             })
         case FAILED:
             return Object.assign({}, state, {
+                user: {
+                  email: action.email
+                },
                 isLoading: false,
                 error: action.err
             })
@@ -33,7 +40,8 @@ export default function loginReducer(state=initialState, action) {
         case 'verified':
           console.log('verified called')
           return Object.assign({}, state, {
-            isVerified: true
+            isVerified: true,
+            error: null
           })
         case 'events':
             return Object.assign({}, state, {

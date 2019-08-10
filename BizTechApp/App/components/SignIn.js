@@ -11,6 +11,7 @@ import styles from '../styles/Styles';
 
 import Text from '../components/Text'
 import Button from '../components/Button'
+import Confirm from '../components/Confirm'
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -43,7 +44,7 @@ class SignIn extends Component {
 				<Text style={styles.h1}>Sign In</Text>
 
 			  <Formik
-			    initialValues={{ email: '' }}
+			    initialValues={{ email: (this.props.userData ? this.props.userData.email : '') }}
 					validationSchema={ FormSchema }
 			    onSubmit={values => this.props.handleSignIn(values)}
 			  >
@@ -52,6 +53,7 @@ class SignIn extends Component {
 			        <TextInput
 		            style={styles.input}
 								placeholder="Email"
+								// defaultValue={this.props.userData ? this.props.userData.email : null}
 			          onChangeText={props.handleChange('email')}
 							  onBlur={() => props.setFieldTouched('email')}
 			          value={props.values.email}
@@ -64,8 +66,11 @@ class SignIn extends Component {
 				          onBlur={props.handleBlur('pass')}
 				          value={props.values.pass}/>
 			        <Button disabled={!props.isValid} onPress={props.handleSubmit} title="Sign In" />
-							{//state.props.incorrect indicates an incorrect try
-								(this.props.incorrect !== undefined) && <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>Incorrect username/password</Text> }
+							{this.props.incorrect && (this.props.incorrect.code !== undefined)
+								&& <Text style={{ marginVertical: 10, fontSize: 10, color: 'red' }}>
+										{this.props.incorrect.message}</Text> }
+							{this.props.incorrect && (this.props.incorrect.code == 'UserNotConfirmedException') &&
+								<Confirm/>}
 			      </View>
 			    )}
 			  </Formik>
@@ -77,6 +82,7 @@ class SignIn extends Component {
 // objects
 const mapStateToProps = (state) => {
 	return {
+		userData: state.login.user,
 		isLoading: state.login.isLoading,
 		incorrect: state.login.error,
 		isLoggedIn: state.login.isLoggedIn
