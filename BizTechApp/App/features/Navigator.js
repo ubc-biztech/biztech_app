@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createAppContainer, createBottomTabNavigator } from 'react-navigation'
+import NavigationService from './NavigationService';
 import HomeNavigator from '../features/HomeNavigator'
 import ProfileNavigator from '../features/ProfileNavigator'
 import Profile from '../screens/Profile'
@@ -30,4 +31,16 @@ const TabNavigator = createBottomTabNavigator({
   },
 })
 
-export default createAppContainer(TabNavigator);
+const AppContainer = createAppContainer(TabNavigator);
+
+export default class Navigator extends Component {
+  render() {
+    return (
+      <AppContainer
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
+    )
+  }
+}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { populateUser, unverify } from '../actions/Login';
+import NavigationService from '../features/NavigationService.js';
 //styling
 import styles from '../styles/Styles';
 import Button from '../components/Button'
@@ -229,6 +230,8 @@ class Register extends Component {
         console.log(response)
         this.props.populateDispatch(id)
     })
+
+    NavigationService.navigate('Home', {});
   }
 }
 // objects
