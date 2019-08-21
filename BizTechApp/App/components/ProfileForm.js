@@ -3,6 +3,7 @@ import { Picker, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { AMAZON_API } from 'react-native-dotenv';
+import Auth from '@aws-amplify/auth';
 import { populateUser } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
@@ -183,7 +184,26 @@ class Register extends Component {
 
   registerPress(values) {
     const { email, pass, fname, lname, id, yr, faculty, gender, diet } = values;
-    console.log(id)
+    // if (email != this.props.userData.email){
+    //   console.log('email changed')
+    //   Auth.currentAuthenticatedUser()
+    //     .then(user => {
+    //         return Auth.changePassword(user, 'poop123', 'pooppoop');
+    //     })
+    //     .then(data => console.log(data))
+    //     .catch(err => console.log(err));
+    // }
+    if (email != this.props.userData.email){
+      console.log('email changed', email)
+      Auth.currentAuthenticatedUser()
+        .then(user => {
+            return Auth.updateUserAttributes(user, {
+              'email': email
+            });
+        })
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+    }
     const body = JSON.stringify({
         fname,
         lname,
