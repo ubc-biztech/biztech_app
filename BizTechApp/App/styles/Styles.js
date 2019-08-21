@@ -22,7 +22,12 @@ export default styles = StyleSheet.create({
     color: 'black'
   },
 	widgetContainer: {
-		padding: 20
+		paddingVertical: 25,
+    paddingHorizontal: 20
+	},
+	pageContainer: {
+		paddingVertical: 0,
+    paddingHorizontal: 20
 	},
 	content: {
 		padding: 10,

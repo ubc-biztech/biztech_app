@@ -47,7 +47,7 @@ class EditProfile extends Component {
   render() {
     return(
       <ScrollView>
-				<View style={styles.widgetContainer}>
+				<View style={styles.pageContainer}>
 	        <Text style={styles.h1}>Edit Profile</Text>
 	        <ProfileForm disableSid={true} schema={FormSchema} title='Save'/>
 	        <Button

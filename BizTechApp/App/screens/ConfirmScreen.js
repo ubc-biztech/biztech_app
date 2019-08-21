@@ -46,7 +46,7 @@ class ConfirmScreen extends Component {
 
   render() {
     return(
-      <View style={styles.widgetContainer}>
+      <View style={styles.pageContainer}>
         <Text style={styles.h1}>Welcome to BizTech!</Text>
         <Text>
           Please enter your confirmation code.

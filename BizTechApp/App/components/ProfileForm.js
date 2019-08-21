@@ -231,6 +231,7 @@ class Register extends Component {
         this.props.populateDispatch(id)
     })
 
+    NavigationService.navigate('Profile', {});
     NavigationService.navigate('Home', {});
   }
 }
