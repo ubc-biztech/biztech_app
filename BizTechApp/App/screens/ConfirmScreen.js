@@ -31,7 +31,17 @@ class ConfirmScreen extends Component {
         this.props.navigation.navigate('Profile')
         this.props.navigation.navigate('Home')
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err)
+        if (err.code == 'NotAuthorizedException'){
+          Auth.verifyCurrentUserAttributeSubmit('email', this.state.confirmationCode)
+            .then(() => {
+              this.props.doVerify()
+              this.props.navigation.navigate('Profile')
+              this.props.navigation.navigate('Home')
+            })
+        }
+      });
   }
 
   render() {

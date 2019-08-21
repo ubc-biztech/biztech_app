@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
-import { populateUser } from '../actions/Login';
+import { populateUser, unverify } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 import Button from '../components/Button'
@@ -197,11 +197,13 @@ class Register extends Component {
       console.log('email changed', email)
       Auth.currentAuthenticatedUser()
         .then(user => {
-            return Auth.updateUserAttributes(user, {
+            Auth.updateUserAttributes(user, {
               'email': email
             });
         })
-        .then(data => console.log(data))
+        .then(data => {
+          this.props.unverify()
+        })
         .catch(err => console.log(err));
     }
     const body = JSON.stringify({
@@ -233,13 +235,15 @@ class Register extends Component {
 const mapStateToProps = (state) => {
 	return {
 		userData: state.login.user,
+		isVerified: state.login.isVerified,
 	};
 };
 
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		populateDispatch: (id) => dispatch(populateUser(id))
+		populateDispatch: (id) => dispatch(populateUser(id)),
+		unverify: () => dispatch(unverify())
 	};
 };
 

@@ -43,6 +43,12 @@ export default function loginReducer(state=initialState, action) {
             isVerified: true,
             error: null
           })
+        case 'unverified':
+          console.log('unverified called')
+          return Object.assign({}, state, {
+            isVerified: false,
+            error: null
+          })
         case 'events':
             return Object.assign({}, state, {
                 events: action.events

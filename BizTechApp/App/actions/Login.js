@@ -80,6 +80,12 @@ export function doVerify() {
     }
 }
 
+export function unverify() {
+    return {
+        type: 'unverified'
+    }
+}
+
 export function populateEvents(events) {
     return {
         type: 'events',
