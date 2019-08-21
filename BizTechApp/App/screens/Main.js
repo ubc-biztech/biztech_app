@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import Navigator from '../features/Navigator';
 import Login from '../screens/Login'
-import { stopLoading } from '../actions/Login'
+import { stopLoading, hideSuccess, unhideSuccess } from '../actions/Login'
 
 import Notification from '../components/Notification'
 
@@ -13,8 +13,12 @@ class Main extends Component {
     return (
       <View style={{ flex:1 }}>
         <StatusBar backgroundColor='#999' barStyle='light-content'/>
-          <Notification
-            whitetext={true} colour='#7ad040'>Success</Notification>
+          {this.props.showSuccess &&
+            <Notification
+              whitetext={true}
+              colour='#7ad040'
+              onPress={() => this.hide()}>Success</Notification>
+          }
         {(this.props.isLoggedIn) ? <Navigator/> : <Login/>}
       </View>
     )
@@ -22,18 +26,23 @@ class Main extends Component {
   componentDidMount() {
     this.props.stopLoading()
   }
+  hide() {
+    this.props.hideSuccess()
+  }
 };
 
 // objects
 const mapStateToProps = (state) => {
 	return {
-    isLoggedIn: state.login.isLoggedIn
+    isLoggedIn: state.login.isLoggedIn,
+    showSuccess: state.login.showSuccess
 	};
 };
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		stopLoading: () => dispatch(stopLoading())
+		stopLoading: () => dispatch(stopLoading()),
+		hideSuccess: () => dispatch(hideSuccess())
 	};
 };
 

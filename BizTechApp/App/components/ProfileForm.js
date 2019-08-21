@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
-import { populateUser, unverify } from '../actions/Login';
+import { populateUser, unverify, unhideSuccess } from '../actions/Login';
 import NavigationService from '../features/NavigationService.js';
 //styling
 import styles from '../styles/Styles';
@@ -229,10 +229,10 @@ class Register extends Component {
     .then((response) => {
         console.log(response)
         this.props.populateDispatch(id)
+				this.props.unhideSuccess()
     })
-
     NavigationService.navigate('Profile', {});
-    NavigationService.navigate('Home', {});
+
   }
 }
 // objects
@@ -247,7 +247,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		populateDispatch: (id) => dispatch(populateUser(id)),
-		unverify: () => dispatch(unverify())
+		unverify: () => dispatch(unverify()),
+		unhideSuccess: () => dispatch(unhideSuccess())
 	};
 };
 

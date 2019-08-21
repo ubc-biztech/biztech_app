@@ -7,7 +7,8 @@ const initialState = {
     isLoading: false,
     user: null,
     error: undefined,
-    isVerified: false
+    isVerified: false,
+    showSuccess: false
 }
 
 export default function loginReducer(state=initialState, action) {
@@ -52,6 +53,14 @@ export default function loginReducer(state=initialState, action) {
         case 'events':
             return Object.assign({}, state, {
                 events: action.events
+            })
+        case 'hideSuccess':
+            return Object.assign({}, state, {
+                showSuccess: false
+            })
+        case 'unhideSuccess':
+            return Object.assign({}, state, {
+                showSuccess: true
             })
         default:
             return state

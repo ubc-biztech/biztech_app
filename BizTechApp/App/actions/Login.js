@@ -92,3 +92,15 @@ export function populateEvents(events) {
         events
     }
 }
+
+export function hideSuccess() {
+    return {
+        type: 'hideSuccess'
+    }
+}
+
+export function unhideSuccess() {
+    return {
+        type: 'unhideSuccess'
+    }
+}
