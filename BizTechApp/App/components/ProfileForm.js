@@ -185,15 +185,6 @@ class Register extends Component {
 
   registerPress(values) {
     const { email, pass, fname, lname, id, yr, faculty, gender, diet } = values;
-    // if (email != this.props.userData.email){
-    //   console.log('email changed')
-    //   Auth.currentAuthenticatedUser()
-    //     .then(user => {
-    //         return Auth.changePassword(user, 'poop123', 'pooppoop');
-    //     })
-    //     .then(data => console.log(data))
-    //     .catch(err => console.log(err));
-    // }
     if (email != this.props.userData.email){
       console.log('email changed', email)
       Auth.currentAuthenticatedUser()

@@ -5,7 +5,7 @@ import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
-import { doVerify, unhideSuccess } from '../actions/Login';
+import { doVerify, unhideSuccess, hideSuccess } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
@@ -40,6 +40,9 @@ class ConfirmScreen extends Component {
               this.props.navigation.navigate('Profile')
               this.props.navigation.navigate('Home')
               this.props.unhideSuccess()
+              setTimeout(() => {
+                this.props.hideSuccess()
+              }, 5000)
             })
         }
       });
@@ -78,7 +81,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		doVerify: () => dispatch(doVerify()),
-    unhideSuccess: () => dispatch(unhideSuccess())
+    unhideSuccess: () => dispatch(unhideSuccess()),
+    hideSuccess: () => dispatch(hideSuccess())
 	};
 };
 
