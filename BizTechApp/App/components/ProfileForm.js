@@ -2,27 +2,11 @@ import React, {Component} from 'react';
 import { Picker, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
+import { AMAZON_API } from 'react-native-dotenv';
+import { populateUser } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 import Button from '../components/Button'
-
-// Validation Schema for Formik form using Yup library
-// const FormSchema = Yup.object().shape({
-// fname: Yup.string()
-// 	.required('Required'),
-// lname: Yup.string()
-// 	.required('Required'),
-// id: Yup.number()
-// 	.min(9999999, 'Valid Student ID required')
-// 	.max(100000000, 'Valid Student ID required')
-// 	.required('Required'),
-// pass: Yup.string()
-// 	.min('6', 'Weak password')
-// 	.required('Password Required'),
-// email: Yup.string()
-// 	.email('Valid email required')
-// 	.required('Email required'),
-// });
 
 class Register extends Component {
 
@@ -34,10 +18,8 @@ class Register extends Component {
     };
   }
 
-
-
   render() {
-    let userData = this.props.userData
+    let userData = this.props.userData;
     return (
       <Formik
         initialValues={{
@@ -46,13 +28,13 @@ class Register extends Component {
           email: userData.email,
           id: userData.id,
           faculty: userData.faculty,
-          year: userData.year,
+          yr: userData.yr,
           gender: userData.gender,
           diet: userData.diet,
         }}
         validationSchema={ this.props.schema }
         onSubmit={(values, actions) => {
-          const {faculty, year, gender} = values;
+          const {faculty, yr, gender} = values;
 
           this.registerPress(values)
 
@@ -117,17 +99,17 @@ class Register extends Component {
             <Text style={{ fontSize: 10 }}>Year of Study</Text>
             <Picker
               style={styles.text}
-              selectedValue={this.state.year}
+              selectedValue={this.state.yr}
               onValueChange={(itemValue, itemIndex) => {
-                props.setFieldValue('year', itemValue)
-                this.setState({year: itemValue})
+                props.setFieldValue('yr', itemValue)
+                this.setState({yr: itemValue})
               }}>
-              <Picker.Item label='Year of Study' value=''/>
+              <Picker.Item label={this.props.userData.yr} value={this.props.userData.yr}/>
               <Picker.Item label='1' value='1'/>
               <Picker.Item label='2' value='2'/>
               <Picker.Item label='3' value='3'/>
               <Picker.Item label='4' value='4'/>
-              <Picker.Item label='5+' value='5'/>
+              <Picker.Item label='5+' value='5+'/>
             </Picker>
             {//show error text if state has yearErr
               this.state.yearErr &&
@@ -141,13 +123,13 @@ class Register extends Component {
                 props.setFieldValue('faculty', itemValue)
                 this.setState({faculty: itemValue})
               }}>
-              <Picker.Item label='Faculty' value=''/>
-              <Picker.Item label='Science' value='science'/>
-              <Picker.Item label='Commerce' value='commerce'/>
-              <Picker.Item label='Arts' value='arts'/>
-              <Picker.Item label='Engineering' value='engineering'/>
-              <Picker.Item label='Land Food Systems' value='lfs'/>
-              <Picker.Item label='Forestry' value='forestry'/>
+              <Picker.Item label={this.props.userData.faculty} value={this.props.userData.faculty}/>
+              <Picker.Item label='Science' value='Science'/>
+              <Picker.Item label='Commerce' value='Commerce'/>
+              <Picker.Item label='Arts' value='Arts'/>
+              <Picker.Item label='Engineering' value='Engineering'/>
+              <Picker.Item label='Land Food Systems' value='Land Food Systems'/>
+              <Picker.Item label='Forestry' value='Forestry'/>
             </Picker>
             {this.state.facultyErr &&
               <Text style={{ fontSize: 10, color: 'red' }}>
@@ -160,10 +142,10 @@ class Register extends Component {
                 props.setFieldValue('gender', itemValue)
                 this.setState({gender: itemValue})
               }}>
-              <Picker.Item label='Gender' value=''/>
-              <Picker.Item label='Male' value='m'/>
-              <Picker.Item label='Female' value='f'/>
-              <Picker.Item label='Other' value='o'/>
+              <Picker.Item label={this.props.userData.gender} value={this.props.userData.gender}/>
+              <Picker.Item label='Male' value='Male'/>
+              <Picker.Item label='Female' value='Female'/>
+              <Picker.Item label='Other' value='Other'/>
             </Picker>
             {this.state.genderErr &&
               <Text style={{ fontSize: 10, color: 'red' }}>
@@ -176,11 +158,12 @@ class Register extends Component {
                 props.setFieldValue('diet', itemValue)
                 this.setState({diet: itemValue})
               }}>
-              <Picker.Item label='Dietary Restrictions' value='none'/>
+              <Picker.Item label={this.props.userData.diet} value={this.props.userData.diet}/>
+              <Picker.Item label='None' value='None'/>
               <Picker.Item label='Vegan' value='Vegan'/>
               <Picker.Item label='Vegetarian' value='Vegetarian'/>
               <Picker.Item label='Halal' value='Halal'/>
-              <Picker.Item label='Gluten Free' value='Gluten'/>
+              <Picker.Item label='Gluten Free' value='Gluten Free'/>
             </Picker>
 
             <Button
@@ -196,6 +179,35 @@ class Register extends Component {
       </Formik>
     )
   }
+
+
+  registerPress(values) {
+    const { email, pass, fname, lname, id, yr, faculty, gender, diet } = values;
+    console.log(id)
+    const body = JSON.stringify({
+        fname,
+        lname,
+        email,
+        id,
+        faculty,
+        yr,
+        gender,
+        diet
+    })
+    let response = fetch(AMAZON_API+'/users/update?id='+id,
+    {   method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: body
+        })
+    .then((response) => response.json())
+    .then((response) => {
+        console.log(response)
+        this.props.populateDispatch(id)
+    })
+  }
 }
 // objects
 const mapStateToProps = (state) => {
@@ -207,7 +219,7 @@ const mapStateToProps = (state) => {
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		doVerify: () => dispatch(doVerify())
+		populateDispatch: (id) => dispatch(populateUser(id))
 	};
 };
 

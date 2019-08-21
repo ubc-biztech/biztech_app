@@ -37,6 +37,7 @@ class Register extends Component {
 				genderErr: false,
 				yearErr: false,
 				facultyErr: false,
+				dietErr: false,
 				err: false,
 				errMessage: ''
       };
@@ -54,22 +55,23 @@ class Register extends Component {
 					id: '',
 	        pass: '',
 	        faculty: '',
-	        year: '',
+	        yr: '',
 	        gender: '',
 	        diet: 'none',
 				}}
 				validationSchema={ FormSchema }
 				onSubmit={(values, actions) => {
-					const {faculty, year, gender} = values;
+					const {faculty, yr, gender, diet} = values;
 
 					// check if dropdown fields are blank, generate error if they are
 					( faculty == '' ? this.setState({facultyErr: true}) : this.setState({facultyErr: false}));
-					( year == '' ? this.setState({yearErr: true}) : this.setState({yearErr: false}));
+					( yr == '' ? this.setState({yearErr: true}) : this.setState({yearErr: false}));
 					( gender == '' ? this.setState({genderErr: true}) : this.setState({genderErr: false}));
-					const {facultyErr, yearErr, genderErr} = this.state;
+					( diet == '' ? this.setState({dietErr: true}) : this.setState({dietErr: false}));
+					const {facultyErr, yearErr, genderErr, dietErr} = this.state;
 
 					// check if there are no dropdown field errors
-					if (!facultyErr && !yearErr && !genderErr ){
+					if (!facultyErr && !yearErr && !genderErr && !dietErr ){
 						this.registerPress(values)
 					}
 					actions.setSubmitting(false)
@@ -141,17 +143,17 @@ class Register extends Component {
 
 						<Picker
 							style={styles.text}
-	            selectedValue={this.state.year}
-							onValueChange={(itemValue, itemIndex) => {
-						    props.setFieldValue('year', itemValue)
-						    this.setState({year: itemValue})
+	            selectedValue={this.state.yr}
+							onValueChange={(itemValue) => {
+						    props.setFieldValue('yr', itemValue)
+						    this.setState({yr: itemValue})
 							}}>
               <Picker.Item label='Year of Study' value=''/>
-	            <Picker.Item label='1' value='1'/>
-	            <Picker.Item label='2' value='2'/>
-	            <Picker.Item label='3' value='3'/>
-	            <Picker.Item label='4' value='4'/>
-	            <Picker.Item label='5+' value='5'/>
+              <Picker.Item label='1' value='1'/>
+              <Picker.Item label='2' value='2'/>
+              <Picker.Item label='3' value='3'/>
+              <Picker.Item label='4' value='4'/>
+              <Picker.Item label='5+' value='5+'/>
 	          </Picker>
 	          {//show error text if state has yearErr
 							this.state.yearErr &&
@@ -165,12 +167,12 @@ class Register extends Component {
 						    this.setState({faculty: itemValue})
 							}}>
 	            <Picker.Item label='Faculty' value=''/>
-	            <Picker.Item label='Science' value='science'/>
-	            <Picker.Item label='Commerce' value='commerce'/>
-	            <Picker.Item label='Arts' value='arts'/>
-	            <Picker.Item label='Engineering' value='engineering'/>
-	            <Picker.Item label='Land Food Systems' value='lfs'/>
-	            <Picker.Item label='Forestry' value='forestry'/>
+              <Picker.Item label='Science' value='Science'/>
+              <Picker.Item label='Commerce' value='Commerce'/>
+              <Picker.Item label='Arts' value='Arts'/>
+              <Picker.Item label='Engineering' value='Engineering'/>
+              <Picker.Item label='Land Food Systems' value='Land Food Systems'/>
+              <Picker.Item label='Forestry' value='Forestry'/>
 	          </Picker>
 	          {this.state.facultyErr &&
 							<Text style={{ fontSize: 10, color: 'red' }}>
@@ -183,9 +185,9 @@ class Register extends Component {
 						    this.setState({gender: itemValue})
 							}}>
               <Picker.Item label='Gender' value=''/>
-	            <Picker.Item label='Male' value='m'/>
-	            <Picker.Item label='Female' value='f'/>
-	            <Picker.Item label='Other' value='o'/>
+              <Picker.Item label='Male' value='Male'/>
+              <Picker.Item label='Female' value='Female'/>
+              <Picker.Item label='Other' value='Other'/>
 	          </Picker>
 	          {this.state.genderErr &&
 							<Text style={{ fontSize: 10, color: 'red' }}>
@@ -193,16 +195,20 @@ class Register extends Component {
 
 						<Picker
 	            selectedValue={this.state.diet}
-							onValueChange={(itemValue, itemIndex) => {
+							onValueChange={(itemValue) => {
 						    props.setFieldValue('diet', itemValue)
 						    this.setState({diet: itemValue})
 							}}>
-              <Picker.Item label='Dietary Restrictions' value='none'/>
-	            <Picker.Item label='Vegan' value='Vegan'/>
-	            <Picker.Item label='Vegetarian' value='Vegetarian'/>
-	            <Picker.Item label='Halal' value='Halal'/>
-	            <Picker.Item label='Gluten Free' value='Gluten'/>
+              <Picker.Item label='Dietary Restrictions' value=''/>
+              <Picker.Item label='None' value='None'/>
+              <Picker.Item label='Vegan' value='Vegan'/>
+              <Picker.Item label='Vegetarian' value='Vegetarian'/>
+              <Picker.Item label='Halal' value='Halal'/>
+              <Picker.Item label='Gluten Free' value='Gluten Free'/>
 	          </Picker>
+	          {this.state.dietErr &&
+							<Text style={{ fontSize: 10, color: 'red' }}>
+							Required</Text>}
 
 		        <Button
 							disabled={props.isSubmitting}
@@ -222,7 +228,7 @@ class Register extends Component {
   }
 
   registerPress(values) {
-    const { email, pass, fname, lname, id, year, faculty, gender, diet } = values;
+    const { email, pass, fname, lname, id, yr, faculty, gender, diet } = values;
 		this.setState({email})
       Auth.signUp({
         username: email,
@@ -241,7 +247,7 @@ class Register extends Component {
 							email,
 							faculty,
 							id,
-							year,
+							yr,
 							gender,
 							diet
 					})
