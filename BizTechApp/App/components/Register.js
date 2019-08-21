@@ -83,7 +83,8 @@ class Register extends Component {
 				{ props => (
 				<View style={styles.container}>
 						<Image source={require('../img/biztech.png')} style={styles.loginLogo} />
-						<Text style={styles.h1}>Sign Up</Text>
+						<Text style={styles.h1}>Welcome</Text>
+		        <Text>Please create an account</Text>
 		        <TextInput
 	            style={styles.input}
 	            placeholder="First Name"

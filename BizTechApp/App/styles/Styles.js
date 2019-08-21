@@ -7,6 +7,10 @@ export default styles = StyleSheet.create({
  bold: {
     fontFamily: 'RedHatDisplay-Bold'
   },
+ whitebold: {
+    fontFamily: 'RedHatDisplay-Bold',
+    color: '#ffffff'
+  },
  colour: {
     fontFamily: 'RedHatDisplay-Regular',
     color: '#7ad040'
