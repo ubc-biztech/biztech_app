@@ -46,13 +46,14 @@ class EditProfile extends Component {
 
   render() {
     return(
-      <ScrollView style={styles.widgetContainer}>
-        <Text style={styles.h1}>Edit Profile</Text>
-        <ProfileForm disableSid={true} schema={FormSchema} title='Save'/>
-        <Button
-          onPress={() => this.props.navigation.navigate('Profile')}
-          title='Change Password' />
-
+      <ScrollView>
+				<View style={styles.widgetContainer}>
+	        <Text style={styles.h1}>Edit Profile</Text>
+	        <ProfileForm disableSid={true} schema={FormSchema} title='Save'/>
+	        <Button
+	          onPress={() => this.props.navigation.navigate('Profile')}
+	          title='Change Password' />
+				</View>
       </ScrollView>
     )
   }

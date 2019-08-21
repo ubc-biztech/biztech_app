@@ -13,7 +13,8 @@ export default styles = StyleSheet.create({
   },
  h1: {
     fontFamily: 'RedHatDisplay-Bold',
-    fontSize: 36
+    fontSize: 36,
+    lineHeight: 38
   },
  h3: {
     fontFamily: 'RedHatDisplay-Bold',

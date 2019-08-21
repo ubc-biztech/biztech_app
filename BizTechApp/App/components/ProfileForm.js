@@ -64,6 +64,7 @@ class Register extends Component {
       >
         { props => (
         <View >
+            <Text style={{ fontSize: 10 }}>First Name</Text>
             <TextInput
               style={styles.input}
               placeholder="First Name"
@@ -76,6 +77,7 @@ class Register extends Component {
               <Text style={{ fontSize: 10, color: 'red' }}>
               {props.errors.fname}</Text>}
 
+            <Text style={{ fontSize: 10 }}>Last Name</Text>
             <TextInput
               style={styles.input}
               placeholder="Last Name"
@@ -87,6 +89,7 @@ class Register extends Component {
               <Text style={{ fontSize: 10, color: 'red' }}>
               {props.errors.lname}</Text>}
 
+            <Text style={{ fontSize: 10 }}>Email</Text>
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -111,6 +114,7 @@ class Register extends Component {
               <Text style={{ fontSize: 10, color: 'red' }}>
               Valid Student ID required</Text>}
 
+            <Text style={{ fontSize: 10 }}>Year of Study</Text>
             <Picker
               style={styles.text}
               selectedValue={this.state.year}
@@ -130,6 +134,7 @@ class Register extends Component {
               <Text style={{ fontSize: 10, color: 'red' }}>
               Required</Text>}
 
+            <Text style={{ fontSize: 10 }}>Faculty</Text>
             <Picker
               selectedValue={this.state.faculty}
               onValueChange={(itemValue) => {
@@ -148,6 +153,7 @@ class Register extends Component {
               <Text style={{ fontSize: 10, color: 'red' }}>
               Required</Text>}
 
+            <Text style={{ fontSize: 10 }}>Gender</Text>
             <Picker
               selectedValue={this.state.gender}
               onValueChange={(itemValue, itemIndex) => {
@@ -163,6 +169,7 @@ class Register extends Component {
               <Text style={{ fontSize: 10, color: 'red' }}>
               Required</Text>}
 
+            <Text style={{ fontSize: 10 }}>Dietary Restrictions</Text>
             <Picker
               selectedValue={this.state.diet}
               onValueChange={(itemValue, itemIndex) => {
