@@ -4,7 +4,7 @@ import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
-import { doVerify, unhideSuccess } from '../actions/Login';
+import { doVerify } from '../actions/Login';
 import * as Yup from 'yup';
 //styling
 import styles from '../styles/Styles';
@@ -40,7 +40,6 @@ class EditProfile extends Component {
         this.props.doVerify()
         this.props.navigation.navigate('Profile')
         this.props.navigation.navigate('Home')
-				this.props.unhideSuccess()
       })
       .catch(err => console.log(err));
   }
@@ -70,8 +69,7 @@ const mapStateToProps = (state) => {
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		doVerify: () => dispatch(doVerify()),
-		unhideSuccess: () => dispatch(unhideSuccess())
+		doVerify: () => dispatch(doVerify())
 	};
 };
 

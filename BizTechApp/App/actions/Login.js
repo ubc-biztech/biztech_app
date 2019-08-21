@@ -100,7 +100,7 @@ export function hideSuccess() {
 }
 
 export function unhideSuccess() {
-    return {
+  return {
         type: 'unhideSuccess'
     }
 }

@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
-import { populateUser, unverify, unhideSuccess } from '../actions/Login';
+import { populateUser, unverify, unhideSuccess, hideSuccess } from '../actions/Login';
 import NavigationService from '../features/NavigationService.js';
 //styling
 import styles from '../styles/Styles';
@@ -229,7 +229,12 @@ class Register extends Component {
     .then((response) => {
         console.log(response)
         this.props.populateDispatch(id)
-				this.props.unhideSuccess()
+				setTimeout(() => {
+          this.props.unhideSuccess()
+        }, 250)
+        setTimeout(() => {
+          this.props.hideSuccess()
+        }, 5250)
     })
     NavigationService.navigate('Profile', {});
 
@@ -248,7 +253,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		populateDispatch: (id) => dispatch(populateUser(id)),
 		unverify: () => dispatch(unverify()),
-		unhideSuccess: () => dispatch(unhideSuccess())
+		unhideSuccess: () => dispatch(unhideSuccess()),
+		hideSuccess: () => dispatch(hideSuccess())
 	};
 };
 
