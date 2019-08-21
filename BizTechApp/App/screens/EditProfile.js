@@ -51,7 +51,7 @@ class EditProfile extends Component {
 	        <Text style={styles.h1}>Edit Profile</Text>
 	        <ProfileForm disableSid={true} schema={FormSchema} title='Save'/>
 	        <Button
-	          onPress={() => this.props.navigation.navigate('Profile')}
+	          onPress={() => this.props.navigation.navigate('Password')}
 	          title='Change Password' />
 				</View>
       </ScrollView>
