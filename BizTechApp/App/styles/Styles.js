@@ -7,13 +7,18 @@ export default styles = StyleSheet.create({
  bold: {
     fontFamily: 'RedHatDisplay-Bold'
   },
+ whitebold: {
+    fontFamily: 'RedHatDisplay-Bold',
+    color: '#ffffff'
+  },
  colour: {
     fontFamily: 'RedHatDisplay-Regular',
     color: '#7ad040'
   },
  h1: {
     fontFamily: 'RedHatDisplay-Bold',
-    fontSize: 36
+    fontSize: 36,
+    lineHeight: 38
   },
  h3: {
     fontFamily: 'RedHatDisplay-Bold',
@@ -21,7 +26,12 @@ export default styles = StyleSheet.create({
     color: 'black'
   },
 	widgetContainer: {
-		padding: 20
+		paddingVertical: 25,
+    paddingHorizontal: 20
+	},
+	pageContainer: {
+		paddingVertical: 0,
+    paddingHorizontal: 20
 	},
 	content: {
 		padding: 10,

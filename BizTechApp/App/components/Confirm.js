@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { View, TextInput } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
-import { doVerify } from '../actions/Login';
+import { doVerify, unhideSuccess, hideSuccess } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
@@ -25,6 +25,10 @@ class ConfirmScreen extends Component {
     Auth.confirmSignUp(email, this.state.confirmationCode, {})
       .then(() => {
         this.props.doVerify()
+				this.props.unhideSuccess()
+				setTimeout(() => {
+					this.props.hideSuccess()
+				}, 5000)
       })
       .catch(err => console.log(err));
   }
@@ -36,6 +40,7 @@ class ConfirmScreen extends Component {
           Please enter your confirmation code.
         </Text>
         <TextInput
+          style={styles.input}
           placeholder="Confirmation Code"
           onChangeText={
             // Set this.state.confirmationCode to the value in this Input box
@@ -59,7 +64,9 @@ const mapStateToProps = (state) => {
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		doVerify: () => dispatch(doVerify())
+		doVerify: () => dispatch(doVerify()),
+    unhideSuccess: () => dispatch(unhideSuccess()),
+    hideSuccess: () => dispatch(hideSuccess())
 	};
 };
 

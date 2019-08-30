@@ -5,7 +5,7 @@ import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
-import { doVerify } from '../actions/Login';
+import { doVerify, unhideSuccess, hideSuccess } from '../actions/Login';
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
@@ -31,12 +31,26 @@ class ConfirmScreen extends Component {
         this.props.navigation.navigate('Profile')
         this.props.navigation.navigate('Home')
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err)
+        if (err.code == 'NotAuthorizedException'){
+          Auth.verifyCurrentUserAttributeSubmit('email', this.state.confirmationCode)
+            .then(() => {
+              this.props.doVerify()
+              this.props.navigation.navigate('Profile')
+              this.props.navigation.navigate('Home')
+              this.props.unhideSuccess()
+              setTimeout(() => {
+                this.props.hideSuccess()
+              }, 5000)
+            })
+        }
+      });
   }
 
   render() {
     return(
-      <View style={styles.widgetContainer}>
+      <View style={styles.pageContainer}>
         <Text style={styles.h1}>Welcome to BizTech!</Text>
         <Text>
           Please enter your confirmation code.
@@ -66,7 +80,9 @@ const mapStateToProps = (state) => {
 // actions
 const mapDispatchToProps = (dispatch) => {
 	return {
-		doVerify: () => dispatch(doVerify())
+		doVerify: () => dispatch(doVerify()),
+    unhideSuccess: () => dispatch(unhideSuccess()),
+    hideSuccess: () => dispatch(hideSuccess())
 	};
 };
 

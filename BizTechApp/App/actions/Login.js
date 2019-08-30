@@ -80,9 +80,27 @@ export function doVerify() {
     }
 }
 
+export function unverify() {
+    return {
+        type: 'unverified'
+    }
+}
+
 export function populateEvents(events) {
     return {
         type: 'events',
         events
+    }
+}
+
+export function hideSuccess() {
+    return {
+        type: 'hideSuccess'
+    }
+}
+
+export function unhideSuccess() {
+  return {
+        type: 'unhideSuccess'
     }
 }
