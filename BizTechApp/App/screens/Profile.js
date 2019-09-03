@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, ThemeProvider } from 'react-native-elements';
 import { AMAZON_API } from 'react-native-dotenv';
+import SquarePayments from '../features/SquarePayments';
 
 export default class Profile extends Component {
 

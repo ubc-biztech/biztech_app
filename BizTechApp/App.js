@@ -15,7 +15,6 @@ function configureStore(initialState) {
     );
 }
 
-
 Amplify.configure(aws_exports);
 const store = configureStore();
 

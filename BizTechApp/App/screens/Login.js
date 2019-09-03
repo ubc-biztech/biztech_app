@@ -5,6 +5,7 @@ import { AMAZON_API } from 'react-native-dotenv';
 import Register from '../components/Register'
 import SignIn from '../components/SignIn'
 import { ButtonGroup } from 'react-native-elements';
+import SquarePayments from '../features/SquarePayments';
 
 const theme = {
 	colors:{

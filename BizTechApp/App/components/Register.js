@@ -6,6 +6,7 @@ import Auth from '@aws-amplify/auth';
 import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import SquarePayments from '../features/SquarePayments';
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -27,7 +28,7 @@ email: Yup.string()
 
 class Register extends Component {
 	  constructor(){
-	    super();
+		super();
 	    this.state = {
         confirmationCode: '',
         modalVisible: false,
@@ -36,7 +37,7 @@ class Register extends Component {
 				facultyErr: false,
 				err: false,
 				errMessage: ''
-      };
+	  };
 	  }
 
 	render() {
@@ -215,7 +216,10 @@ class Register extends Component {
 	            style={styles.button}
 	            title="debug open modal"
 	            onPress={this.handleDebugOpen.bind(this)} />
-					</View>
+
+				<SquarePayments/>
+
+				</View>
 		    )}
 	  </Formik>
 
@@ -236,13 +240,13 @@ class Register extends Component {
           title='Submit'
 					color='#7ad040'
           onPress={ this.handleConfirmationCode.bind(this)}/>
+		
         <Button
           title='Debug close'
           onPress={ this.handleDebugClose.bind(this)}/>
       </View>
     </Modal>
 	</View>
-
 		);
   }
 
