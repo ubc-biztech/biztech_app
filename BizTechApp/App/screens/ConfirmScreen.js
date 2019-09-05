@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { View,
          TextInput } from 'react-native';
-import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
