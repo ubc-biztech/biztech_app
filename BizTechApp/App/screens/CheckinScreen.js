@@ -26,8 +26,16 @@ class CheckinScreen extends Component {
     );
   };
 
+  goHome() {
+    this.props.navigation.navigate('Home');
+  }
+
   handleCheckin() {
     console.log(this.state.checkinCode);
+    if (this.state.checkinCode.length != 4) {
+      Alert.alert('Not a valid code!');
+      return;
+    }
     fetch(AMAZON_API + '/events/scan?code=' + this.state.checkinCode)
       .then((response) => response.json())
       .then((response) => {
@@ -95,6 +103,7 @@ class CheckinScreen extends Component {
           Once you arrive at the event venue, enter the 4 character code to check in!
         </Text>
         <TextInput
+          autoCapitalize = 'none'
           style={styles.input}
           placeholder='####'
           onChangeText={
@@ -104,6 +113,10 @@ class CheckinScreen extends Component {
         <Button
           title='Submit'
           onPress={ this.handleCheckin.bind(this) }
+        />
+        <Button
+          title='Back'
+          onPress={ this.goHome.bind(this) }
         />
       </View>
     )
