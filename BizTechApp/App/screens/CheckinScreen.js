@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, TextInput } from 'react-native';
+import { Alert, View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
@@ -14,8 +14,16 @@ class CheckinScreen extends Component {
   constructor() {
     super();
     this.state = {
-      checkinCode: ''
+      checkinCode: '',
     }
+  };
+
+  doAlert(message) {
+    Alert.alert(
+      'Event Check-in',
+      message,
+      [{text: 'OK'}],
+    );
   };
 
   handleCheckin() {
@@ -25,16 +33,57 @@ class CheckinScreen extends Component {
       .then((response) => {
           console.log(response);
           if (Object.keys(response).length == 1) {
+            if (response[0].opened) {
             const studentID = this.props.userData.id;
-            console.log("checkin success");
-            console.log(studentID);
+            let users = response[0].users;
+            if(users.hasOwnProperty(studentID)) {
+              if (users[studentID] == 'R') {
+                console.log('checkin success');
+                const body = JSON.stringify({
+                  'id' : response[0].id,
+                  'userID' : studentID,
+                  'status' : 'C'
+                });
+                let update = fetch(AMAZON_API+'/events/userupdate',
+                {   method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: body
+                    })
+                .then((update) => update.json())
+                .then((update) => {
+                    console.log(update)
+                })
+                .done();
+                console.log('user check in success');
+                this.doAlert('You have successfully checked in. Hang tight!');
+
+              } else if (users[studentID] == 'C') {
+                console.log('user already checked in');
+                this.doAlert('You have already checked in. Sit tight!');
+              } else if (users[studentID] == 'W') {
+                console.log('user on waitlist');
+                this.doAlert('You are on the waitlist.');
+              } else if (users[studentID] == 'Can') {
+                console.log('user cancelled');
+                this.doAlert('You have cancelled your registration for this event.');
+              }
+            } else {
+              console.log('user not registered');
+              this.doAlert('You have not registered for this event.');
+            }
           } else {
-            console.log("checkin failed");
+            console.log('checkin failed');
+            this.doAlert('An error occured.');
           }
-      })
+      }
+    })
       .catch(err => {
-        console.log("checkin error");
+        console.log('checkin error');
         console.log(err);
+        this.doAlert('An error occured.');
       })
   };
 
