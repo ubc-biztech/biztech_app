@@ -83,9 +83,16 @@ class CheckinScreen extends Component {
               this.doAlert('You have not registered for this event.');
             }
           } else {
-            console.log('checkin failed');
-            this.doAlert('An error occured.');
+            console.log('event not opened');
+            this.doAlert('Check-in for this event has not been opened yet.');
           }
+      } else if (Object.keys(response).length == 0) {
+        console.log('no event found.');
+        this.doAlert('No event with given code.');
+      } else {
+        //Invalid number of events in response.
+        console.log('scan error');
+        this.doAlert('An error occured.');
       }
     })
       .catch(err => {
