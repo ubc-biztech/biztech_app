@@ -4,10 +4,11 @@ import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 //styling
 import styles from '../styles/Styles';
-import Text from '../components/Text'
+import Text from '../components/Text';
+import Button from '../components/Button';
 
-import Notification from '../components/Notification'
-import EventCard from '../components/EventCard'
+import Notification from '../components/Notification';
+import EventCard from '../components/EventCard';
 
 import { populateEvents } from '../actions/Login';
 
@@ -56,6 +57,10 @@ class Home extends Component {
           <Text style={styles.h1}>Home</Text>
           {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
           {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
+          <Button 
+            title='Event Check-in'
+            onPress={() => this.props.navigation.navigate('Checkin')}
+          />
         </View>
 
         <View style={styles.center}>
