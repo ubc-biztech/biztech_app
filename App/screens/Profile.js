@@ -10,36 +10,36 @@ import Notification from '../components/Notification'
 import Button from '../components/Button'
 
 class Profile extends Component {
-  static navigationOptions = {
-    header: null
-  };
+	static navigationOptions = {
+		header: null
+	};
 
 
-	  render(){
-	    return(
-	      <View>
-          { !this.props.isVerified &&
-            <Notification
-              onPress={() => this.props.navigation.navigate('Confirm')}
-              colour='#ff7043'>Please confirm your account</Notification>
-          }
-					<ScrollView style={styles.widgetContainer}>
-		        <Text style={styles.h1}>Profile</Text>
-	          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
-	          {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
+	render() {
+		return (
+			<View>
+				{!this.props.isVerified &&
+					<Notification
+						onPress={() => this.props.navigation.navigate('Confirm')}
+						colour='#ff7043'>Please confirm your account</Notification>
+				}
+				<ScrollView style={styles.widgetContainer}>
+					<Text style={styles.h1}>Profile</Text>
+					{this.props.isLoggedIn && <Text>Welcome, {this.props.userData.fname} </Text>}
+					{!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
 
-						<Button
-							onPress={() => this.props.navigation.navigate('Edit Profile')}
-							title='Edit Profile'/>
+					<Button
+						onPress={() => this.props.navigation.navigate('Edit Profile')}
+						title='Edit Profile' />
 
-						<Button
-							onPress={() => this.props.logout()}
-							title='Logout'/>
+					<Button
+						onPress={() => this.props.logout()}
+						title='Logout' />
 
-					</ScrollView>
-	      </View>
-	    )
-	  }
+				</ScrollView>
+			</View>
+		)
+	}
 
 }
 
@@ -47,8 +47,8 @@ class Profile extends Component {
 const mapStateToProps = (state) => {
 	return {
 		userData: state.login.user,
-    isLoggedIn: state.login.isLoggedIn,
-    isVerified: state.login.isVerified
+		isLoggedIn: state.login.isLoggedIn,
+		isVerified: state.login.isVerified
 	};
 };
 // actions
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
