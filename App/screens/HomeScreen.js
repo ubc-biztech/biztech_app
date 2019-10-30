@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { ScrollView, RefreshControl, ActivityIndicator, View } from 'react-native';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
@@ -21,15 +21,15 @@ class Home extends Component {
   }
 
   _onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     this.fetchEvents().then(() => {
-      this.setState({refreshing: false});
+      this.setState({ refreshing: false });
     });
   }
 
-  async fetchEvents(){
+  async fetchEvents() {
     console.log('home screen fetching events')
-    fetch(AMAZON_API+'/events/get')
+    fetch(AMAZON_API + '/events/get')
       .then((response) => response.json())
       .then((response) => {
         this.props.populateEvents(response)
@@ -41,23 +41,23 @@ class Home extends Component {
   }
 
   render() {
-    return(
+    return (
       <ScrollView refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />
-        }>
-        { !this.props.isVerified &&
+        <RefreshControl
+          refreshing={this.state.refreshing}
+          onRefresh={this._onRefresh}
+        />
+      }>
+        {!this.props.isVerified &&
           <Notification
             onPress={() => this.props.navigation.navigate('Confirm')}
             colour='#ff7043'>Please confirm your account</Notification>
         }
         <View style={styles.widgetContainer}>
           <Text style={styles.h1}>Home</Text>
-          {this.props.isLoggedIn && <Text>Welcome, { this.props.userData.fname } </Text>}
+          {this.props.isLoggedIn && <Text>Welcome, {this.props.userData.fname} </Text>}
           {!this.props.isLoggedIn && <Text>Welcome to BizTech </Text>}
-          <Button 
+          <Button
             title='Event Check-in'
             onPress={() => this.props.navigation.navigate('Checkin')}
           />
@@ -70,9 +70,10 @@ class Home extends Component {
                 <EventCard key={event.id} event={event}
                   onPress={() => {
                     this.props.navigation.navigate('Event', {
-                      event: event })
-                    }
-                  }/>
+                      event: event
+                    })
+                  }
+                  } />
               )
             })
           }
@@ -84,7 +85,7 @@ class Home extends Component {
 
 // objects
 const mapStateToProps = (state) => {
-	return {
+  return {
     userData: state.login.user,
     isLoggedIn: state.login.isLoggedIn,
     isVerified: state.login.isVerified,
@@ -93,9 +94,9 @@ const mapStateToProps = (state) => {
 };
 // actions
 const mapDispatchToProps = (dispatch) => {
-	return {
-		populateEvents: (events) => dispatch(populateEvents(events))
-	};
+  return {
+    populateEvents: (events) => dispatch(populateEvents(events))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

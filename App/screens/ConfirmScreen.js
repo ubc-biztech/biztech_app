@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import { View,
-         TextInput } from 'react-native';
+import React, { Component } from 'react';
+import { View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
@@ -12,12 +11,12 @@ import Text from '../components/Text'
 import Button from '../components/Button'
 
 class ConfirmScreen extends Component {
-	  constructor(){
-	    super();
-	    this.state = {
-        confirmationCode: ''
-      }
+  constructor() {
+    super();
+    this.state = {
+      confirmationCode: ''
     }
+  }
 
   handleConfirmationCode() {
     const confirmationCode = this.state;
@@ -32,7 +31,7 @@ class ConfirmScreen extends Component {
       })
       .catch(err => {
         console.log(err)
-        if (err.code == 'NotAuthorizedException'){
+        if (err.code == 'NotAuthorizedException') {
           Auth.verifyCurrentUserAttributeSubmit('email', this.state.confirmationCode)
             .then(() => {
               this.props.doVerify()
@@ -48,7 +47,7 @@ class ConfirmScreen extends Component {
   }
 
   render() {
-    return(
+    return (
       <View style={styles.pageContainer}>
         <Text style={styles.h1}>Welcome to BizTech!</Text>
         <Text>
@@ -63,7 +62,7 @@ class ConfirmScreen extends Component {
         />
         <Button
           title='Submit'
-          onPress={ this.handleConfirmationCode.bind(this) }/>
+          onPress={this.handleConfirmationCode.bind(this)} />
       </View>
     )
   }
@@ -71,18 +70,18 @@ class ConfirmScreen extends Component {
 
 // objects
 const mapStateToProps = (state) => {
-	return {
-		userData: state.login.user,
-	};
+  return {
+    userData: state.login.user,
+  };
 };
 
 // actions
 const mapDispatchToProps = (dispatch) => {
-	return {
-		doVerify: () => dispatch(doVerify()),
+  return {
+    doVerify: () => dispatch(doVerify()),
     unhideSuccess: () => dispatch(unhideSuccess()),
     hideSuccess: () => dispatch(hideSuccess())
-	};
+  };
 };
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps) (ConfirmScreen));
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(ConfirmScreen));
