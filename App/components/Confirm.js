@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
@@ -10,12 +10,12 @@ import Text from '../components/Text'
 import Button from '../components/Button'
 
 class ConfirmScreen extends Component {
-	  constructor(){
-	    super();
-	    this.state = {
-        confirmationCode: ''
-      }
+  constructor() {
+    super();
+    this.state = {
+      confirmationCode: ''
     }
+  }
 
   handleConfirmationCode() {
     const confirmationCode = this.state;
@@ -25,16 +25,16 @@ class ConfirmScreen extends Component {
     Auth.confirmSignUp(email, this.state.confirmationCode, {})
       .then(() => {
         this.props.doVerify()
-				this.props.unhideSuccess()
-				setTimeout(() => {
-					this.props.hideSuccess()
-				}, 5000)
+        this.props.unhideSuccess()
+        setTimeout(() => {
+          this.props.hideSuccess()
+        }, 5000)
       })
       .catch(err => console.log(err));
   }
 
   render() {
-    return(
+    return (
       <View style={styles.widgetContainer}>
         <Text>
           Please enter your confirmation code.
@@ -49,7 +49,7 @@ class ConfirmScreen extends Component {
         />
         <Button
           title='Submit'
-          onPress={ this.handleConfirmationCode.bind(this) }/>
+          onPress={this.handleConfirmationCode.bind(this)} />
       </View>
     )
   }
@@ -57,17 +57,17 @@ class ConfirmScreen extends Component {
 
 // objects
 const mapStateToProps = (state) => {
-	return {
+  return {
     userData: state.login.user
-	};
+  };
 };
 // actions
 const mapDispatchToProps = (dispatch) => {
-	return {
-		doVerify: () => dispatch(doVerify()),
+  return {
+    doVerify: () => dispatch(doVerify()),
     unhideSuccess: () => dispatch(unhideSuccess()),
     hideSuccess: () => dispatch(hideSuccess())
-	};
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (ConfirmScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmScreen);

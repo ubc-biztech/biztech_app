@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 //styling
 import styles from '../styles/Styles';
@@ -6,7 +6,7 @@ import styles from '../styles/Styles';
 export default class Card extends Component {
 
   render() {
-    return(
+    return (
       <TouchableOpacity
         underlayColor='#dddddd'
         style={styles.card}

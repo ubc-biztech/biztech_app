@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Alert, View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { AMAZON_API } from 'react-native-dotenv';
@@ -22,7 +22,7 @@ class CheckinScreen extends Component {
     Alert.alert(
       'Event Check-in',
       message,
-      [{text: 'OK'}],
+      [{ text: 'OK' }],
     );
   };
 
@@ -39,32 +39,33 @@ class CheckinScreen extends Component {
     fetch(AMAZON_API + '/events/scan?code=' + this.state.checkinCode)
       .then((response) => response.json())
       .then((response) => {
-          console.log(response);
-          if (Object.keys(response).length == 1) {
-            if (response[0].opened) {
+        console.log(response);
+        if (Object.keys(response).length == 1) {
+          if (response[0].opened) {
             const studentID = this.props.userData.id;
             let users = response[0].users;
-            if(users.hasOwnProperty(studentID)) {
+            if (users.hasOwnProperty(studentID)) {
               if (users[studentID] == 'R') {
                 console.log('checkin success');
                 const body = JSON.stringify({
-                  'id' : response[0].id,
-                  'userID' : studentID,
-                  'status' : 'C'
+                  'id': response[0].id,
+                  'userID': studentID,
+                  'status': 'C'
                 });
-                let update = fetch(AMAZON_API+'/events/userupdate',
-                {   method: 'POST',
+                let update = fetch(AMAZON_API + '/events/userupdate',
+                  {
+                    method: 'POST',
                     headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
                     },
                     body: body
-                    })
-                .then((update) => update.json())
-                .then((update) => {
+                  })
+                  .then((update) => update.json())
+                  .then((update) => {
                     console.log(update)
-                })
-                .done();
+                  })
+                  .done();
                 console.log('user check in success');
                 this.doAlert('You have successfully checked in. Hang tight!');
 
@@ -86,15 +87,15 @@ class CheckinScreen extends Component {
             console.log('event not opened');
             this.doAlert('Check-in for this event has not been opened yet.');
           }
-      } else if (Object.keys(response).length == 0) {
-        console.log('no event found.');
-        this.doAlert('No event with given code.');
-      } else {
-        //Invalid number of events in response.
-        console.log('scan error');
-        this.doAlert('An error occured.');
-      }
-    })
+        } else if (Object.keys(response).length == 0) {
+          console.log('no event found.');
+          this.doAlert('No event with given code.');
+        } else {
+          //Invalid number of events in response.
+          console.log('scan error');
+          this.doAlert('An error occured.');
+        }
+      })
       .catch(err => {
         console.log('checkin error');
         console.log(err);
@@ -103,14 +104,14 @@ class CheckinScreen extends Component {
   };
 
   render() {
-    return(
+    return (
       <View style={styles.widgetContainer}>
         <Text style={styles.h1}>Event Check-in</Text>
         <Text>
           Once you arrive at the event venue, enter the 4 character code to check in!
         </Text>
         <TextInput
-          autoCapitalize = 'none'
+          autoCapitalize='none'
           style={styles.input}
           placeholder='####'
           onChangeText={
@@ -119,11 +120,11 @@ class CheckinScreen extends Component {
         />
         <Button
           title='Submit'
-          onPress={ this.handleCheckin.bind(this) }
+          onPress={this.handleCheckin.bind(this)}
         />
         <Button
           title='Back'
-          onPress={ this.goHome.bind(this) }
+          onPress={this.goHome.bind(this)}
         />
       </View>
     )
@@ -131,7 +132,7 @@ class CheckinScreen extends Component {
 };
 
 const mapStateToProps = (state) => {
-	return {
+  return {
     userData: state.login.user,
   };
 };

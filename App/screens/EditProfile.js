@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ScrollView, View } from 'react-native';
-import { AMAZON_API } from 'react-native-dotenv';
 import { withNavigation } from 'react-navigation';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';

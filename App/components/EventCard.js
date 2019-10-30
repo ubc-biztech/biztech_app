@@ -1,16 +1,11 @@
-import React, {Component} from 'react';
-import { View,
-         Dimensions,
-         Button,
-         Image } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { AMAZON_API } from 'react-native-dotenv';
+import React, { Component } from 'react';
+import { View, Dimensions, Image } from 'react-native';
 import Card from './Card';
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const theme = {
   colors: {
@@ -21,7 +16,7 @@ const theme = {
 export default class EventCard extends Component {
 
   render() {
-    return(
+    return (
       <Card
         onPress={this.props.onPress}>
 
@@ -29,20 +24,21 @@ export default class EventCard extends Component {
           <Image
             source={{ uri: this.props.event.img }}
             style={{
-              width: width-20,
+              width: width - 20,
               height: 240,
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
-              marginBottom: 10 }}
+              marginBottom: 10
+            }}
             // PlaceholderContent={<ActivityIndicator />}
             resizeMode="cover"
           />
 
-            <View style={styles.content}>
-              <Text style={styles.h3}>{this.props.event.ename}</Text>
-              <Text style={styles.colour}>{this.props.event.edate}</Text>
-              <Text>{this.props.event.tagline}</Text>
-            </View>
+          <View style={styles.content}>
+            <Text style={styles.h3}>{this.props.event.ename}</Text>
+            <Text style={styles.colour}>{this.props.event.edate}</Text>
+            <Text>{this.props.event.tagline}</Text>
+          </View>
 
         </View>
 

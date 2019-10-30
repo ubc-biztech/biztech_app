@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 //aws
 import Amplify from '@aws-amplify/core';
 import aws_exports from './aws-exports';
@@ -23,9 +23,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 function configureStore(initialState) {
   let store = createStore(
-      persistedReducer,
-      initialState,
-      applyMiddleware(thunk)
+    persistedReducer,
+    initialState,
+    applyMiddleware(thunk)
   )
   let persistor = persistStore(store)
   return { store, persistor }
@@ -35,13 +35,13 @@ Amplify.configure(aws_exports);
 const { store, persistor } = configureStore();
 
 export default class App extends Component {
-	render() {
-		return (
-			<Provider store={store}>
+  render() {
+    return (
+      <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Main/>
+          <Main />
         </PersistGate>
-			</Provider>
-		);
-	}
+      </Provider>
+    );
+  }
 }
