@@ -8,6 +8,7 @@ import styles from '../styles/Styles';
 import Text from '../components/Text'
 
 import Button from '../components/Button'
+import FormTextInput from '../components/FormTextInput';
 
 class ConfirmScreen extends Component {
   constructor() {
@@ -39,7 +40,7 @@ class ConfirmScreen extends Component {
         <Text>
           Please enter your confirmation code.
         </Text>
-        <TextInput
+        <FormTextInput
           style={styles.input}
           placeholder="Confirmation Code"
           onChangeText={

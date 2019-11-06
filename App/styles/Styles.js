@@ -94,11 +94,12 @@ export default styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 60
   },
+
   input: {
     fontFamily: 'RedHatDisplay-Regular',
     color: '#333333',
     paddingVertical: 5,
-    marginBottom: 10,
+    marginBottom: 2,
     borderBottomColor: '#7ad040',
     borderBottomWidth: 1
   }

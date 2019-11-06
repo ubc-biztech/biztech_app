@@ -9,8 +9,9 @@ import { connect } from 'react-redux';
 
 //styling
 import styles from '../styles/Styles';
-import Text from '../components/Text'
-import Button from '../components/Button'
+import Text from '../components/Text';
+import Button from '../components/Button';
+import FormTextInput from '../components/FormTextInput';
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -84,8 +85,9 @@ class Register extends Component {
             <View style={styles.container}>
               <Image source={require('../img/biztech.png')} style={styles.loginLogo} />
               <Text style={styles.h1}>Welcome</Text>
-              <Text>Please create an account</Text>
-              <TextInput
+              <Text style={{ paddingBottom: 10, }}>Please create an account</Text>
+
+              <FormTextInput
                 style={styles.input}
                 placeholder="First Name"
                 onChangeText={props.handleChange('fname')}
@@ -93,14 +95,11 @@ class Register extends Component {
                 autoCorrect={false}
                 autoCompleteType="off"
                 value={props.values.fname}
+                showError={props.touched.fname && props.errors.fname}
+                errorText={props.errors.fname}
               />
 
-              {//if touched or invalid show error text
-                props.touched.fname && props.errors.fname &&
-                <Text style={{ fontSize: 10, color: 'red' }}>
-                  {props.errors.fname}</Text>}
-
-              <TextInput
+              <FormTextInput
                 style={styles.input}
                 placeholder="Last Name"
                 onChangeText={props.handleChange('lname')}
@@ -108,13 +107,11 @@ class Register extends Component {
                 autoCorrect={false}
                 autoCompleteType="off"
                 value={props.values.lname}
+                showError={props.touched.lname && props.errors.lname}
+                errorText={props.errors.lname}
               />
 
-              {props.touched.lname && props.errors.lname &&
-                <Text style={{ fontSize: 10, color: 'red' }}>
-                  {props.errors.lname}</Text>}
-
-              <TextInput
+              <FormTextInput
                 style={styles.input}
                 placeholder="Email"
                 onChangeText={props.handleChange('email')}
@@ -123,13 +120,11 @@ class Register extends Component {
                 autoCompleteType="email"
                 autoCapitalize="none"
                 value={props.values.email}
+                showError={props.touched.email && props.errors.email}
+                errorText={props.errors.email}
               />
 
-              {props.touched.email && props.errors.email &&
-                <Text style={{ fontSize: 10, color: 'red' }}>
-                  {props.errors.email}</Text>}
-
-              <TextInput
+              <FormTextInput
                 style={styles.input}
                 placeholder="Student Number"
                 onChangeText={props.handleChange('id')}
@@ -137,24 +132,20 @@ class Register extends Component {
                 autoCorrect={false}
                 autoCompleteType="off"
                 value={props.values.id}
+                showError={props.touched.id && props.errors.id}
+                errorText="Valid Student ID required"
               />
 
-              {props.touched.id && props.errors.id &&
-                <Text style={{ fontSize: 10, color: 'red' }}>
-                  Valid Student ID required</Text>}
-
-              <TextInput
+              <FormTextInput
                 secureTextEntry={true}
                 style={styles.input}
                 placeholder="Password"
                 onChangeText={props.handleChange('pass')}
                 onBlur={() => props.setFieldTouched('pass')}
                 value={props.values.pass}
+                showError={props.touched.pass && props.errors.pass}
+                errorText={props.errors.pass}
               />
-
-              {props.touched.pass && props.errors.pass &&
-                <Text style={{ fontSize: 10, color: 'red' }}>
-                  {props.errors.pass}</Text>}
 
               <Picker
                 style={styles.text}

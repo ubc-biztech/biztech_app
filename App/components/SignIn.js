@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ import styles from '../styles/Styles';
 import Text from '../components/Text'
 import Button from '../components/Button'
 import Confirm from '../components/Confirm'
+import FormTextInput from '../components/FormTextInput';
 
 // Validation Schema for Formik form using Yup library
 const FormSchema = Yup.object().shape({
@@ -48,8 +49,8 @@ class SignIn extends Component {
           onSubmit={values => this.props.handleSignIn(values)}
         >
           {props => (
-            <View>
-              <TextInput
+            <View style={{ paddingTop: 10 }}>
+              <FormTextInput
                 style={styles.input}
                 placeholder="Email"
                 // defaultValue={this.props.userData ? this.props.userData.email : null}
@@ -57,7 +58,7 @@ class SignIn extends Component {
                 onBlur={() => props.setFieldTouched('email')}
                 value={props.values.email}
               />
-              <TextInput
+              <FormTextInput
                 style={styles.input}
                 placeholder="Password"
                 onChangeText={props.handleChange('pass')}
