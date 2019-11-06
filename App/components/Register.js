@@ -90,8 +90,11 @@ class Register extends Component {
                 placeholder="First Name"
                 onChangeText={props.handleChange('fname')}
                 onBlur={() => props.setFieldTouched('fname')}
+                autoCorrect={false}
+                autoCompleteType="off"
                 value={props.values.fname}
               />
+
               {//if touched or invalid show error text
                 props.touched.fname && props.errors.fname &&
                 <Text style={{ fontSize: 10, color: 'red' }}>
@@ -102,8 +105,11 @@ class Register extends Component {
                 placeholder="Last Name"
                 onChangeText={props.handleChange('lname')}
                 onBlur={() => props.setFieldTouched('lname')}
+                autoCorrect={false}
+                autoCompleteType="off"
                 value={props.values.lname}
               />
+
               {props.touched.lname && props.errors.lname &&
                 <Text style={{ fontSize: 10, color: 'red' }}>
                   {props.errors.lname}</Text>}
@@ -113,8 +119,12 @@ class Register extends Component {
                 placeholder="Email"
                 onChangeText={props.handleChange('email')}
                 onBlur={() => props.setFieldTouched('email')}
+                autoCorrect={false}
+                autoCompleteType="email"
+                autoCapitalize="none"
                 value={props.values.email}
               />
+
               {props.touched.email && props.errors.email &&
                 <Text style={{ fontSize: 10, color: 'red' }}>
                   {props.errors.email}</Text>}
@@ -124,8 +134,11 @@ class Register extends Component {
                 placeholder="Student Number"
                 onChangeText={props.handleChange('id')}
                 onBlur={() => props.setFieldTouched('id')}
+                autoCorrect={false}
+                autoCompleteType="off"
                 value={props.values.id}
               />
+
               {props.touched.id && props.errors.id &&
                 <Text style={{ fontSize: 10, color: 'red' }}>
                   Valid Student ID required</Text>}
@@ -138,6 +151,7 @@ class Register extends Component {
                 onBlur={() => props.setFieldTouched('pass')}
                 value={props.values.pass}
               />
+
               {props.touched.pass && props.errors.pass &&
                 <Text style={{ fontSize: 10, color: 'red' }}>
                   {props.errors.pass}</Text>}
