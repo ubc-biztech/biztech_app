@@ -3,19 +3,18 @@ import { Alert, View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
+import { getRegistrations } from '../actions/Login';
 
 // styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
 import Button from '../components/Button'
 
-
 class CheckinScreen extends Component {
-  constructor() {
-    super();
-    this.state = {
-      checkinCode: '',
-    }
+  state = { checkinCode: '' }
+
+  componentDidMount() {
+    this.props.getRegistrations(this.props.userData.id);
   };
 
   doAlert(message) {
@@ -28,66 +27,64 @@ class CheckinScreen extends Component {
 
   goHome() {
     this.props.navigation.navigate('Home');
-  }
+  };
+
+  checkRegistrationStatus(eventID) {
+    const entry = this.props.registration.data.filter(entry => entry.eventID == eventID);
+    if (entry.length == 1) {
+      return entry[0].registrationStatus;
+    }
+    return '';
+  };
 
   handleCheckin() {
     console.log(this.state.checkinCode);
     if (this.state.checkinCode.length != 4) {
-      Alert.alert('Not a valid code!');
+      this.doAlert('Not a valid code!');
       return;
     }
     fetch(AMAZON_API + '/events/scan?code=' + this.state.checkinCode)
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
-        if (Object.keys(response).length == 1) {
-          if (response[0].opened) {
-            const studentID = this.props.userData.id;
-            let users = response[0].users;
-            if (users.hasOwnProperty(studentID)) {
-              if (users[studentID] == 'R') {
-                console.log('checkin success');
-                const body = JSON.stringify({
-                  'id': response[0].id,
-                  'userID': studentID,
-                  'status': 'C'
-                });
-                let update = fetch(AMAZON_API + '/events/userupdate',
-                  {
-                    method: 'POST',
-                    headers: {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json',
-                    },
-                    body: body
-                  })
-                  .then((update) => update.json())
-                  .then((update) => {
-                    console.log(update)
-                  })
-                  .done();
-                console.log('user check in success');
-                this.doAlert('You have successfully checked in. Hang tight!');
-
-              } else if (users[studentID] == 'C') {
-                console.log('user already checked in');
-                this.doAlert('You have already checked in. Sit tight!');
-              } else if (users[studentID] == 'W') {
-                console.log('user on waitlist');
-                this.doAlert('You are on the waitlist.');
-              } else if (users[studentID] == 'Can') {
-                console.log('user cancelled');
-                this.doAlert('You have cancelled your registration for this event.');
-              }
-            } else {
-              console.log('user not registered');
-              this.doAlert('You have not registered for this event.');
-            }
-          } else {
-            console.log('event not opened');
-            this.doAlert('Check-in for this event has not been opened yet.');
+        if (response.size == 1) {
+          const status = this.checkRegistrationStatus(response.data[0].id);
+          if (status == "checkedin") {
+            this.doAlert('You have already checked in to this event.');
+            return;
+          } else if (status != "registered") {
+            this.doAlert('You have not yet registered for this event.');
+            return;
           }
-        } else if (Object.keys(response).length == 0) {
+          const body = JSON.stringify({
+            id: this.props.userData.id,
+            eventID: response.data[0].id,
+            registrationStatus: 'checkedin'
+          });
+          fetch(AMAZON_API + '/registration/create', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: body
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              console.log(response)
+              if (response.registrationStatus == 'checkedin') {
+                this.doAlert('Checked in!');
+              } else {
+                this.doAlert('Checkin failed, the event may be full.');
+              }
+            })
+            .catch(err => {
+              this.doAlert('An error occured.');
+            })
+          // TODO: Readd functionality to open/close event checkin
+          // console.log('event not opened');
+          // this.doAlert('Check-in for this event has not been opened yet.');
+
+        } else if (response.size == 0) {
           console.log('no event found.');
           this.doAlert('No event with given code.');
         } else {
@@ -104,6 +101,13 @@ class CheckinScreen extends Component {
   };
 
   render() {
+    if (this.props.isLoading) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.h1}>Loading Screen</Text>
+        </View>
+      )
+    }
     return (
       <View style={styles.widgetContainer}>
         <Text style={styles.h1}>Event Check-in</Text>
@@ -134,7 +138,15 @@ class CheckinScreen extends Component {
 const mapStateToProps = (state) => {
   return {
     userData: state.login.user,
+    registration: state.login.registration,
+    isLoading: state.login.isLoading
   };
 };
 
-export default withNavigation(connect(mapStateToProps)(CheckinScreen));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRegistrations: (id) => dispatch(getRegistrations(id))
+  };
+};
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(CheckinScreen));
