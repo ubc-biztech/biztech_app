@@ -9,15 +9,8 @@ import styles from '../styles/Styles';
 import Text from '../components/Text'
 import Button from '../components/Button'
 
-
 class CheckinScreen extends Component {
-  constructor() {
-    super();
-    this.state = {
-      checkinCode: '',
-    }
-  };
-
+  state = { checkinCode: '' }
   doAlert(message) {
     Alert.alert(
       'Event Check-in',
@@ -39,55 +32,38 @@ class CheckinScreen extends Component {
     fetch(AMAZON_API + '/events/scan?code=' + this.state.checkinCode)
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
-        if (Object.keys(response).length == 1) {
-          if (response[0].opened) {
-            const studentID = this.props.userData.id;
-            let users = response[0].users;
-            if (users.hasOwnProperty(studentID)) {
-              if (users[studentID] == 'R') {
-                console.log('checkin success');
-                const body = JSON.stringify({
-                  'id': response[0].id,
-                  'userID': studentID,
-                  'status': 'C'
-                });
-                let update = fetch(AMAZON_API + '/events/userupdate',
-                  {
-                    method: 'POST',
-                    headers: {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json',
-                    },
-                    body: body
-                  })
-                  .then((update) => update.json())
-                  .then((update) => {
-                    console.log(update)
-                  })
-                  .done();
-                console.log('user check in success');
-                this.doAlert('You have successfully checked in. Hang tight!');
-
-              } else if (users[studentID] == 'C') {
-                console.log('user already checked in');
-                this.doAlert('You have already checked in. Sit tight!');
-              } else if (users[studentID] == 'W') {
-                console.log('user on waitlist');
-                this.doAlert('You are on the waitlist.');
-              } else if (users[studentID] == 'Can') {
-                console.log('user cancelled');
-                this.doAlert('You have cancelled your registration for this event.');
+        if (response.size == 1) {
+          const body = JSON.stringify({
+            id: this.props.userData.id,
+            eventID: response.data[0].id,
+            registrationStatus: 'checkedin'
+          });
+          console.log(body)
+          fetch(AMAZON_API + '/registration/create', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: body
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              console.log(response)
+              if (response.registrationStatus == 'checkedin') {
+                this.doAlert('Checked in!');
+              } else {
+                this.doAlert('Checkin failed, the event may be full.');
               }
-            } else {
-              console.log('user not registered');
-              this.doAlert('You have not registered for this event.');
-            }
-          } else {
-            console.log('event not opened');
-            this.doAlert('Check-in for this event has not been opened yet.');
-          }
-        } else if (Object.keys(response).length == 0) {
+            })
+            .catch(err => {
+              this.doAlert('An error occured.');
+            })
+          // TODO: Readd functionality to open/close event checkin
+          // console.log('event not opened');
+          // this.doAlert('Check-in for this event has not been opened yet.');
+
+        } else if (response.size == 0) {
           console.log('no event found.');
           this.doAlert('No event with given code.');
         } else {

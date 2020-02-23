@@ -124,7 +124,6 @@ export function registrationFailed(err) {
 }
 
 export function registerUser(id, eventID) {
-  console.log("hello");
   return (dispatch) => {
     dispatch(isLoading());
     const body = JSON.stringify({
@@ -132,7 +131,6 @@ export function registerUser(id, eventID) {
       eventID,
       registrationStatus: 'registered'
     })
-    console.log(body)
     fetch(AMAZON_API + '/registration/create', {
       method: 'POST',
       headers: {
