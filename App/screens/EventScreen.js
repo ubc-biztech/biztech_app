@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { View, Dimensions, Image } from 'react-native';
+import { connect } from 'react-redux';
+import { getRegistrations, registerUser } from '../actions/Login';
 
 const { width, height } = Dimensions.get('window');
 //styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
 import Button from '../components/Button'
-import { connect } from 'react-redux';
-import { getRegistrations, registerUser } from '../actions/Login';
+
 
 class EventScreen extends Component {
 
@@ -26,8 +27,7 @@ class EventScreen extends Component {
   };
 
   getRegistrationStatus(eventID) {
-    const regData = this.props.registration.data;
-    const entry = regData.filter(entry => entry.eventID == eventID);
+    const entry = this.props.registration.data.filter(entry => entry.eventID == eventID);
     if (entry.length == 1) {
       this.state.disableButton = true;
       if (entry[0].registrationStatus == 'registered') {
@@ -86,7 +86,8 @@ const mapStateToProps = (state) => {
     registration: state.login.registration,
     isLoading: state.login.isLoading
   }
-}
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getRegistrations: (id) => dispatch(getRegistrations(id)),

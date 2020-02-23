@@ -3,6 +3,7 @@ import { Alert, View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
+import { getRegistrations } from '../actions/Login';
 
 // styling
 import styles from '../styles/Styles';
@@ -11,6 +12,11 @@ import Button from '../components/Button'
 
 class CheckinScreen extends Component {
   state = { checkinCode: '' }
+
+  componentDidMount() {
+    this.props.getRegistrations(this.props.userData.id);
+  };
+
   doAlert(message) {
     Alert.alert(
       'Event Check-in',
@@ -21,24 +27,39 @@ class CheckinScreen extends Component {
 
   goHome() {
     this.props.navigation.navigate('Home');
-  }
+  };
+
+  checkRegistrationStatus(eventID) {
+    const entry = this.props.registration.data.filter(entry => entry.eventID == eventID);
+    if (entry.length == 1) {
+      return entry[0].registrationStatus;
+    }
+    return '';
+  };
 
   handleCheckin() {
     console.log(this.state.checkinCode);
     if (this.state.checkinCode.length != 4) {
-      Alert.alert('Not a valid code!');
+      this.doAlert('Not a valid code!');
       return;
     }
     fetch(AMAZON_API + '/events/scan?code=' + this.state.checkinCode)
       .then((response) => response.json())
       .then((response) => {
         if (response.size == 1) {
+          const status = this.checkRegistrationStatus(response.data[0].id);
+          if (status == "checkedin") {
+            this.doAlert('You have already checked in to this event.');
+            return;
+          } else if (status != "registered") {
+            this.doAlert('You have not yet registered for this event.');
+            return;
+          }
           const body = JSON.stringify({
             id: this.props.userData.id,
             eventID: response.data[0].id,
             registrationStatus: 'checkedin'
           });
-          console.log(body)
           fetch(AMAZON_API + '/registration/create', {
             method: 'POST',
             headers: {
@@ -80,6 +101,13 @@ class CheckinScreen extends Component {
   };
 
   render() {
+    if (this.props.isLoading) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.h1}>Loading Screen</Text>
+        </View>
+      )
+    }
     return (
       <View style={styles.widgetContainer}>
         <Text style={styles.h1}>Event Check-in</Text>
@@ -110,7 +138,15 @@ class CheckinScreen extends Component {
 const mapStateToProps = (state) => {
   return {
     userData: state.login.user,
+    registration: state.login.registration,
+    isLoading: state.login.isLoading
   };
 };
 
-export default withNavigation(connect(mapStateToProps)(CheckinScreen));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRegistrations: (id) => dispatch(getRegistrations(id))
+  };
+};
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(CheckinScreen));
