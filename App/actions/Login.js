@@ -93,6 +93,70 @@ export function populateEvents(events) {
   }
 }
 
+export function getRegistrations(id) {
+  return (dispatch) => {
+    dispatch(isLoading());
+    fetch(AMAZON_API + '/registration/queryStudent?id=' + id)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log('getRegistration success');
+        dispatch(getRegistrationSuccess(response));
+      })
+      .catch(err => {
+        console.log('getRegistration failed');
+        dispatch(registrationFailed(err));
+      })
+  }
+}
+
+export function getRegistrationSuccess(response) {
+  return {
+    type: 'registrationSuccess',
+    response
+  }
+}
+
+export function registrationFailed(err) {
+  return {
+    type: 'registrationFailed',
+    err
+  }
+}
+
+export function registerUser(id, eventID) {
+  console.log("hello");
+  return (dispatch) => {
+    dispatch(isLoading());
+    const body = JSON.stringify({
+      id,
+      eventID,
+      registrationStatus: 'registered'
+    })
+    console.log(body)
+    fetch(AMAZON_API + '/registration/create', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: body
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response)
+        if (response.message == 'Update succeeded') {
+          dispatch(getRegistrations(id));
+        } else {
+          dispatch(registrationFailed(err));
+        }
+      })
+      .catch(err => {
+        console.log('registration failed');
+        dispatch(registrationFailed(err));
+      })
+  }
+}
+
 export function hideSuccess() {
   return {
     type: 'hideSuccess'

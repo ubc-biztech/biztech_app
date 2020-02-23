@@ -22,7 +22,7 @@ export default class EventCard extends Component {
 
         <View >
           <Image
-            source={{ uri: this.props.event.img }}
+            source={{ uri: this.props.event.imageUrl }}
             style={{
               width: width - 20,
               height: 240,
