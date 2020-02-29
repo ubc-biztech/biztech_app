@@ -1,14 +1,14 @@
 {
-    "projectName": "biztechapp",
+    "projectName": "bt-web",
     "version": "3.0",
     "frontend": "javascript",
     "javascript": {
-        "framework": "react-native",
+        "framework": "react",
         "config": {
-            "SourceDir": "/",
-            "DistributionDir": "/",
-            "BuildCommand": "npm.cmd run-script build",
-            "StartCommand": "npm.cmd run-script start"
+            "SourceDir": "src",
+            "DistributionDir": "build",
+            "BuildCommand": "npm run build",
+            "StartCommand": "npm start"
         }
     },
     "providers": [
