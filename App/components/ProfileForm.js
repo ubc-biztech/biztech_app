@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Picker, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
-import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { populateUser, unverify, unhideSuccess, hideSuccess } from '../actions/Login';
 import NavigationService from '../features/NavigationService.js';
@@ -209,15 +208,7 @@ class Register extends Component {
       gender,
       diet
     })
-    let response = fetch(AMAZON_API + '/users/update?id=' + id,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: body
-      })
+    fetchBackend('/users/update?id=' + id, 'POST', body)
       .then((response) => response.json())
       .then((response) => {
         console.log(response)

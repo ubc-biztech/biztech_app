@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Picker, TextInput, View, Image } from 'react-native';
-import { AMAZON_API } from 'react-native-dotenv';
 import Auth from '@aws-amplify/auth';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -252,15 +251,7 @@ class Register extends Component {
           gender,
           diet
         })
-        let response = fetch(AMAZON_API + '/users/create',
-          {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: body
-          })
+        fetchBackend('/users/create', 'POST', body)
           .then((response) => response.json())
           .then((response) => {
             console.log(response)
