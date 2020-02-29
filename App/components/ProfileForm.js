@@ -8,6 +8,7 @@ import NavigationService from '../features/NavigationService.js';
 //styling
 import styles from '../styles/Styles';
 import Button from '../components/Button'
+import { fetchBackend } from '../utils'
 
 class Register extends Component {
 
