@@ -11,6 +11,7 @@ import Notification from '../components/Notification';
 import EventCard from '../components/EventCard';
 
 import { populateEvents } from '../actions/Login';
+import Carousel from 'react-native-snap-carousel';
 
 class Home extends Component {
   constructor(props) {
@@ -30,10 +31,12 @@ class Home extends Component {
   async fetchEvents() {
     console.log('home screen fetching events')
     fetch(AMAZON_API + '/events/get')
-      .then((response) => response.json())
       .then((response) => {
+        console.log('response AAA========>')
+        console.log(JSON.stringify(response.json));
         this.props.populateEvents(response)
       })
+      
   }
 
   componentDidMount() {
@@ -63,7 +66,7 @@ class Home extends Component {
           />
         </View>
 
-        <View style={styles.center}>
+        {/* <View style={styles.center}>
           {this.props && this.props.events &&
             this.props.events.map(event => {
               return (
@@ -77,7 +80,7 @@ class Home extends Component {
               )
             })
           }
-        </View>
+        </View> */}
       </ScrollView>
     )
   }
