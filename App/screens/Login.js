@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, ThemeProvider } from 'react-native-elements';
-import { AMAZON_API } from 'react-native-dotenv';
+import { ScrollView } from 'react-native';
+import { ThemeProvider } from 'react-native-elements';
 import Register from '../components/Register'
 import SignIn from '../components/SignIn'
 import { ButtonGroup } from 'react-native-elements';

@@ -1,7 +1,7 @@
 // Actions for logging in.
 import Auth from '@aws-amplify/auth';
 import { ATTEMPT, SUCCESS, FAILED } from '../constants/Consts'
-import { AMAZON_API } from 'react-native-dotenv';
+import { fetchBackend } from '../utils';
 
 export function isLoading() {
   return {
@@ -39,7 +39,7 @@ export function doLogin(values) {
         console.log(user.signInUserSession.idToken.payload);
         let id = (user.signInUserSession.idToken.payload.nickname);
         user.signInUserSession.idToken.payload.email_verified ? dispatch(doVerify()) : null;
-        fetch(AMAZON_API + '/users/get?id=' + id)
+        fetchBackend('/users/get?id=' + id, 'GET')
           .then((response) => response.json())
           .then((response) => {
             dispatch(loginSuccess(response));
@@ -58,7 +58,7 @@ export function doLogin(values) {
 
 export function populateUser(id) {
   return (dispatch) => {
-    fetch(AMAZON_API + '/users/get?id=' + id)
+    fetchBackend('/users/get?id=' + id, 'GET')
       .then((response) => response.json())
       .then((response) => {
         dispatch(loginSuccess(response));

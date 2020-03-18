@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ScrollView, RefreshControl, ActivityIndicator, View } from 'react-native';
-import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 //styling
 import styles from '../styles/Styles';
@@ -11,7 +10,11 @@ import Notification from '../components/Notification';
 import EventCard from '../components/EventCard';
 
 import { populateEvents } from '../actions/Login';
+<<<<<<< HEAD
 import Carousel from 'react-native-snap-carousel';
+=======
+import { fetchBackend } from '../utils';
+>>>>>>> 92a3f843700354fa1bf4c372bf819898e75ccec1
 
 class Home extends Component {
   constructor(props) {
@@ -30,7 +33,8 @@ class Home extends Component {
 
   async fetchEvents() {
     console.log('home screen fetching events')
-    fetch(AMAZON_API + '/events/get')
+    fetchBackend('/events/get', 'GET')
+      .then((response) => response.json())
       .then((response) => {
         console.log('response AAA========>')
         console.log(JSON.stringify(response.json));

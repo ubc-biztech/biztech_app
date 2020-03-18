@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
-import { doVerify } from '../actions/Login';
 import * as Yup from 'yup';
 //styling
 import styles from '../styles/Styles';
@@ -22,27 +20,6 @@ const FormSchema = Yup.object().shape({
 });
 
 class EditProfile extends Component {
-  constructor() {
-    super();
-    this.state = {
-      confirmationCode: ''
-    }
-  }
-
-  handleSave() {
-    const confirmationCode = this.state;
-    const email = this.props.userData.email;
-    console.log(email);
-    console.log(this.state.confirmationCode);
-    Auth.confirmSignUp(email, this.state.confirmationCode, {})
-      .then(() => {
-        this.props.doVerify()
-        this.props.navigation.navigate('Profile')
-        this.props.navigation.navigate('Home')
-      })
-      .catch(err => console.log(err));
-  }
-
   render() {
     return (
       <ScrollView>
@@ -65,11 +42,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-// actions
-const mapDispatchToProps = (dispatch) => {
-  return {
-    doVerify: () => dispatch(doVerify())
-  };
-};
-
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(EditProfile));
+export default withNavigation(connect(mapStateToProps)(EditProfile));

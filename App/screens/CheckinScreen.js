@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Alert, View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { AMAZON_API } from 'react-native-dotenv';
 import { connect } from 'react-redux';
 
 // styling
 import styles from '../styles/Styles';
 import Text from '../components/Text'
 import Button from '../components/Button'
+import { fetchBackend } from '../utils';
 
 
 class CheckinScreen extends Component {
@@ -36,7 +36,7 @@ class CheckinScreen extends Component {
       Alert.alert('Not a valid code!');
       return;
     }
-    fetch(AMAZON_API + '/events/scan?code=' + this.state.checkinCode)
+    fetchBackend('/events/scan?code=' + this.state.checkinCode, 'GET')
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
@@ -52,15 +52,7 @@ class CheckinScreen extends Component {
                   'userID': studentID,
                   'status': 'C'
                 });
-                let update = fetch(AMAZON_API + '/events/userupdate',
-                  {
-                    method: 'POST',
-                    headers: {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json',
-                    },
-                    body: body
-                  })
+                fetchBackend('/events/userupdate', 'POST', body)
                   .then((update) => update.json())
                   .then((update) => {
                     console.log(update)
