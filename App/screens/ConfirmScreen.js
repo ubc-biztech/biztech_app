@@ -19,7 +19,6 @@ class ConfirmScreen extends Component {
   }
 
   handleConfirmationCode() {
-    const confirmationCode = this.state;
     const email = this.props.userData.email;
     console.log(email);
     console.log(this.state.confirmationCode);
